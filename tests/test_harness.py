@@ -1,4 +1,4 @@
-"""End-to-end against the committed cache.
+"""These tests run end-to-end against the committed cache.
 
 The README says the evaluation replays from the committed cache with no API
 key and reproduces the committed results.json. This tests that.
@@ -45,13 +45,13 @@ def test_evaluate_reproduces_committed_results(tmp_path, monkeypatch, capsys):
     assert fresh["frontier"] == committed["frontier"]
     assert fresh["configs"] == committed["configs"]
     assert fresh["meta"]["documents_scored"] == 40
-    # Nothing excluded, so no exclusion reason.
+    # Nothing is excluded, so there is no exclusion reason.
     assert fresh["meta"]["documents_excluded"] == []
     assert fresh["meta"]["exclusion_reason"] is None
     # The terminal demo shows the headline sections.
     assert "COST / ACCURACY FRONTIER" in printed
     assert "RECONCILIATION" in printed
-    assert "n/a" in printed            # 0/0 abstention precision shown as undefined
+    assert "n/a" in printed  # The 0/0 abstention precision is shown as undefined.
 
 
 def test_extra_runs_requested_degrades_gracefully(tmp_path, monkeypatch, capsys):
@@ -78,7 +78,7 @@ def test_harness_refuses_a_cached_response_for_a_changed_image(tmp_path, monkeyp
     dst = docs / (doc + settings.DOC_EXT)
     shutil.copy(os.path.join(settings.DOCS, doc + settings.DOC_EXT), dst)
     with open(dst, "ab") as fh:
-        fh.write(b"\x00")                      # one byte: a different image
+        fh.write(b"\x00")  # One appended byte makes this a different image.
     monkeypatch.setattr(run, "DOCS", str(docs))
     with pytest.raises(SystemExit, match="Stale cached response"):
         run.load_cache(settings.PRIMARY, "test", 1, [doc])
@@ -128,8 +128,9 @@ def _stub_score(accuracy_at, coverage_at):
 
 
 def test_tune_rejects_thresholds_below_the_bar(monkeypatch):
-    """Below the bar at tau 0, above it once anything is abstained: tune must
-    pick the abstaining threshold and say the bar was met."""
+    """The stubbed score is below the bar at tau 0 and above it once anything is
+    abstained, so tune must pick the abstaining threshold and say the bar was
+    met."""
     monkeypatch.setattr(run, "score", _stub_score(
         lambda t: 0.90 if t == 0.0 else 0.99, lambda t: 1.0 if t == 0.0 else 0.8))
     out = run.tune(run.load_labels())

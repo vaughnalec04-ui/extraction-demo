@@ -1,4 +1,4 @@
-"""The manifest of records flagged for manual label verification."""
+"""This module writes the manifest of records flagged for manual label verification."""
 from __future__ import annotations
 
 import os
@@ -12,17 +12,18 @@ SPOT_CHECK_N = 10
 
 
 def write_spot_check(records: List[dict]) -> List[str]:
-    """Flag records for manual label verification, weighted toward hard cases.
+    """This function flags records for manual label verification, weighted toward
+    hard cases.
 
-    Not random. The labels most worth checking are where authoring could have
-    gone wrong: ambiguous pairs, handwritten amounts, absent fields, and OOD
-    pages where every label is null.
+    The selection is not random. The labels most worth checking are where
+    authoring could have gone wrong: ambiguous pairs, handwritten amounts,
+    absent fields, and OOD pages where every label is null.
     """
     by_id = {r["doc_id"]: r for r in records}
 
     def pick(pred, n):
-        # Interleave tune and test so both splits are covered. Checking labels
-        # is not evaluation, so reading a test label leaks nothing.
+        # This interleaves tune and test so both splits are covered. Checking
+        # labels is not evaluation, so reading a test label leaks nothing.
         hits = [r for r in records if pred(r)]
         tune = [r["doc_id"] for r in hits if r["split"] == "tune"]
         test = [r["doc_id"] for r in hits if r["split"] == "test"]

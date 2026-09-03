@@ -1,4 +1,4 @@
-"""Terminal rendering of a results block.
+"""This module renders a results block in the terminal.
 
 Everything printed here also exists in results.json; the JSON is the
 artifact. Nothing is computed in this module. Every number on screen has a
@@ -31,7 +31,7 @@ def render(results: dict) -> None:
         _config(config, block)
 
 
-# --- top of the report -----------------------------------------------------
+# These functions render the top of the report.
 
 def _header(meta: dict) -> None:
     print()
@@ -73,7 +73,7 @@ def _frontier(frontier: list, meta: dict) -> None:
     print("n/a means nothing was flagged, so the precision is 0/0 and undefined.")
 
 
-# --- one configuration -----------------------------------------------------
+# These functions render one configuration.
 
 def _config(config: str, block: dict) -> None:
     first, var = block["runs"][0], block["variance"]

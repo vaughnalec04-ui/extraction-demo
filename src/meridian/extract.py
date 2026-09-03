@@ -1,11 +1,11 @@
-"""Populate the response cache for a split.
+"""This program populates the response cache for a split.
 
 Extraction and scoring are separate programs. This one fetches and caches raw
 model responses. Thresholds, escalation and the cascade are all computed later
 by the harness from the cached confidences, so a threshold sweep costs no API
 calls and tuning is reproducible.
 
-Usage:
+Example usage is shown below.
   meridian-extract --split tune --model gemini-3.5-flash-lite
   meridian-extract --split test --all-models --runs 3
 """

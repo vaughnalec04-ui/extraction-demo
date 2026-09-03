@@ -1,4 +1,4 @@
-"""Render a document image from its label record."""
+"""This module renders a document image from its label record."""
 from __future__ import annotations
 
 import os
@@ -52,7 +52,7 @@ def fmt_money(v: str, style: str) -> str:
 
 
 def _rows_for(rec: dict) -> List[tuple]:
-    """Printable rows for a record, from the label."""
+    """This function returns the printable rows for a record, taken from the label."""
     f, r = rec["fields"], rec["render"]
     dfmt = r.get("date_format", "iso")
     absent = r.get("absent_field")
@@ -61,8 +61,8 @@ def _rows_for(rec: dict) -> List[tuple]:
 
     def row(key, label, value):
         if key == absent:
-            # Printed label over an empty rule. The field is absent; the form
-            # invites a guess.
+            # The row is a printed label over an empty rule. The field is absent;
+            # the form invites a guess.
             return (label, "__________________") if blank_mode else None
         if value is None:
             return None
@@ -137,13 +137,13 @@ def render(rec: dict) -> Image.Image:
             d.text((60, y), label, font=_f(base, 15), fill=60)
             d.text((300, y), value, font=_f(boldf, 15), fill=0)
             y += 34
-        # No "this is not a claim" marker. A real OOD document does not
+        # There is no "this is not a claim" marker. A real OOD document does not
         # announce itself, and a footer would leak the label.
         d.text((60, H - 70), "Retain for your records.", font=_f(base, 11), fill=140)
         return img
 
     f = rec["fields"]
-    # When provider_name is the absent field the letterhead must not leak it.
+    # When provider_name is the absent field, the letterhead must not leak it.
     letterhead = (f["provider_name"] or "MERIDIAN CLAIMS PROCESSING CENTER").upper()
     d.text((60, y), letterhead, font=_f(boldf, 19), fill=0); y += 30
     d.text((60, y), "%d %s Street, %s" % (rng.randint(10, 990),
@@ -164,8 +164,8 @@ def render(rec: dict) -> Image.Image:
         d.multiline_text((60, y), NARRATIVE, font=_f(base, 13), fill=25, spacing=8)
         y += 74
 
-    # Itemisation comes from the label, so the arithmetic on the page is the
-    # arithmetic under test.
+    # The itemization comes from the label, so the arithmetic on the page is
+    # the arithmetic under test.
     d.line([(60, y), (W - 60, y)], fill=140, width=1); y += 22
     for li in rec.get("reconciliation", {}).get("line_items", []):
         d.text((60, y), li["description"], font=_f(base, 13), fill=70)
@@ -175,10 +175,11 @@ def render(rec: dict) -> Image.Image:
 
     d.line([(60, y), (W - 60, y)], fill=0, width=1); y += 22
 
-    # Ambiguous stratum: a second money figure of equal visual weight, above or
-    # below the true total.
+    # The ambiguous stratum carries a second money figure of equal visual
+    # weight, above or below the true total.
     def draw_total(y: int) -> int:
-        """Draw the TOTAL DUE line at cursor y; return the new cursor."""
+        """This function draws the TOTAL DUE line at cursor y and returns the new
+        cursor."""
         if f["total_amount"] is None:
             if r.get("absence_mode") == "blank_value" and r.get("absent_field") == "total_amount":
                 d.text((60, y), "TOTAL DUE:", font=_f(boldf, 16), fill=0)
@@ -194,14 +195,15 @@ def render(rec: dict) -> Image.Image:
         return y + 36
 
     def draw_distractor(y: int) -> int:
-        """Draw the competing total, if any, at cursor y; return the new cursor."""
+        """This function draws the competing total, if any, at cursor y and
+        returns the new cursor."""
         if not r.get("distractor_total"):
             return y
         text = fmt_money(r["distractor_total"], mfmt)
         d.text((60, y), r["distractor_label"] + ":", font=_f(boldf, 16), fill=0)
         d.text((560, y), text, font=_f(boldf, 16), fill=0)
         if r.get("struck_through"):
-            # Ruled through by hand; superseded.
+            # The figure is ruled through by hand and superseded.
             w = d.textlength(text, font=_f(boldf, 16))
             d.line([(556, y + 9), (566 + w, y + 7)], fill=20, width=2)
         return y + 36
@@ -215,7 +217,7 @@ def render(rec: dict) -> Image.Image:
     d.text((60, H - 70), "Retain for your records.", font=_f(base, 11), fill=140)
 
     if r.get("form_rules"):
-        # Pre-printed carbon-form rules that cross the typed values.
+        # These are pre-printed carbon-form rules that cross the typed values.
         for ry in range(190, min(y + 60, H - 90), 36):
             d.line([(50, ry), (W - 50, ry)], fill=95, width=1)
 
@@ -225,10 +227,11 @@ def render(rec: dict) -> Image.Image:
 
 
 def _apply_stamp(img: Image.Image, rng: random.Random) -> Image.Image:
-    """An intake stamp rotated across the page over printed values.
+    """This function applies an intake stamp rotated across the page over
+    printed values.
 
-    Composited with a darken blend so it obscures rather than replaces, like a
-    rubber stamp over toner.
+    It is composited with a darken blend so that it obscures rather than
+    replaces, like a rubber stamp over toner.
     """
     stamp = Image.new("L", (420, 90), 255)
     sd = ImageDraw.Draw(stamp)

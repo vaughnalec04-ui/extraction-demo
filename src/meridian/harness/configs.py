@@ -1,18 +1,19 @@
-"""The configurations compared on the cost/accuracy frontier.
+"""This module defines the configurations compared on the cost/accuracy frontier.
 
 The design copies a control Meridian already runs. Claims processors catch
 keying errors by double-keying: two operators key the same document and
 disagreements go to a supervisor. `double_key` is the automated version, with
 two independent model readers and disagreements routed to the exception queue.
 
-  primary_solo   one call to the primary reader. Uncertainty signal is
-                 self-reported confidence.
-  verifier_solo  one call to the second reader. Same signal.
-  cascade        primary reads; the document goes to the verifier when the
-                 primary's own confidence is low. Only works if self-reported
-                 confidence carries information.
-  double_key     both readers on every document; abstain where they disagree.
-                 Costs more than either solo run. Needs no self-assessment.
+  primary_solo   makes one call to the primary reader. Its uncertainty signal
+                 is self-reported confidence.
+  verifier_solo  makes one call to the second reader. It uses the same signal.
+  cascade        starts with the primary reader; the document goes to the
+                 verifier when the primary's own confidence is low. It only
+                 works if self-reported confidence carries information.
+  double_key     runs both readers on every document and abstains where they
+                 disagree. It costs more than either solo run. It needs no
+                 self-assessment.
 
 cascade and double_key make opposite bets about self-reported confidence, so
 both are measured.
@@ -20,9 +21,9 @@ both are measured.
 Both readers are lite-class. The original design escalated to a Flash-tier
 model, but free-tier quota on each Flash model run toward evaluation volume
 ran out after roughly twenty requests (FRICTION.md F-010), which cannot fund a
-scored evaluation. For
-a disagreement signal, independence between readers matters more than relative
-capability, so the design changed rather than the evaluation.
+scored evaluation. For a disagreement signal, independence between readers
+matters more than relative capability, so the design changed rather than the
+evaluation.
 """
 
 from __future__ import annotations
@@ -36,9 +37,9 @@ CONFIGS = ("primary_solo", "verifier_solo", "cascade", "double_key")
 
 
 def _cells(rec: Optional[dict]) -> Dict[str, dict]:
-    """Field cells from a cache record. A failed or missing call gives empty
-    cells, which score as missed fields. The default path never gets here:
-    scorable_docs() drops a document with a failed call from every
+    """This returns the field cells from a cache record. A failed or missing call
+    gives empty cells, which score as missed fields. The default path never gets
+    here: scorable_docs() drops a document with a failed call from every
     configuration first, so the comparison stays paired."""
     resp = (rec or {}).get("response") or {}
     return {f: (resp.get(f) or {"value": None, "confidence": 0.0}) for f in FIELD_ORDER}
@@ -46,10 +47,10 @@ def _cells(rec: Optional[dict]) -> Dict[str, dict]:
 
 def resolve(config: str, primary_rec: dict, verifier_rec: dict,
             tau_abstain: float, tau_escalate: float) -> Tuple[Dict[str, dict], dict]:
-    """Emitted value and abstention decision per field, plus the cost and
-    latency this configuration incurred on the document.
+    """This resolves the emitted value and abstention decision per field, plus
+    the cost and latency this configuration incurred on the document.
 
-    Returns ({field: {value, confidence, abstained, source}}, usage_block).
+    It returns ({field: {value, confidence, abstained, source}}, usage_block).
     """
     primary, verifier = _cells(primary_rec), _cells(verifier_rec)
     out: Dict[str, dict] = {}
@@ -84,8 +85,8 @@ def resolve(config: str, primary_rec: dict, verifier_rec: dict,
         out["_escalated"] = escalated
 
     elif config == "double_key":
-        # Both readers always. Disagreement is judged on the normalized value,
-        # so "$1,696.42" against "1696.42" is agreement.
+        # Both readers always run. Disagreement is judged on the normalized
+        # value, so "$1,696.42" against "1696.42" is agreement.
         used = [primary_rec, verifier_rec]
         for f in FIELD_ORDER:
             cv, sv = primary[f]["value"], verifier[f]["value"]
@@ -99,8 +100,8 @@ def resolve(config: str, primary_rec: dict, verifier_rec: dict,
 
     usage = {
         "cost_usd": sum(r.get("cost_usd", 0.0) for r in used if r),
-        # Serial latency, as measured. double_key's two calls are independent
-        # and could run concurrently; that is not measured here.
+        # This is serial latency, as measured. double_key's two calls are
+        # independent and could run concurrently; that is not measured here.
         "latency_s": sum(r.get("latency_s", 0.0) for r in used if r),
         "n_calls": len([r for r in used if r]),
         "errors": [r.get("error") for r in used if r and r.get("error")],

@@ -1,11 +1,12 @@
-"""Concurrent interactive execution and the throughput sweep.
+"""This module provides concurrent interactive execution and the throughput sweep.
 
 Meridian processes about 40,000 documents a month, so throughput decides
 whether the pipeline is deployable. The sustainable request rate is not in the
 docs (FRICTION F-009) and a 429 does not say what the limit is (F-008), so
 `sweep` finds where throughput stops scaling and errors start.
 
-Run:  meridian-throughput --split test --levels 1,2,4,8,16
+The sweep is run as follows.
+  meridian-throughput --split test --levels 1,2,4,8,16
 """
 from __future__ import annotations
 
@@ -22,7 +23,7 @@ from meridian.settings import (DATA, MONTHLY_VOLUME, PRIMARY, RESULTS)
 
 
 class RateGate:
-    """Shared token bucket across workers.
+    """This is a shared token bucket across workers.
 
     Per-worker back-off does not work here. N workers backing off on their own
     still put N times the load on one quota and thrash against it together.
@@ -46,13 +47,13 @@ class RateGate:
             time.sleep(wait)
 
     def penalise(self) -> None:
-        """Called on a 429/503 by any worker. Slows the whole pool."""
+        """This is called on a 429/503 by any worker and slows the whole pool."""
         with self._lock:
             self.throttle_events += 1
             self._interval = min(max(self._interval * 1.5, 0.5) + 0.25, self._max)
 
     def relax(self) -> None:
-        """Called on sustained success. Recovers toward full speed."""
+        """This is called on sustained success and recovers toward full speed."""
         with self._lock:
             if self._interval > 0:
                 self._interval = max(0.0, self._interval * 0.93)
@@ -63,7 +64,7 @@ class RateGate:
 
 
 def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
-    """A single extraction through the gate. Returns a timing record.
+    """This runs a single extraction through the gate and returns a timing record.
 
     The request is Client.call(), the same one the cached extractor uses, so
     throughput is measured on the production request.
@@ -79,8 +80,8 @@ def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
         try:
             _, usage, service_s = client.call(model, image_bytes)
             gate.relax()
-            # usage includes cached_tokens, which shows whether implicit caching
-            # (on by default) hit any of the input.
+            # usage includes cached_tokens, which shows whether implicit caching hit
+            # any of the input. Implicit caching is on by default.
             return {"doc_id": doc_id, "ok": True, "attempts": attempts,
                     "service_s": service_s,
                     "total_s": time.monotonic() - started_total, **usage}
@@ -99,10 +100,10 @@ def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
 
 def run_concurrent(model: str, doc_ids: Sequence[str], workers: int,
                    gate: Optional[RateGate] = None) -> dict:
-    """Run one pass at a fixed worker count and report measured throughput."""
+    """This runs one pass at a fixed worker count and reports measured throughput."""
     client = Client()
-    client.genai                           # construct before timing starts
-    for d in doc_ids:                      # warm the image cache off the clock
+    client.genai                           # The client is built before timing starts.
+    for d in doc_ids:                      # This warms the image cache off the clock.
         client.image(d)
 
     gate = gate or RateGate()
@@ -139,18 +140,18 @@ def run_concurrent(model: str, doc_ids: Sequence[str], workers: int,
 
 
 def sweep(model: str, doc_ids: Sequence[str], levels: Sequence[int]) -> List[dict]:
-    """Find the knee: where does adding workers stop adding throughput."""
+    """This finds the knee, which is where adding workers stops adding throughput."""
     out = []
     for w in levels:
         print("  concurrency=%-3d ..." % w, end="", flush=True)
-        # Fresh gate per level so back-off from one level does not carry into
-        # the next measurement.
+        # A fresh gate is used per level so back-off from one level does not carry
+        # into the next measurement.
         r = run_concurrent(model, doc_ids, w, RateGate())
         out.append(r)
         print(" %6.1f docs/min  ok=%d fail=%d throttles=%d  p50=%.2fs"
               % (r["throughput_docs_per_min"], r["succeeded"], r["failed"],
                  r["throttle_events"], r["service_latency_p50_s"]))
-        time.sleep(5)                      # let any burst quota recover
+        time.sleep(5)                      # This lets any burst quota recover.
     return out
 
 

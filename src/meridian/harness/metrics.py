@@ -1,6 +1,6 @@
-"""Scoring primitives.
+"""This module holds the scoring primitives.
 
-Three definitions matter most:
+Three definitions matter most.
 
 * A field-instance is one (document, field) pair. Rates are over
   field-instances because Meridian pays per field.
@@ -20,23 +20,23 @@ from typing import Dict, List, Optional, Sequence
 from meridian.schema import normalize
 from meridian.settings import MIN_BUCKET_N
 
-# outcome labels for a scored field-instance
-CORRECT = "correct"                       # value emitted and matches
-CORRECT_REJECT = "correct_rejection"      # said absent, and it is absent
-WRONG_VALUE = "wrong_value"               # value emitted, present in gt, differs
-MISSED_FIELD = "missed_field"             # said absent, but gt has a value
-HALLUCINATED = "hallucinated_field"       # emitted a value, gt has none
-ABSTAINED = "abstained"                   # routed to the exception queue
+# These are the outcome labels for a scored field-instance.
+CORRECT = "correct"                       # A value was emitted and it matches.
+CORRECT_REJECT = "correct_rejection"      # The model said absent, and it is absent.
+WRONG_VALUE = "wrong_value"               # The emitted value differs from the gt value.
+MISSED_FIELD = "missed_field"             # The model said absent, but gt has a value.
+HALLUCINATED = "hallucinated_field"       # The model emitted a value; gt has none.
+ABSTAINED = "abstained"                   # The field was routed to the exception queue.
 
 # The three error kinds carry different business costs and are reported apart.
 ERROR_KINDS = (WRONG_VALUE, MISSED_FIELD, HALLUCINATED)
 
 
 def wilson(successes: int, n: int, z: float = 1.959963985) -> Dict[str, float]:
-    """Wilson score interval for a binomial proportion.
+    """This computes the Wilson score interval for a binomial proportion.
 
-    Used over the normal approximation because these proportions sit near 1.0
-    at n=40 to 240, where the normal approximation gives intervals above 1.0.
+    It is used over the normal approximation because these proportions sit near
+    1.0 at n=40 to 240, where the normal approximation gives intervals above 1.0.
     """
     if n == 0:
         return {"point": None, "low": None, "high": None, "n": 0}
@@ -52,7 +52,7 @@ def wilson(successes: int, n: int, z: float = 1.959963985) -> Dict[str, float]:
 
 def classify(field: str, gt_raw: Optional[str], pred_raw: Optional[str],
              abstained: bool) -> Dict[str, object]:
-    """Score one field-instance.
+    """This scores one field-instance.
 
     `would_be_*` records the outcome had the system not abstained. Abstention
     precision needs it: you have to know whether the suppressed value was going
@@ -85,7 +85,7 @@ def classify(field: str, gt_raw: Optional[str], pred_raw: Optional[str],
 
 
 def summarize(instances: Sequence[dict]) -> Dict[str, object]:
-    """Aggregate scored field-instances.
+    """This aggregates scored field-instances.
 
     Order follows the questions as they get asked: how much did it process
     (coverage), how right was it on that (accuracy_on_covered), what did it get
@@ -120,10 +120,10 @@ def summarize(instances: Sequence[dict]) -> Dict[str, object]:
         "errors": errors,
         "error_rate_on_covered": wilson(sum(errors.values()), len(covered)),
 
-        # Of what was flagged, how much would have been wrong. A system that
-        # flags everything drives this toward the base error rate.
+        # Of what was flagged, this measures how much would have been wrong. A
+        # system that flags everything drives this toward the base error rate.
         "abstention_precision": wilson(caught, len(abstained)),
-        # Of everything that would have been wrong, how much was caught.
+        # Of everything that would have been wrong, this measures how much was caught.
         "abstention_recall": wilson(caught, would_be_wrong),
         "would_be_wrong_total": would_be_wrong,
     }
@@ -131,11 +131,11 @@ def summarize(instances: Sequence[dict]) -> Dict[str, object]:
 
 def calibration(instances: Sequence[dict], confidences: Sequence[float],
                 n_buckets: int = 10, min_n: int = MIN_BUCKET_N) -> Dict[str, object]:
-    """Bucket by stated confidence and compare against observed accuracy.
+    """This buckets by stated confidence and compares against observed accuracy.
 
-    Scored on `would_be_correct` over all instances including abstained ones.
-    Whether stated confidence predicts correctness is a property of the model,
-    not of the gate in front of it.
+    It is scored on `would_be_correct` over all instances including abstained ones.
+    Whether stated confidence predicts correctness is a property of the model
+    rather than of the gate in front of it.
 
     ECE is the count-weighted mean gap between stated confidence and observed
     accuracy. A model that says 1.0 while being right 90% of the time scores
@@ -181,23 +181,23 @@ def calibration(instances: Sequence[dict], confidences: Sequence[float],
         "occupied_buckets": occupied,
         "informative_buckets": informative,
         "min_bucket_n": min_n,
-        # Fewer than two informative buckets is not a curve. Flag it in the
-        # data so a chart does not imply resolution that is not there.
+        # Fewer than two informative buckets is not a curve. It is flagged in
+        # the data so a chart does not imply resolution that is not there.
         "degenerate": informative <= 1,
     }
 
 
 def by_key(instances: Sequence[dict], keys: Sequence[str]) -> Dict[str, dict]:
-    """Slice summaries by a per-instance key (stratum, field, ...)."""
+    """This slices summaries by a per-instance key (stratum, field, ...)."""
     out: Dict[str, List[dict]] = {}
     for inst, k in zip(instances, keys):
         out.setdefault(k, []).append(inst)
     return {k: summarize(v) for k, v in sorted(out.items())}
 
 
-# --- reconciliation -------------------------------------------------------
+# The reconciliation section starts here.
 # Reading the total is transcription. Checking the total against the
-# itemisation is adjudication. They fail for different reasons and are scored
+# itemization is adjudication. They fail for different reasons and are scored
 # separately.
 
 
@@ -212,14 +212,15 @@ def _money(v) -> Optional[Decimal]:
 
 
 def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
-    """Score one document's reconciliation.
+    """This scores one document's reconciliation.
 
-    Two verdicts come from the same model output:
+    Two verdicts come from the same model output.
 
-      model_verdict  the model's own `reconciles` boolean; it read the page and
+      model_verdict  is the model's own `reconciles` boolean; it read the page and
                      did the arithmetic itself.
-      code_verdict   Python sums the line items the model extracted and compares
-                     against the total the model extracted.
+      code_verdict   is computed in Python, which sums the line items the model
+                     extracted and compares them against the total the model
+                     extracted.
 
     Both use identical extractions, so any gap between them is arithmetic. That
     separates a misread number from a bad addition. The first needs a better
@@ -227,7 +228,7 @@ def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
     """
     gt_rec = gt.get("reconciliation") or {}
     gt_verdict = gt_rec.get("reconciles")
-    if gt_verdict is None:            # OOD or no stated total: nothing to reconcile
+    if gt_verdict is None:  # OOD or no stated total leaves nothing to reconcile.
         return {"applicable": False}
 
     pred = pred or {}
@@ -246,7 +247,7 @@ def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
     model_sum = _money(model_block.get("line_items_sum"))
     true_sum = _money(gt_rec.get("line_items_sum"))
 
-    # Sub-cent tolerance only. A claim off by a penny is still off.
+    # The tolerance is sub-cent only. A claim off by a penny is still off.
     tol = Decimal("0.005")
     code_verdict = (abs(code_sum - stated) <= tol) if stated is not None else None
     model_verdict = model_block.get("reconciles")
@@ -258,7 +259,7 @@ def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
         if v == gt_verdict:
             return "correct"
         # Passing a claim that does not add up is a wrong payout. Flagging one
-        # that does is a review cost. Kept apart.
+        # that does is a review cost. They are kept apart.
         return "false_pass" if v is True else "false_flag"
 
     return {
@@ -268,10 +269,11 @@ def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
         "code_verdict": code_verdict,
         "model_outcome": outcome(model_verdict),
         "code_outcome": outcome(code_verdict),
-        # Did the model add its own extracted items correctly?
+        # This records whether the model added its own extracted items correctly.
         "model_arithmetic_correct": (model_sum is not None
                                      and abs(model_sum - code_sum) <= tol),
-        # Did it find the right number of line items and read them correctly?
+        # These record whether it found the right number of line items and read them
+        # correctly.
         "n_items_gt": len(gt_rec.get("line_items") or []),
         "n_items_pred": parsed_items,
         "item_count_correct": parsed_items == len(gt_rec.get("line_items") or []),
@@ -282,7 +284,7 @@ def score_reconciliation(gt: dict, pred: Optional[dict]) -> Dict[str, object]:
 
 
 def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
-    """Aggregate reconciliation scores, keeping the two verdict paths apart."""
+    """This aggregates reconciliation scores, keeping the two verdict paths apart."""
     live = [r for r in rows if r.get("applicable")]
     n = len(live)
     if not n:
@@ -309,7 +311,7 @@ def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
         "n_inconsistent_claims": len(inconsistent),
         "model_verdict": verdict_block("model_outcome"),
         "code_verdict": verdict_block("code_outcome"),
-        # Recall on the claims that do not add up, the ones that would
+        # This is recall on the claims that do not add up, the ones that would
         # otherwise be paid wrong.
         "bad_claim_recall_model": wilson(caught_model, len(inconsistent)),
         "bad_claim_recall_code": wilson(caught_code, len(inconsistent)),
@@ -322,14 +324,14 @@ def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
     }
 
 
-# --- paired comparison ------------------------------------------------------
+# The paired comparison section starts here.
 
-WRONG_EMISSION = (WRONG_VALUE, HALLUCINATED)   # a value went out and it was wrong
+WRONG_EMISSION = (WRONG_VALUE, HALLUCINATED)   # A value went out and it was wrong.
 
 
 def paired_difference(candidate: Sequence[dict], baseline: Sequence[dict],
                       resamples: int, seed: int) -> Dict[str, object]:
-    """Compare two configurations scored on the same field-instances.
+    """This compares two configurations scored on the same field-instances.
 
     Every configuration is scored on identical documents, so the difference
     between two of them is a paired quantity, and its interval is tighter than
@@ -395,8 +397,8 @@ def _percentile_ci(samples: List[float]) -> Dict[str, float]:
 
 
 def _binomial_two_sided(k: int, n: int) -> float:
-    """Two-sided exact binomial p-value at p = 0.5 for k of n discordant
-    instances. 1.0 when nothing is discordant."""
+    """This computes the two-sided exact binomial p-value at p = 0.5 for k of n
+    discordant instances. It returns 1.0 when nothing is discordant."""
     if n == 0:
         return 1.0
     k = min(k, n - k)

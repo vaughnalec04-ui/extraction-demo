@@ -1,4 +1,4 @@
-"""The cache-freshness guard.
+"""These tests cover the cache-freshness guard.
 
 Regenerating the corpus and scoring new documents against old responses would
 not crash and would produce plausible wrong numbers. The key is recomputed
@@ -48,7 +48,8 @@ def test_replay_refuses_stale_entry(sandbox):
     _, sha = c.image("d1")
     _write_cache("m", "d1", client_mod.cache_key("m", "d1", 1, sha, c.schema_sha))
 
-    (sandbox / "d1.jpg").write_bytes(b"document version two")   # corpus regenerated
+    # The corpus has been regenerated.
+    (sandbox / "d1.jpg").write_bytes(b"document version two")
     with pytest.raises(RuntimeError, match="stale"):
         client_mod.Client(replay=True).extract("m", "d1", "test", 1)
 
@@ -61,12 +62,18 @@ def test_replay_refuses_missing_entry(sandbox):
 
 def test_cache_key_covers_every_input():
     base = client_mod.cache_key("m", "d1", 1, "img-a", "schema-a")
-    assert base != client_mod.cache_key("m2", "d1", 1, "img-a", "schema-a")   # model
-    assert base != client_mod.cache_key("m", "d2", 1, "img-a", "schema-a")    # document
-    assert base != client_mod.cache_key("m", "d1", 2, "img-a", "schema-a")    # run index
-    assert base != client_mod.cache_key("m", "d1", 1, "img-b", "schema-a")    # image bytes
-    assert base != client_mod.cache_key("m", "d1", 1, "img-a", "schema-b")    # schema
-    assert base == client_mod.cache_key("m", "d1", 1, "img-a", "schema-a")    # deterministic
+    # The model differs.
+    assert base != client_mod.cache_key("m2", "d1", 1, "img-a", "schema-a")
+    # The document differs.
+    assert base != client_mod.cache_key("m", "d2", 1, "img-a", "schema-a")
+    # The run index differs.
+    assert base != client_mod.cache_key("m", "d1", 2, "img-a", "schema-a")
+    # The image bytes differ.
+    assert base != client_mod.cache_key("m", "d1", 1, "img-b", "schema-a")
+    # The schema differs.
+    assert base != client_mod.cache_key("m", "d1", 1, "img-a", "schema-b")
+    # The key is deterministic.
+    assert base == client_mod.cache_key("m", "d1", 1, "img-a", "schema-a")
 
 
 def test_live_client_requires_key(sandbox):
@@ -92,17 +99,18 @@ def test_parse_tolerates_malformed_model_output():
     assert parse("[]") is None
     out = parse(json.dumps({"total_amount": {"value": "1.00", "confidence": "high"},
                             "line_items": "nope", "reconciliation_confidence": None}))
-    assert out["total_amount"]["confidence"] == 0.0          # unparseable -> 0
+    assert out["total_amount"]["confidence"] == 0.0  # An unparseable value becomes 0.
     assert out["line_items"] == []
     assert out["reconciliation"]["confidence"] == 0.0
     out = parse(json.dumps({"claim_id": {"value": "x", "confidence": 7}}))
-    assert out["claim_id"]["confidence"] == 1.0              # clamped
+    assert out["claim_id"]["confidence"] == 1.0              # The value is clamped.
 
 
 def test_prompt_text_is_pinned_to_its_version():
-    """The cache key carries PROMPT_VERSION, not the prompt text, so an edit
-    to PROMPT without a version bump would serve stale responses. This pins
-    the text. When PROMPT changes, bump PROMPT_VERSION and update the hash."""
+    """The cache key carries PROMPT_VERSION rather than the prompt text, so an
+    edit to PROMPT without a version bump would serve stale responses. This
+    test pins the text. When PROMPT changes, PROMPT_VERSION must be bumped and
+    the hash updated."""
     from meridian.client import PROMPT, _sha
     from meridian.settings import PROMPT_VERSION
     assert PROMPT_VERSION == "v2-reconciliation"
@@ -131,5 +139,6 @@ def test_transient_errors_are_recognised_by_status_code_then_by_message():
     assert is_transient(ApiError(503, "UNAVAILABLE"))
     assert not is_transient(ApiError(400, "INVALID_ARGUMENT mentioning 429 in the text"))
     assert not is_transient(ApiError(500, "internal"))
-    assert is_transient(Exception("503 UNAVAILABLE: high demand"))        # no code attribute
+    # This exception has no code attribute.
+    assert is_transient(Exception("503 UNAVAILABLE: high demand"))
     assert not is_transient(Exception("Connection reset"))

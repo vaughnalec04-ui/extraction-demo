@@ -31,7 +31,7 @@ def test_name_folds_case_accents_punctuation_whitespace():
 
 
 def test_name_does_not_reorder_tokens():
-    # A payee written surname-first is a real difference, not formatting.
+    # A payee written surname-first is a real difference rather than a formatting one.
     assert normalize("claimant_name", "Ferraro, Dolores") != normalize("claimant_name", "Dolores Ferraro")
 
 
@@ -41,7 +41,7 @@ def test_absent_markers_normalise_to_none(raw):
 
 
 def test_normalizers_are_total_and_never_raise():
-    # Garbage in must degrade to a non-match, never to an exception mid-run.
+    # Garbage in must degrade to a non-match rather than to an exception mid-run.
     for field in FIELD_ORDER:
         assert isinstance(normalize(field, "!!! ??? ..."), (str, type(None)))
         assert isinstance(normalize(field, "12/99/9999"), (str, type(None)))
@@ -70,6 +70,7 @@ def test_dates_reject_impossible_readings_instead_of_inventing_one():
     import re
     assert normalize("date_of_service", "2026/03/14") == "2026-03-14"
     assert normalize("date_of_service", "6/1/26") == "2026-06-01"
-    assert normalize("date_of_service", "01/02/2026") == "2026-01-02"     # month first
+    # The month comes first.
+    assert normalize("date_of_service", "01/02/2026") == "2026-01-02"
     for bad in ("14/03/2026", "2026-14-03", "00/10/2026", "3/32/2026"):
         assert not re.fullmatch(r"\d{4}-\d{2}-\d{2}", normalize("date_of_service", bad)), bad

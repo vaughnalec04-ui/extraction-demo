@@ -4283,7 +4283,7 @@
     "runs": 1,
     "split_scored": "test",
     "thresholds_tuned_on": "tune split, run 1, never test",
-    "tuning_objective": "maximise coverage subject to normalized accuracy on covered >= 0.97"
+    "tuning_objective": "maximize coverage subject to normalized accuracy on covered >= 0.97"
   },
   "thresholds": {
     "cascade": {

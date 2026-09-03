@@ -1,12 +1,13 @@
-"""Batch API submission and polling.
+"""This module handles Batch API submission and polling.
 
-Batch suits the overnight bulk: 50% of the interactive rate with a 24h target
-turnaround. On this key every batches.create returned 400 FAILED_PRECONDITION
-(FRICTION F-011), so this path is implemented against the SDK contract and
-unverified.
+Batch suits the overnight bulk, as it runs at 50% of the interactive rate with a
+24h target turnaround. On this key every batches.create returned 400
+FAILED_PRECONDITION (FRICTION F-011), so this path is implemented against the
+SDK contract and unverified.
 
-Run:  meridian-batch --mode submit --split test
-      meridian-batch --mode poll
+The commands are as follows.
+  meridian-batch --mode submit --split test
+  meridian-batch --mode poll
 """
 from __future__ import annotations
 
@@ -25,11 +26,11 @@ BATCH_STATE_FILE = os.path.join(RESULTS, "batch_job.json")
 
 
 def submit_batch(model: str, doc_ids: Sequence[str], display_name: str = "meridian-extract") -> dict:
-    """Submit the corpus as one batch job.
+    """This submits the corpus as one batch job.
 
-    Batch suits the overnight bulk: 50% of the interactive rate with a 24h
-    target turnaround. The same-day queue still needs the interactive path, so
-    both are measured.
+    Batch suits the overnight bulk, as it runs at 50% of the interactive rate
+    with a 24h target turnaround. The same-day queue still needs the interactive
+    path, so both are measured.
     """
     client = Client()
     schema = response_schema()
@@ -66,9 +67,10 @@ def submit_batch(model: str, doc_ids: Sequence[str], display_name: str = "meridi
 
 
 def poll_batch(budget_s: float = 600.0, interval_s: float = 20.0) -> dict:
-    """Poll a submitted job for a bounded time and record the state it reaches.
+    """This polls a submitted job for a bounded time and records the state it
+    reaches.
 
-    The documented target is 24h. "Submitted, not finished within the window"
+    The documented target is 24h. "Submitted but not finished within the window"
     is a recordable result; waiting a day inside a demo is not.
     """
     with open(BATCH_STATE_FILE) as fh:
@@ -107,7 +109,8 @@ def poll_batch(budget_s: float = 600.0, interval_s: float = 20.0) -> dict:
         state["usage"] = {"input_tokens": usage_in, "output_tokens": usage_out,
                           "thinking_tokens": usage_think}
         state["cost_usd_interactive_equivalent"] = round(interactive, 6)
-        state["cost_usd_batch"] = round(interactive * 0.5, 6)   # published 50% rate
+        # This applies the published 50% rate.
+        state["cost_usd_batch"] = round(interactive * 0.5, 6)
         state["cost_usd_per_doc_batch"] = round(interactive * 0.5 / len(parsed), 8) if parsed else None
         state["n_responses"] = len(parsed)
         state["n_errors"] = sum(1 for p in parsed if p["error"])

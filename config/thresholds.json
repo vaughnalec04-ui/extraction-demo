@@ -30,7 +30,7 @@
     }
   },
   "grid_size": 5,
-  "objective": "maximise coverage subject to normalized accuracy on covered >= 0.97",
+  "objective": "maximize coverage subject to normalized accuracy on covered >= 0.97",
   "sweeps": {
     "cascade": [
       {

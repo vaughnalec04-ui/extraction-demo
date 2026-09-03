@@ -1,4 +1,4 @@
-"""Scanner artefacts, deterministic in each record's seed."""
+"""This module adds scanner artifacts that are deterministic in each record's seed."""
 from __future__ import annotations
 
 import random
@@ -7,14 +7,16 @@ from PIL import Image, ImageFilter
 
 
 def degrade(img: Image.Image, r: dict) -> Image.Image:
-    """Apply scan artefacts. Deterministic in the record's seed."""
+    """This function applies scan artifacts that are deterministic in the
+    record's seed."""
     rng = random.Random(r["seed"] + 7)
     if r.get("rotation"):
         img = img.rotate(r["rotation"], resample=Image.BICUBIC, fillcolor=248)
     if r.get("blur"):
         img = img.filter(ImageFilter.GaussianBlur(r["blur"]))
     if r.get("fade"):
-        # Faded toner: compress the range toward white so strokes thin out.
+        # This simulates faded toner by compressing the range toward white so
+        # that strokes thin out.
         fade = r["fade"]
         img = img.point(lambda v: int(255 - (255 - v) * fade))
     if r.get("noise"):

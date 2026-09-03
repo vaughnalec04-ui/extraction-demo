@@ -1,10 +1,10 @@
-"""Evaluation harness.
+"""This module is the evaluation harness.
 
-Scores cached responses and never calls the API. Extraction and scoring are
-separate so a threshold sweep is free and a demo is deterministic.
+It scores cached responses and never calls the API. Extraction and scoring
+are separate so a threshold sweep is free and a demo is deterministic.
 
-  meridian-evaluate --split tune --tune-thresholds
-  meridian-evaluate --split test
+Thresholds are tuned with `meridian-evaluate --split tune --tune-thresholds`,
+and the test split is scored with `meridian-evaluate --split test`.
 
 Thresholds are swept on the tune split only. The chosen values are written to
 config/thresholds.json and read back for the test run, so no test score comes
@@ -48,9 +48,10 @@ def load_split(split: str) -> List[str]:
 
 
 def load_cache(model: str, split: str, run: int, doc_ids: Sequence[str]) -> Dict[str, dict]:
-    """Cached records for these documents, each checked against the current
-    image bytes, schema and prompt version. A stale record is refused, not
-    scored: the harness never calls the API, so it cannot repair one."""
+    """This loads the cached records for these documents, each checked against
+    the current image bytes, schema and prompt version. A stale record is
+    refused rather than scored: the harness never calls the API, so it cannot
+    repair one."""
     out = {}
     schema = schema_sha()
     for d in doc_ids:
@@ -73,7 +74,8 @@ def load_cache(model: str, split: str, run: int, doc_ids: Sequence[str]) -> Dict
 
 
 def available_runs(split: str) -> int:
-    """Highest run index for which every reader has a cache directory."""
+    """This returns the highest run index for which every reader has a cache
+    directory."""
     n = 0
     while True:
         nxt = n + 1
@@ -85,7 +87,7 @@ def available_runs(split: str) -> int:
 
 
 def scorable_docs(split: str, runs: int) -> Dict[str, object]:
-    """Documents every reader and run covers, plus the ones dropped.
+    """This returns the documents every reader and run covers, plus the ones dropped.
 
     Quota can leave a document uncovered for one reader. Scoring the union
     would compare configurations over different document sets, so the
@@ -114,7 +116,7 @@ def scorable_docs(split: str, runs: int) -> Dict[str, object]:
 def score(config: str, split: str, run: int, tau_abstain: float,
           tau_escalate: float, labels: Dict[str, dict],
           doc_ids: Optional[Sequence[str]] = None) -> dict:
-    """Score one configuration over one split at one run index."""
+    """This scores one configuration over one split at one run index."""
     doc_ids = list(doc_ids) if doc_ids is not None else load_split(split)
     primary = load_cache(PRIMARY, split, run, doc_ids)
     verifier = ({d: None for d in doc_ids} if config == "primary_solo"
@@ -190,7 +192,8 @@ def score(config: str, split: str, run: int, tau_abstain: float,
         "escalation_rate": round(escalations / len(doc_ids), 6) if config == "cascade" else None,
         "escalation": metrics.wilson(escalations, len(doc_ids)) if config == "cascade" else None,
         "api_call_errors": call_errors,
-        # Consumed by evaluate() for the paired comparison; not written out.
+        # This is consumed by evaluate() for the paired comparison; it is not
+        # written out.
         "_instances": instances,
     }
 
@@ -204,10 +207,10 @@ def _pct(values: Sequence[float], p: float) -> float:
     return s[lo] + (s[hi] - s[lo]) * (k - lo)
 
 
-# --- threshold tuning (tune split only) -----------------------------------
+# This section handles threshold tuning (tune split only).
 
 def sweep_grid(labels: Dict[str, dict], split: str = "tune") -> List[float]:
-    """Candidate thresholds drawn from the confidences observed on tune.
+    """This returns candidate thresholds drawn from the confidences observed on tune.
 
     A fixed 0.0..1.0 grid would put most of its points where no prediction
     lands. Using observed values means every candidate separates something.
@@ -232,16 +235,17 @@ def sweep_grid(labels: Dict[str, dict], split: str = "tune") -> List[float]:
 
 
 def tune(labels: Dict[str, dict]) -> dict:
-    """Choose thresholds on the tune split.
+    """This chooses thresholds on the tune split.
 
-    Objective: maximise coverage subject to normalized accuracy on covered
-    items clearing Meridian's 97% bar. Automate as much as possible without
-    dropping below the bar on what is automated. If no threshold clears the
-    bar, that is reported rather than relaxed.
+    The objective is to maximize coverage subject to normalized accuracy on
+    covered items clearing Meridian's 97% bar. It automates as much as possible
+    without dropping below the bar on what is automated. If no threshold clears
+    the bar, that is reported rather than relaxed.
     """
     grid = sweep_grid(labels)
     chosen, sweeps = {}, {}
-    # Same intersection rule as the test path so both splits use one policy.
+    # The tune path uses the same intersection rule as the test path so both
+    # splits use one policy.
     tune_docs = scorable_docs("tune", 1)["scored"]
 
     for config in CONFIGS:
@@ -276,14 +280,14 @@ def tune(labels: Dict[str, dict]) -> dict:
                           "tune_accuracy_on_covered": best["accuracy_on_covered"]}
         sweeps[config] = rows
     return {"chosen": chosen, "sweeps": sweeps, "grid_size": len(grid),
-            "objective": "maximise coverage subject to normalized accuracy on "
+            "objective": "maximize coverage subject to normalized accuracy on "
                          "covered >= %.2f" % MERIDIAN_BAR,
             "tuned_on": "tune split, run 1, never test"}
 
 
 def evaluate(labels: Dict[str, dict], split: str, runs: int, thresholds: dict,
              doc_ids: Optional[Sequence[str]] = None) -> dict:
-    """Score every configuration across `runs` repeats and report the spread."""
+    """This scores every configuration across `runs` repeats and reports the spread."""
     per_config, first_run = {}, {}
     for config in CONFIGS:
         t = thresholds["chosen"][config]
@@ -299,7 +303,7 @@ def evaluate(labels: Dict[str, dict], split: str, runs: int, thresholds: dict,
             "thresholds_from_tune": t,
         }
     # Every configuration was scored on the same documents, so the difference
-    # from the primary reader alone is a paired quantity. Run 1 only.
+    # from the primary reader alone is a paired quantity. This uses run 1 only.
     base = first_run["primary_solo"]
     for config in CONFIGS:
         per_config[config]["paired_vs_primary_solo"] = (
@@ -310,8 +314,8 @@ def evaluate(labels: Dict[str, dict], split: str, runs: int, thresholds: dict,
 
 
 def _variance(run_results: List[dict]) -> dict:
-    """Run-to-run spread on the headline figures. Expected to be zero at
-    temperature 0; a non-zero spread is a finding."""
+    """This computes the run-to-run spread on the headline figures. It is
+    expected to be zero at temperature 0; a non-zero spread is a finding."""
     def pull(path):
         vals = []
         for r in run_results:
@@ -375,8 +379,8 @@ def main() -> None:
     with open(tpath) as fh:
         thresholds = json.load(fh)
 
-    # Score the runs the cache holds. Asking for 3 when 1 is cached is a
-    # normal thing to do from the README; score 1 and say so.
+    # This scores the runs the cache holds. Asking for 3 when 1 is cached is a
+    # normal thing to do from the README; it scores 1 and says so.
     available = available_runs(args.split)
     if available < args.runs:
         print("NOTE: %d run(s) requested but only %d cached for every reader on "
@@ -425,9 +429,9 @@ def main() -> None:
 
 
 def _frontier(per_config: dict) -> List[dict]:
-    """One point per configuration, ready to plot from the JSON.
+    """This returns one point per configuration, ready to plot from the JSON.
 
-    Run 1 throughout, so every point and its interval describe the same run.
+    It uses run 1 throughout, so every point and its interval describe the same run.
     Run-to-run spread is under each configuration's variance block.
     """
     pts = []

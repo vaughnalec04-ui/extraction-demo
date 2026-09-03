@@ -12,8 +12,10 @@ def _rec(values, conf, cost=0.001, latency=1.0, error=None):
 
 
 P_VALUES = ["CLM-1", "MP-1", "Ada Lovelace", "2026-01-01", "Acme Clinic", "$1,696.42"]
-V_SAME = ["CLM-1", "MP-1", "Ada Lovelace", "2026-01-01", "Acme Clinic", "1696.42"]   # same, differently formatted
-V_DIFF = ["CLM-1", "MP-1", "Ada Lovelace", "2026-01-01", "Acme Clinic", "$2,120.53"]  # disagrees on the total
+# V_SAME holds the same values, differently formatted.
+V_SAME = ["CLM-1", "MP-1", "Ada Lovelace", "2026-01-01", "Acme Clinic", "1696.42"]
+# V_DIFF disagrees on the total.
+V_DIFF = ["CLM-1", "MP-1", "Ada Lovelace", "2026-01-01", "Acme Clinic", "$2,120.53"]
 
 
 def test_every_config_is_resolvable():
@@ -46,7 +48,7 @@ def test_cascade_escalates_when_primary_unsure():
     out, usage = resolve("cascade", _rec(P_VALUES, 0.8, cost=0.001), _rec(V_DIFF, 1.0, cost=0.002),
                          tau_abstain=0.0, tau_escalate=0.9)
     assert out["_escalated"] is True
-    assert out["total_amount"]["value"] == "$2,120.53"          # verifier's value
+    assert out["total_amount"]["value"] == "$2,120.53"  # This is the verifier's value.
     assert out["total_amount"]["source"] == VERIFIER
     assert usage["n_calls"] == 2 and usage["cost_usd"] == pytest.approx(0.003)
 
@@ -60,7 +62,7 @@ def test_cascade_holds_when_primary_confident():
 
 
 def test_cascade_at_zero_threshold_equals_primary():
-    # With a constant confidence signal the cascade never fires.
+    # With a constant confidence signal, the cascade never fires.
     solo, su = resolve("primary_solo", _rec(P_VALUES, 1.0), _rec(V_DIFF, 1.0), 0.0, 0.0)
     casc, cu = resolve("cascade", _rec(P_VALUES, 1.0), _rec(V_DIFF, 1.0), 0.0, 0.0)
     casc.pop("_escalated")
@@ -78,12 +80,12 @@ def test_double_key_agrees_on_normalized_value():
 def test_double_key_abstains_on_disagreement():
     out, _ = resolve("double_key", _rec(P_VALUES, 0.9), _rec(V_DIFF, 0.7), 0.0, 0.0)
     assert out["total_amount"]["abstained"] is True
-    assert out["claim_id"]["abstained"] is False               # only the disputed field is flagged
+    assert out["claim_id"]["abstained"] is False  # Only the disputed field is flagged.
     assert out["total_amount"]["confidence"] == pytest.approx(0.7)
 
 
 def test_failed_call_gives_empty_cells():
     out, usage = resolve("primary_solo", _rec(P_VALUES, 1.0, error="429: quota"), _rec(V_SAME, 1.0), 0.5, 0.0)
     assert all(out[f]["value"] is None for f in FIELD_ORDER)
-    assert all(out[f]["abstained"] for f in FIELD_ORDER)      # confidence 0.0 < 0.5
+    assert all(out[f]["abstained"] for f in FIELD_ORDER)  # Confidence 0.0 is below 0.5.
     assert usage["errors"] == ["429: quota"]

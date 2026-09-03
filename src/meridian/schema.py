@@ -1,4 +1,5 @@
-"""Field definitions, the response schema sent to the model, and normalization.
+"""This module holds the field definitions, the response schema sent to the model,
+and normalization.
 
 The six fields are mixed in type (identifier, name, date, money) so the
 normalization layer gets exercised. Exact match alone would understate accuracy
@@ -11,7 +12,7 @@ import unicodedata
 from decimal import Decimal, InvalidOperation
 from typing import Dict, Optional
 
-# --- field registry -------------------------------------------------------
+# --- This section defines the field registry. -----------------------------
 
 IDENTIFIER, NAME, DATE, MONEY = "identifier", "name", "date", "money"
 
@@ -63,11 +64,11 @@ LINE_ITEM_SCHEMA = {
 
 
 def response_schema() -> dict:
-    """Schema handed to the model.
+    """This returns the schema handed to the model.
 
     Each field is an object so the model must return a confidence with the
-    value. `value` is nullable so "this field is absent" is a real answer and
-    not a parse failure.
+    value. `value` is nullable so "this field is absent" is a real answer rather
+    than a parse failure.
     """
     props = {}
     for field in FIELD_ORDER:
@@ -122,7 +123,7 @@ def response_schema() -> dict:
     return {"type": "OBJECT", "properties": props, "required": required}
 
 
-# --- normalization --------------------------------------------------------
+# --- This section defines normalization. ----------------------------------
 # Normalizers never raise. An unparseable value falls back to a casefolded
 # string so it can still be compared; it just will not match.
 
@@ -135,12 +136,14 @@ _MONTHS = {m: i for i, m in enumerate(
 
 
 def _norm_identifier(v: str) -> str:
-    """Case- and separator-insensitive: CLM-40218 == clm 40218 == CLM40218."""
+    """This normalizer is case- and separator-insensitive, so CLM-40218,
+    clm 40218 and CLM40218 all normalize to the same string.
+    """
     return re.sub(r"[^A-Za-z0-9]", "", v).upper()
 
 
 def _norm_name(v: str) -> str:
-    """Fold case, accents, punctuation and whitespace runs.
+    """This normalizer folds case, accents, punctuation and whitespace runs.
 
     Token order is kept. "Ferraro, Dolores" and "Dolores Ferraro" stay distinct
     because on a payee that difference is worth seeing.
@@ -151,11 +154,12 @@ def _norm_name(v: str) -> str:
 
 
 def _norm_money(v: str) -> str:
-    """Canonical decimal string with 2dp: $1,412.50 == 1412.5 == USD 1412.50.
+    """This normalizer returns a canonical decimal string with two decimal places,
+    so $1,412.50, 1412.5 and USD 1412.50 all normalize to the same string.
 
-    Accounting negatives are honoured: (12.50), 12.50 CR and -12.50 all give
-    -12.50. US formats only; a European decimal comma is not handled, and the
-    corpus does not render one.
+    Accounting negatives are honored: (12.50), 12.50 CR and -12.50 all give
+    -12.50. Only US formats are supported; a European decimal comma is not
+    handled, and the corpus does not render one.
     """
     s = v.strip()
     negative = ((s.startswith("(") and s.endswith(")"))
@@ -172,12 +176,13 @@ def _norm_money(v: str) -> str:
 
 
 def _norm_date(v: str) -> str:
-    """Best-effort ISO YYYY-MM-DD across the formats the corpus renders.
+    """This normalizer makes a best-effort conversion to ISO YYYY-MM-DD across the
+    formats the corpus renders.
 
-    Numeric dates are read month-first (US convention; the corpus is US), so
-    01/02/2026 is 2 January. A reading with an impossible month or day is
-    returned unnormalized rather than turned into a date that could match a
-    label by accident.
+    Numeric dates are read month-first, following the US convention because the
+    corpus is US, so 01/02/2026 is 2 January. A reading with an impossible month
+    or day is returned unnormalized rather than turned into a date that could
+    match a label by accident.
     """
     s = v.strip()
     m = re.search(r"(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})", s)
@@ -190,7 +195,7 @@ def _norm_date(v: str) -> str:
             if len(y) == 2:
                 y = "20" + y
         else:
-            # "March 14, 2026" / "14 Mar 2026"
+            # This branch handles forms like "March 14, 2026" and "14 Mar 2026".
             mon = re.search(r"([A-Za-z]{3,9})", s)
             day = re.search(r"\b(\d{1,2})\b", s)
             yr = re.search(r"\b(\d{4})\b", s)
@@ -218,7 +223,7 @@ _NORMALIZERS = {
 
 
 def normalize(field: str, value: Optional[str]) -> Optional[str]:
-    """Normalize one field value. None (absent) passes through as None."""
+    """This normalizes one field value. None (absent) passes through as None."""
     if value is None:
         return None
     text = str(value).strip()

@@ -1,4 +1,4 @@
-"""Author the ground truth.
+"""This module authors the ground truth.
 
 Every record is produced from a fixed seed before any document exists. Nothing
 here reads a document or calls a model.
@@ -12,8 +12,8 @@ from meridian.schema import FIELD_ORDER
 from meridian.settings import CORPUS_VERSION, SEED
 
 
-# Stratum -> (n_tune, n_test). Each stratum is large enough for its own Wilson
-# interval; the harder strata get more weight.
+# This maps each stratum to (n_tune, n_test). Each stratum is large enough for
+# its own Wilson interval; the harder strata get more weight.
 STRATA = {
     "clean":      (12, 12),
     "ambiguous":  (8, 8),
@@ -46,7 +46,7 @@ PROVIDERS = [
 
 # Line items are part of the label so the arithmetic on the page has ground
 # truth. Reading the total is easy for these models; checking it against the
-# itemisation is the part a claims processor is paid for, and where errors
+# itemization is the part a claims processor is paid for, and where errors
 # appear.
 LINE_ITEMS = {
     "medical": ["Professional services", "Diagnostic imaging", "Laboratory panel",
@@ -58,13 +58,14 @@ LINE_ITEMS = {
 }
 
 
-# Ways an inconsistent claim goes wrong. Each is a real failure mode in claims
-# intake, so the model is tested on the kind of error a keyer would catch.
+# These are the ways an inconsistent claim goes wrong. Each is a real failure
+# mode in claims intake, so the model is tested on the kind of error a keyer
+# would catch.
 DISCREPANCY_MODES = [
-    "omitted_line",      # a line item is priced but left out of the total
-    "double_counted",    # one line counted twice
-    "transposed_digit",  # total transposes two digits of the true sum
-    "unlisted_surcharge" # total exceeds the itemisation by an unitemised amount
+    "omitted_line",      # A line item is priced but left out of the total.
+    "double_counted",    # One line is counted twice.
+    "transposed_digit",  # The total transposes two digits of the true sum.
+    "unlisted_surcharge" # The total exceeds the itemization by an unitemized amount.
 ]
 
 
@@ -75,7 +76,8 @@ OOD_TYPES = ["vehicle_registration", "utility_bill", "employee_timesheet", "safe
 
 
 def author_labels() -> List[dict]:
-    """Author the ground truth. Reads no document and calls no model."""
+    """This function authors the ground truth. It reads no document and calls no
+    model."""
     rng = random.Random(SEED)
     records: List[dict] = []
     idx = 0
@@ -88,8 +90,8 @@ def author_labels() -> List[dict]:
             split = "tune" if i < n_tune else "test"
 
             if stratum == "ood":
-                # Wrong document type. None of the six fields exist and the
-                # right answer is null for all of them.
+                # This record has the wrong document type. None of the six fields
+                # exist, and the right answer is null for all of them.
                 rec = {
                     "corpus_version": CORPUS_VERSION,
                     "doc_id": doc_id,
@@ -115,14 +117,14 @@ def author_labels() -> List[dict]:
                     rng.choice("ABCDEFGHJKLMNPQRSTVWXYZ"),
                     rng.choice("ABCDEFGHJKLMNPQRSTVWXYZ")),
                 "claimant_name": name,
-                # Months 1-8 so no date of service falls after the engagement
-                # date.
+                # The month is limited to 1-8 so that no date of service falls
+                # after the engagement date.
                 "date_of_service": "2026-%02d-%02d" % (rng.randint(1, 8), rng.randint(1, 28)),
                 "provider_name": rng.choice(PROVIDERS).strip("*"),
-                "total_amount": None,          # derived from line items below
+                "total_amount": None,          # It is derived from line items below.
             }
 
-            # --- itemisation, then the total derived from it ---------------
+            # The itemization comes first, and then the total is derived from it.
             kind = "repair" if i % 4 == 3 else "medical"
             n_items = rng.randint(3, 5)
             descriptions = rng.sample(LINE_ITEMS[kind], n_items)
@@ -163,7 +165,7 @@ def author_labels() -> List[dict]:
                 "kind": stratum,
                 "seed": SEED + idx,
                 # Every page is a scan, so every stratum gets mild scanner
-                # artefacts. Only the degraded stratum gets the heavy treatment.
+                # artifacts. Only the degraded stratum gets the heavy treatment.
                 "noise": rng.randint(4, 9),
                 "jpeg_quality": rng.randint(74, 90),
                 # Format variety applies to every stratum so it is not confounded
@@ -174,21 +176,22 @@ def author_labels() -> List[dict]:
             }
 
             if stratum == "ambiguous":
-                # Three ways a page can carry two plausible totals. A careful
-                # keyer can resolve each one; a positional or largest-number
-                # heuristic cannot.
+                # There are three ways a page can carry two plausible totals. A
+                # careful keyer can resolve each one; a positional or
+                # largest-number heuristic cannot.
                 true_v = float(fields["total_amount"])
                 mode = ["dual_label", "correction", "near_transposition"][i % 3]
                 render["ambiguity_mode"] = mode
 
                 if mode == "near_transposition":
-                    # Off by one transposed digit, so a misread and a wrong
-                    # pick look the same downstream.
+                    # The distractor is off by one transposed digit, so a misread
+                    # and a wrong pick look the same downstream.
                     distractor = round(true_v + rng.choice([-90.0, -9.0, 9.0, 90.0]), 2)
                     render["distractor_label"] = "SUBTOTAL"
                 elif mode == "correction":
-                    # Printed total struck through and corrected by hand. A keyer
-                    # takes the correction. Hardest case in the corpus.
+                    # The printed total is struck through and corrected by hand. A
+                    # keyer takes the correction. This is the hardest case in the
+                    # corpus.
                     distractor = round(true_v * rng.choice([1.15, 1.22, 0.88]), 2)
                     render["distractor_label"] = "TOTAL DUE"
                     render["struck_through"] = True
@@ -200,16 +203,17 @@ def author_labels() -> List[dict]:
                          "SUBMITTED CHARGES", "TOTAL (BEFORE ADJUSTMENT)", "TOTAL BILLED"])
 
                 render["distractor_total"] = "%.2f" % distractor
-                # Position varies so "last figure on the page" does not work.
+                # The position varies so "last figure on the page" does not work.
                 render["distractor_position"] = ("above" if mode == "correction"
                                                  else rng.choice(["above", "below"]))
 
             if stratum == "degraded":
-                # Set to match a bad fax-then-scan, fixed before scoring and not
-                # tuned against any accuracy figure. The ceiling is legibility:
-                # a keyer has to be able to recover every labelled value, or the
-                # item has no derivable ground truth. Bounds were chosen by
-                # looking at rendered pages, not at model scores.
+                # These values are set to match a bad fax-then-scan. They were
+                # fixed before scoring and were not tuned against any accuracy
+                # figure. The ceiling is legibility: a keyer has to be able to
+                # recover every labeled value, or the item has no derivable
+                # ground truth. The bounds were chosen by looking at rendered
+                # pages rather than at model scores.
                 render["rotation"] = round(rng.uniform(-4.0, 4.0), 2)
                 render["noise"] = rng.randint(16, 36)
                 render["blur"] = round(rng.uniform(0.5, 1.1), 2)
@@ -226,12 +230,12 @@ def author_labels() -> List[dict]:
                 absent = rng.choice([f for f in FIELD_ORDER if f != "claim_id"])
                 fields[absent] = None
                 render["absent_field"] = absent
-                # Two ways a field goes missing. A printed label above an empty
-                # rule invites a guess more than a row that is not there.
+                # There are two ways a field goes missing. A printed label above
+                # an empty rule invites a guess more than a row that is not there.
                 render["absence_mode"] = ["row_omitted", "blank_value"][i % 2]
                 if absent == "total_amount":
-                    # No stated total, so nothing to reconcile against. The
-                    # verdict is undefined, not False.
+                    # There is no stated total, so there is nothing to reconcile
+                    # against. The verdict is undefined rather than False.
                     reconciliation["reconciles"] = None
                     reconciliation["stated_total"] = None
                     reconciliation["discrepancy"] = None

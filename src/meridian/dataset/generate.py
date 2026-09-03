@@ -1,6 +1,7 @@
-"""Generate the dataset: labels first, then documents rendered from the labels.
+"""This module generates the dataset. Labels are authored first, and the
+documents are then rendered from the labels.
 
-Run:  meridian-generate
+The meridian-generate command runs it.
 """
 from __future__ import annotations
 

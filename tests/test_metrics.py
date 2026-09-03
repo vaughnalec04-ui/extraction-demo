@@ -1,11 +1,12 @@
-"""The scoring primitives. Every headline number in results.json passes through
-these functions, so each documented contract is asserted here."""
+"""These tests cover the scoring primitives. Every headline number in
+results.json passes through these functions, so each documented contract is
+asserted here."""
 import pytest
 
 from meridian.harness import metrics as m
 
 
-# --- wilson ---------------------------------------------------------------
+# The wilson() tests follow.
 
 def test_wilson_zero_n_is_undefined_not_perfect():
     w = m.wilson(0, 0)
@@ -28,7 +29,7 @@ def test_wilson_is_bounded_and_monotone_in_n():
     assert (w100["high"] - w100["low"]) < (w10["high"] - w10["low"])
 
 
-# --- classify -------------------------------------------------------------
+# The classify() tests follow.
 
 @pytest.mark.parametrize("gt,pred,expected", [
     ("100.00", "$100.00", m.CORRECT),
@@ -59,7 +60,7 @@ def test_classify_exact_match_requires_correctness():
     assert r["exact_match"] is True
 
 
-# --- summarize ------------------------------------------------------------
+# The summarize() tests follow.
 
 def _inst(gt, pred, abstained=False):
     return m.classify("total_amount", gt, pred, abstained)
@@ -67,10 +68,14 @@ def _inst(gt, pred, abstained=False):
 
 def test_summarize_coverage_and_abstention():
     instances = [
-        _inst("1.00", "1.00"), _inst("2.00", "2.00"), _inst("3.00", "3.00"),   # 3 correct, covered
-        _inst("4.00", "9.00"),                                                  # 1 wrong, covered
-        _inst("5.00", "9.00", abstained=True),                                  # wrong, flagged (caught)
-        _inst("6.00", "6.00", abstained=True),                                  # right, flagged (wasted)
+        # These three are correct and covered.
+        _inst("1.00", "1.00"), _inst("2.00", "2.00"), _inst("3.00", "3.00"),
+        # This one is wrong and covered.
+        _inst("4.00", "9.00"),
+        # This one is wrong and flagged, so it is caught.
+        _inst("5.00", "9.00", abstained=True),
+        # This one is right and flagged, so the flag is wasted.
+        _inst("6.00", "6.00", abstained=True),
     ]
     s = m.summarize(instances)
     assert s["n_instances"] == 6
@@ -84,8 +89,8 @@ def test_summarize_coverage_and_abstention():
 
 def test_abstention_precision_undefined_when_nothing_flagged():
     s = m.summarize([_inst("1.00", "1.00"), _inst("2.00", "9.00")])
-    assert s["abstention_precision"]["point"] is None     # 0/0
-    assert s["abstention_recall"]["point"] == 0.0         # 1 wrong, 0 caught
+    assert s["abstention_precision"]["point"] is None     # The ratio is 0/0.
+    assert s["abstention_recall"]["point"] == 0.0  # One is wrong and none is caught.
 
 
 def test_error_kinds_are_never_pooled():
@@ -94,22 +99,24 @@ def test_error_kinds_are_never_pooled():
     assert s["error_rate_on_covered"]["point"] == 1.0
 
 
-# --- calibration ----------------------------------------------------------
+# The calibration() tests follow.
 
 def test_calibration_single_bucket_is_flagged_degenerate():
     inst = [{"would_be_correct": True}] * 9 + [{"would_be_correct": False}]
     c = m.calibration(inst, [1.0] * 10)
     assert c["occupied_buckets"] == 1
     assert c["degenerate"] is True
-    # ECE is |1.0 - 0.9| = 0.1. It measures the gap, not the constancy.
+    # ECE is |1.0 - 0.9| = 0.1. It measures the gap rather than the constancy.
     assert c["ece"] == pytest.approx(0.1)
 
 
 def test_calibration_ece_is_count_weighted_gap():
     inst = [{"would_be_correct": v} for v in (True, False, True, False)] * 5
     c = m.calibration(inst, [1.0, 1.0, 0.5, 0.5] * 5)
-    # bucket 0.9-1.0: n=10, conf 1.0, acc 0.5, gap 0.5, weight 0.5 -> 0.25
-    # bucket 0.4-0.5: n=10, conf 0.5, acc 0.5, gap 0.0            -> 0.00
+    # The 0.9-1.0 bucket has n=10, confidence 1.0, and accuracy 0.5, so its gap
+    # is 0.5 and its weight is 0.5, which contributes 0.25.
+    # The 0.4-0.5 bucket has n=10, confidence 0.5, and accuracy 0.5, so its gap
+    # is 0.0 and it contributes 0.00.
     assert c["ece"] == pytest.approx(0.25)
     assert c["occupied_buckets"] == 2 and c["informative_buckets"] == 2
     assert c["degenerate"] is False
@@ -129,7 +136,7 @@ def test_calibration_requires_aligned_inputs():
         m.calibration([{"would_be_correct": True}], [1.0, 1.0])
 
 
-# --- reconciliation -------------------------------------------------------
+# The reconciliation tests follow.
 
 def _gt(reconciles, items, total):
     return {"reconciliation": {
@@ -152,12 +159,14 @@ def test_reconciliation_not_applicable_without_verdict():
 
 
 def test_reconciliation_false_pass_is_the_wrong_payout():
-    # Items and sum read correctly; the model still says it reconciles.
+    # The items and the sum are read correctly; the model still says it reconciles.
     gt = _gt(False, ["100.00", "50.00"], "175.00")
     r = m.score_reconciliation(gt, _pred(["$100.00", "$50.00"], "$175.00", "150.00", True))
     assert r["model_outcome"] == "false_pass"
-    assert r["code_outcome"] == "correct"             # Python: 150 != 175 -> does not reconcile
-    assert r["model_arithmetic_correct"] is True      # 150 == 150
+    # In Python, 150 != 175, so the claim does not reconcile.
+    assert r["code_outcome"] == "correct"
+    # The model's arithmetic gives 150 == 150.
+    assert r["model_arithmetic_correct"] is True
     assert r["items_sum_matches_truth"] is True
 
 
@@ -169,14 +178,14 @@ def test_reconciliation_false_flag_is_the_review_cost():
 
 
 def test_reconciliation_separates_misread_from_arithmetic():
-    # Model misreads 50.00 as 58.00 and adds its own numbers correctly.
-    # Both verdict paths fail the same way; arithmetic is still correct.
+    # The model misreads 50.00 as 58.00 and adds its own numbers correctly.
+    # Both verdict paths fail the same way; the arithmetic is still correct.
     gt = _gt(True, ["100.00", "50.00"], "150.00")
     r = m.score_reconciliation(gt, _pred(["$100.00", "$58.00"], "$150.00", "158.00", False))
     assert r["model_outcome"] == "false_flag"
     assert r["code_outcome"] == "false_flag"
     assert r["model_arithmetic_correct"] is True
-    assert r["items_sum_matches_truth"] is False      # the error is the misread
+    assert r["items_sum_matches_truth"] is False      # The error is the misread.
 
 
 def test_reconciliation_penny_tolerance_only():
@@ -187,9 +196,12 @@ def test_reconciliation_penny_tolerance_only():
 
 def test_summarize_reconciliation_counts_and_recall():
     rows = [
-        m.score_reconciliation(_gt(False, ["1.00"], "2.00"), _pred(["1.00"], "2.00", "1.00", False)),  # caught
-        m.score_reconciliation(_gt(False, ["1.00"], "2.00"), _pred(["1.00"], "2.00", "1.00", True)),   # false pass
-        m.score_reconciliation(_gt(True, ["1.00"], "1.00"), _pred(["1.00"], "1.00", "1.00", True)),    # correct
+        # This row is caught.
+        m.score_reconciliation(_gt(False, ["1.00"], "2.00"), _pred(["1.00"], "2.00", "1.00", False)),
+        # This row is a false pass.
+        m.score_reconciliation(_gt(False, ["1.00"], "2.00"), _pred(["1.00"], "2.00", "1.00", True)),
+        # This row is correct.
+        m.score_reconciliation(_gt(True, ["1.00"], "1.00"), _pred(["1.00"], "1.00", "1.00", True)),
         {"applicable": False},
     ]
     s = m.summarize_reconciliation(rows)
@@ -204,7 +216,7 @@ def test_summarize_reconciliation_empty_is_not_applicable():
     assert m.summarize_reconciliation([{"applicable": False}]) == {"n": 0, "applicable": False, "routed_to_review": 0}
 
 
-# --- paired comparison ------------------------------------------------------
+# The paired comparison tests follow.
 
 def _pinst(doc, field, outcome, abstained=False):
     return {"doc_id": doc, "field": field, "outcome": outcome, "abstained": abstained}
@@ -226,7 +238,7 @@ def test_paired_difference_counts_discordant_instances_and_exact_p():
     cand = [_pinst("d%d" % i, "f", "correct") for i in range(3)] + [_pinst("d9", "f", "correct")]
     w = m.paired_difference(cand, base, resamples=200, seed=1)["wrong_emissions"]
     assert (w["candidate_only"], w["baseline_only"]) == (0, 3)
-    assert w["exact_p"] == 0.25          # two-sided, 2 * 0.5 ** 3
+    assert w["exact_p"] == 0.25          # The two-sided value is 2 * 0.5 ** 3.
     assert w["difference_point"] == -0.75
 
 
@@ -284,7 +296,8 @@ def test_ece_is_weighted_by_bucket_count_not_a_mean_over_buckets():
     from meridian.harness import metrics as m
     inst = [{"would_be_correct": True}] * 3 + [{"would_be_correct": False}]
     cal = m.calibration(inst, [0.95, 0.95, 0.95, 0.55])
-    assert cal["ece"] == 0.175          # (3 * 0.05 + 1 * 0.55) / 4; an unweighted mean gives 0.30
+    # The value is (3 * 0.05 + 1 * 0.55) / 4; an unweighted mean gives 0.30.
+    assert cal["ece"] == 0.175
 
 
 def test_reconciliation_summary_counts_verdicts_routed_to_review():

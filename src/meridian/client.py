@@ -1,4 +1,5 @@
-"""Model client: structured extraction, response caching, cost and latency.
+"""This module is the model client, covering structured extraction, response
+caching, cost and latency.
 
 Every call is cached under a key built from the model, prompt version, schema,
 a fixed temperature tag, run index and the image bytes, so a hit is the response
@@ -18,10 +19,10 @@ from meridian.schema import FIELD_ORDER, response_schema
 from meridian.settings import (CACHE, CONFIG, DOCS, MAX_INTERVAL_S, MIN_INTERVAL_S,
                                PROMPT_VERSION, RATE_LIMIT_ATTEMPTS)
 
-# Names the six payment fields; the schema also requires the reconciliation
-# block (line items, stated total, the model's own sum and verdict). Changing
-# this text changes what the cache holds: bump PROMPT_VERSION. A test pins the
-# hash.
+# This prompt names the six payment fields; the schema also requires the
+# reconciliation block (line items, stated total, the model's own sum and
+# verdict). Changing this text changes what the cache holds, so PROMPT_VERSION
+# has to be bumped. A test pins the hash.
 PROMPT = """You are extracting fields from a document submitted to Meridian Claims Group for payment processing.
 
 Return exactly the six fields in the schema. For each field give the value and your confidence that the value is exactly correct.
@@ -47,7 +48,7 @@ def load_pricing() -> dict:
 
 
 def cost_usd(model: str, usage: dict, pricing: Optional[dict] = None) -> float:
-    """Dollar cost of one call from token counts.
+    """This returns the dollar cost of one call from token counts.
 
     Thinking tokens bill at the output rate, so they are added to output tokens
     before pricing.
@@ -59,14 +60,17 @@ def cost_usd(model: str, usage: dict, pricing: Optional[dict] = None) -> float:
 
 
 def cache_key(model: str, doc_id: str, run: int, image_sha: str, schema_sha: str) -> str:
-    # "t0" stands in for the temperature (always 0.0). Kept as a literal because
-    # changing the key format would invalidate the committed cache.
+    # "t0" stands in for the temperature, which is always 0.0. It is kept as a
+    # literal because changing the key format would invalidate the committed
+    # cache.
     raw = "|".join([model, PROMPT_VERSION, doc_id, str(run), image_sha, schema_sha, "t0"])
     return hashlib.sha256(raw.encode()).hexdigest()[:20]
 
 
 def schema_sha() -> str:
-    """Hash of the response schema as sent; part of every cache key."""
+    """This returns the hash of the response schema as sent, which is part of every
+    cache key.
+    """
     return _sha(json.dumps(response_schema(), sort_keys=True).encode())
 
 
@@ -78,7 +82,7 @@ def file_sha(path: str) -> str:
 
 def record_is_fresh(rec: dict, model: str, doc_id: str, run: int,
                     image_sha: str, schema: str) -> bool:
-    """Was this cached record produced for exactly this request?
+    """This reports whether this cached record was produced for exactly this request.
 
     The key is recomputed from the current image bytes, schema and prompt
     version. Without the check, regenerating the corpus would score new
@@ -93,8 +97,10 @@ TRANSIENT_STATUS = (429, 503)
 
 
 def is_transient(exc: BaseException) -> bool:
-    """Rate limit or overload, worth a retry. Decided by the status code when
-    the exception carries one; by message text only when it does not."""
+    """This reports whether the exception is a rate limit or overload, which is
+    worth a retry. The decision uses the status code when the exception carries
+    one, and it uses message text only when it does not.
+    """
     for attr in ("code", "status_code"):
         code = getattr(exc, attr, None)
         if isinstance(code, int) and not isinstance(code, bool):
@@ -120,12 +126,14 @@ class Client:
 
     @property
     def schema_sha(self) -> str:
-        """Hash of the response schema; part of every cache key."""
+        """This is the hash of the response schema, which is part of every cache
+        key.
+        """
         return self._schema_sha
 
     @property
     def genai(self):
-        """The SDK client. Built lazily so replay mode needs no API key."""
+        """This is the SDK client, built lazily so replay mode needs no API key."""
         return self._client()
 
     def _client(self):
@@ -140,11 +148,12 @@ class Client:
         return self._genai
 
     def call(self, model: str, image_bytes: bytes):
-        """One structured-output request. Returns (response, usage, latency_s).
+        """This makes one structured-output request and returns
+        (response, usage, latency_s).
 
-        The only place the request is built. extract() adds caching and pacing
-        on top; throughput.py adds a shared rate gate. Latency is the service time
-        of this attempt with no sleeps included.
+        This is the only place the request is built. extract() adds caching and
+        pacing on top; throughput.py adds a shared rate gate. Latency is the
+        service time of this attempt with no sleeps included.
         """
         from google.genai import types
         started = time.time()
@@ -173,7 +182,7 @@ class Client:
         return self._images[doc_id]
 
     def extract(self, model: str, doc_id: str, split: str, run: int) -> dict:
-        """One extraction, served from cache when the stored key matches.
+        """This runs one extraction, served from cache when the stored key matches.
 
         A file at the cache path is not enough on its own. The stored cache_key
         is compared with one recomputed from the current image bytes, prompt and
@@ -200,7 +209,7 @@ class Client:
                     "The document, prompt or schema changed since this response was "
                     "recorded. Refusing to score a new input against an old output."
                     % (model, doc_id, run, cached.get("cache_key"), expected))
-            # Live mode: the request changed, so fetch it again.
+            # In live mode the request changed, so it is fetched again.
 
         if self.replay:
             raise RuntimeError(
@@ -221,11 +230,12 @@ class Client:
                 # Latency covers the successful attempt only; back-off sleeps
                 # are not model latency.
                 resp, usage, record["latency_s"] = self.call(model, image_bytes)
-                usage.pop("cached_tokens", None)      # keep the record shape stable
+                usage.pop("cached_tokens", None)      # The record shape is kept stable.
                 record["usage"] = usage
                 record["response"] = self._parse(resp.text)
-                # An unparseable body is a failed call, not a claim that every
-                # field is absent. Scored as such: excluded by name.
+                # An unparseable body is a failed call rather than a claim that
+                # every field is absent. It is scored as such, which means it is
+                # excluded by name.
                 record["error"] = (None if record["response"] is not None
                                    else "unparseable response: %r" % (resp.text or "")[:200])
                 record["attempts"] = attempt + 1
@@ -260,7 +270,9 @@ class Client:
 
     @staticmethod
     def _parse(text: Optional[str]) -> Optional[dict]:
-        """Parse structured output defensively. Malformed pieces become None or 0."""
+        """This parses structured output defensively. Malformed pieces become None
+        or 0.
+        """
         if not text:
             return None
         try:
@@ -292,8 +304,8 @@ class Client:
         except (TypeError, ValueError):
             rconf = 0.0
         out["reconciliation"] = {
-            # The model's own sum and verdict, kept apart from line_items so the
-            # harness can recompute both independently.
+            # These are the model's own sum and verdict, kept apart from line_items
+            # so the harness can recompute both independently.
             "line_items_sum": data.get("line_items_sum"),
             "reconciles": data.get("reconciles"),
             "confidence": max(0.0, min(1.0, rconf)),

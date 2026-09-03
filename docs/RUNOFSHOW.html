@@ -1,975 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meridian Run of Show</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap">
 <style>
-  :root{
-    --ground:#FAFAF8; --raise:#FFFFFF; --ink:#16171A; --ink-2:#33353B;
-    --muted:#63656E; --rule:#E4E3DE; --rule-2:#EFEEEA;
-    --cue:#8A2B0E; --cue-bg:#F6EBE6; --cue-edge:#E0C4B8;
-    --label:"Archivo",system-ui,-apple-system,sans-serif;
-    --read:"Literata",Georgia,"Times New Roman",serif;
-    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  :root {
+    --bg: #FFFFFF; --ink: #1F2328; --ink-2: #444C56; --muted: #6B7480;
+    --rule: #C9CED6; --head-bg: #F3F5F7; --link: #1F4E8C; --code-bg: #F0F2F4;
+    --cue-bg: #FFF7E8; --cue-edge: #E3C98F; --cue-ink: #6B4E00;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --ground:#131417; --raise:#191B1F; --ink:#EDEDEA; --ink-2:#C9C9C4;
-      --muted:#8D8F98; --rule:#2A2C31; --rule-2:#202226;
-      --cue:#E88A64; --cue-bg:#2A1912; --cue-edge:#4A2C1E;
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9; --rule: #3A424C;
+      --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
+      --cue-bg: #2A2416; --cue-edge: #6B5A2A; --cue-ink: #E8CF8A;
     }
   }
-  :root[data-theme="dark"]{
-    --ground:#131417; --raise:#191B1F; --ink:#EDEDEA; --ink-2:#C9C9C4;
-    --muted:#8D8F98; --rule:#2A2C31; --rule-2:#202226;
-    --cue:#E88A64; --cue-bg:#2A1912; --cue-edge:#4A2C1E;
+  :root[data-theme="dark"] {
+    --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9; --rule: #3A424C;
+    --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
+    --cue-bg: #2A2416; --cue-edge: #6B5A2A; --cue-ink: #E8CF8A;
   }
-
-  *{box-sizing:border-box}
-  body{background:var(--ground);color:var(--ink);font-family:var(--read);
-       font-size:24px;line-height:1.44;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:880px;margin:0 auto;padding:0 26px 120px}
-
-  header.mast{padding:40px 0 18px;border-bottom:3px solid var(--ink)}
-  .kicker{font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.18em;
-          text-transform:uppercase;color:var(--cue)}
-  h1{font-family:var(--label);font-weight:700;font-size:clamp(27px,4.2vw,40px);
-     line-height:1.06;letter-spacing:-.02em;margin:12px 0 0}
-  .standfirst{font-family:var(--label);font-size:16px;font-weight:500;color:var(--ink-2);
-              margin:12px 0 0;max-width:56ch;line-height:1.55}
-  .standfirst b{color:var(--ink)}
-
-  .voice{background:var(--raise);border:1px solid var(--rule);
-         border-left:4px solid var(--ink);padding:20px 24px;margin:24px 0 0}
-  .voice h2{font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.14em;
-            text-transform:uppercase;color:var(--muted);margin:0 0 10px}
-  .voice ul{margin:0;padding-left:20px}
-  .voice li{margin-bottom:8px;color:var(--ink-2);font-family:var(--label);
-            font-size:15.5px;font-weight:500;line-height:1.58}
-  .voice b{color:var(--ink)}
-
-  .pre{background:var(--raise);border:1px solid var(--rule);
-       border-left:4px solid var(--cue);padding:22px 24px;margin:20px 0 0}
-  .pre h2{font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.14em;
-          text-transform:uppercase;color:var(--cue);margin:0 0 6px}
-  .pre .why{font-family:var(--label);font-size:15px;font-weight:500;color:var(--muted);
-            margin:0 0 14px;line-height:1.55}
-  .tab{display:grid;grid-template-columns:66px 1fr;gap:14px;padding:11px 0;
-       border-top:1px solid var(--rule-2);align-items:start}
-  .tab:first-of-type{border-top:none}
-  .tab .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--cue);padding-top:3px}
-  .tab .what{font-family:var(--label);font-weight:600;font-size:15.5px;margin:0 0 2px}
-  .tab .det{font-family:var(--label);font-size:14px;font-weight:500;color:var(--muted);
-            margin:0;line-height:1.5}
-  .tab code{font-family:var(--mono);font-size:12.5px;background:var(--rule-2);
-            padding:2px 5px;border-radius:2px;word-break:break-all}
-
-  .part{margin:44px 0 0;padding:14px 0 0;border-top:3px solid var(--ink)}
-  .part .pn{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--cue);
-             letter-spacing:.06em}
-  .part h2{font-family:var(--label);font-size:24px;font-weight:700;margin:6px 0 0;
-           letter-spacing:-.015em;line-height:1.15}
-  .part .pd{font-family:var(--label);font-size:15px;font-weight:500;color:var(--muted);
-            margin:7px 0 0;max-width:58ch;line-height:1.5}
-
-  .beat{display:grid;grid-template-columns:84px 1fr;gap:20px;
-        padding:28px 0 10px;border-top:1px solid var(--rule)}
-  .t{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--cue)}
-  .take{font-family:var(--label);font-size:10.5px;font-weight:700;letter-spacing:.12em;
-        text-transform:uppercase;color:var(--muted);margin-top:6px}
-  .beat h3{font-family:var(--label);font-size:14px;font-weight:700;margin:0 0 16px;
-           letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-
-  .cue{background:var(--cue-bg);border:1px solid var(--cue-edge);
-       padding:10px 14px;margin:0 0 20px;display:grid;
-       grid-template-columns:auto 1fr;gap:11px;align-items:baseline}
-  .cue .lab{font-family:var(--label);font-size:10.5px;font-weight:700;letter-spacing:.13em;
-            text-transform:uppercase;color:var(--cue);white-space:nowrap}
-  .cue .txt{font-family:var(--label);font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.5}
-  .cue code{font-family:var(--mono);font-size:13px}
-
-  /* one line = one breath. stopping at every line break is the whole trick. */
-  .say{margin:0 0 24px}
-  .say div{margin-bottom:3px}
-  .say b{font-weight:600;box-shadow:inset 0 -0.48em 0 var(--cue-bg)}
-  .gap{height:15px}
-  .beatmark{font-family:var(--label);font-size:12.5px;font-weight:700;letter-spacing:.13em;
-            text-transform:uppercase;color:var(--cue);margin:0 0 22px}
-
-  .qa{background:var(--raise);border:1px solid var(--rule);
-      border-left:4px solid var(--muted);padding:22px 24px;margin-top:38px}
-  .qa h2{font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.14em;
-         text-transform:uppercase;color:var(--muted);margin:0 0 6px}
-  .qa .why{font-family:var(--label);font-size:15px;font-weight:500;color:var(--muted);
-           margin:0 0 16px;max-width:58ch;line-height:1.55}
-  .q{padding:15px 0;border-top:1px solid var(--rule-2)}
-  .q:first-of-type{border-top:none}
-  .q .ask{font-family:var(--label);font-weight:600;font-size:15.5px;margin:0 0 8px;color:var(--cue)}
-  .q p{margin:0;font-size:19px;max-width:58ch;line-height:1.6}
-
-  footer{margin-top:40px;padding-top:18px;border-top:3px solid var(--ink);
-         font-family:var(--label);font-size:15.5px;font-weight:500;
-         color:var(--ink-2);line-height:1.6}
-  footer p{margin:0 0 11px;max-width:58ch}
-  footer b{color:var(--ink)}
-  @media(max-width:700px){.beat,.tab{grid-template-columns:1fr;gap:8px}body{font-size:21px}}
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.5; }
+  .memo { max-width: 800px; margin: 0 auto; padding: 40px 28px 72px; }
+  @media (max-width: 600px) { .memo { padding: 24px 16px 48px; } }
+  h1 { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  h2 { font-size: 18px; font-weight: 700; margin: 34px 0 10px; padding-top: 14px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; }
+  p, li { color: var(--ink-2); }
+  p { margin: 0 0 10px; }
+  ul, ol { margin: 0 0 12px; padding-left: 1.4em; }
+  li { margin: 0 0 6px; }
+  a { color: var(--link); }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--code-bg); padding: 0 4px; border-radius: 3px; color: var(--ink); }
+  pre { font-family: var(--mono); font-size: 13.5px; background: var(--code-bg); padding: 10px 12px; overflow-x: auto; margin: 0 0 12px; border-radius: 3px; color: var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 6px 0 14px; }
+  th, td { border: 1px solid var(--rule); padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: var(--head-bg); font-weight: 600; }
+  .beat { margin: 22px 0 0; }
+  .beat h3 { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .beat h3 .t { color: var(--muted); font-weight: 500; font-size: 14px; white-space: nowrap; }
+  .cue { background: var(--cue-bg); border: 1px solid var(--cue-edge); color: var(--cue-ink); padding: 7px 10px; font-size: 14.5px; margin: 0 0 10px; border-radius: 3px; }
+  .cue b { font-weight: 700; }
+  .say { font-size: 18.5px; line-height: 1.6; color: var(--ink); margin: 0 0 12px; }
+  .say p { color: var(--ink); margin: 0 0 12px; }
+  .fill { background: var(--cue-bg); border-bottom: 2px solid var(--cue-edge); padding: 0 4px; color: var(--cue-ink); font-style: normal; }
+  .small { font-size: 14px; color: var(--muted); }
+  @media print { .memo { max-width: none; padding: 0; } .say { font-size: 15px; } }
 </style>
+</head>
+<body>
 
-<div class="wrap">
+<div class="memo">
+  <h1>Meridian demo: run of show</h1>
+  <p class="sub">What to have open, what to say, what to click. About 12 minutes. Cut beats 7 and 9 to land near 9.</p>
 
-<header class="mast">
-  <div class="kicker">Self-filmed · thirteen takes · no clock</div>
-  <h1>Meridian Claims — full walkthrough</h1>
-  <p class="standfirst">Written for the mouth, not the page. <b>One line = one breath. Stop at every
-    line break, even mid-thought.</b> Each beat is its own take — record it, flub it, do it again,
-  move on. You're cutting clips together, not performing one unbroken run.</p>
-</header>
+  <h2>Before you record</h2>
+  <h3>Terminal (its own window, large font)</h3>
+  <pre>cd ~/extraction-demo
+source venv/bin/activate
+echo ${GEMINI_API_KEY:-no key set}      # must print: no key set
+clear</pre>
+  <p>If the echo prints a key, run <code>unset GEMINI_API_KEY</code> and echo again. Then type <code>meridian-evaluate</code> but don't press return. Press ⌘+ three times so the text is legible on video. The run takes about a quarter of a second, so the whole report arrives at once; you'll scroll it.</p>
 
-<div class="voice">
-  <h2>How to shoot it</h2>
-  <ul>
-    <li><b>One take per beat.</b> Thirteen beats. A clean 60-second take is easy where a clean
-      15-minute take is not, and nobody can hear the cuts.</li>
-    <li><b>Voiceover over a screen recording?</b> Then just read it. Read the whole thing. Nobody can
-      see your eyes, so all that matters is sounding like you're explaining. Read it out loud twice
-      first — the third pass is the one that sounds like you.</li>
-    <li><b>Face on camera?</b> Put this right under the lens. Look up at the end of each bold phrase.</li>
-    <li><b>Say numbers loosely.</b> "About ninety-two percent" is better than "ninety-two point
-      three." The exact figure is on the screen behind you.</li>
-    <li><b>Beats marked "—BEAT—" are two full seconds.</b> They feel endless while you're recording
-      and read as composure on playback. Don't fill them.</li>
-    <li><b>Record the terminal beat last,</b> and check the command actually ran before you keep the take.</li>
-    <li><b>Shoot beat 1 last too.</b> First takes are stiff, and the open is the one that has to
-      sound easy.</li>
-  </ul>
-</div>
+  <h3>Browser tabs, in this order</h3>
+  <table>
+    <thead><tr><th>Tab</th><th>What</th><th>URL</th><th>Prep</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Briefing</td><td><code>file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html</code></td><td>Scrolled to the top. Zoom 125%.</td></tr>
+      <tr><td>2</td><td>GitHub repo</td><td><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a></td><td>Top of README visible.</td></tr>
+      <tr><td>3</td><td>Degraded page</td><td><code>file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/degr-012.jpg</code></td><td>Click once so it fits the window. Find the total (4,804.39) and the policy number before recording.</td></tr>
+      <tr><td>4</td><td>Utility bill</td><td><code>file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/ood-006.jpg</code></td><td>Same. Find the "Amount Due" line.</td></tr>
+      <tr><td>5</td><td>The double-key rule</td><td><a href="https://github.com/vaughnalec04-ui/extraction-demo/blob/main/src/meridian/harness/configs.py#L86-L96">configs.py, lines 86 to 96</a></td><td>Lines highlighted on load.</td></tr>
+      <tr><td>6</td><td>Friction log</td><td><a href="https://github.com/vaughnalec04-ui/extraction-demo/blob/main/FRICTION.md#f-007-self-reported-confidence-is-a-constant-self-consistency-too">FRICTION.md at F-007</a></td><td>F-010 is two entries below; you'll scroll to it.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Notifications off. Close every other window. Put this script on a second screen or phone. One bracket to fill in before you start: your implementation hours, in beat 1.</p>
 
-<div class="pre">
-  <h2>Before you hit record</h2>
-  <p class="why">Five tabs, left to right, and you never go back. Hunting backwards through tabs on
-    camera looks like you've lost your place. Browser zoom 110%. Script on your phone or a second
-    screen — never the shared one.</p>
-  <div class="tab"><div class="n">TAB 1</div><div>
-    <p class="what">The briefing</p>
-    <p class="det"><code>claude.ai/code/artifact/c5deb888-c569-4436-82a5-d4425f5033dc</code> — at the top.</p></div></div>
-  <div class="tab"><div class="n">TAB 2</div><div>
-    <p class="what">A degraded document</p>
-    <p class="det"><code>~/extraction-demo/data/docs/degr-001.jpg</code> — browser tab, not Preview.</p></div></div>
-  <div class="tab"><div class="n">TAB 3</div><div>
-    <p class="what">A broken claim</p>
-    <p class="det"><code>~/extraction-demo/data/docs/clea-001.jpg</code> — the one where the line items
-      don't add up to the total. You need this for the reconciliation beat.</p></div></div>
-  <div class="tab"><div class="n">TAB 4</div><div>
-    <p class="what">Terminal</p>
-    <p class="det">In <code>~/extraction-demo</code> with the venv active, cleared, typed but <b>not run</b>:<br>
-      <code>meridian-evaluate --split test --runs 1</code></p></div></div>
-  <div class="tab"><div class="n">TAB 5</div><div>
-    <p class="what">FRICTION.md</p>
-    <p class="det">The repo, <code>FRICTION.md</code>, scrolled to <b>F-007</b>.</p></div></div>
-</div>
+  <h2>Script</h2>
 
-<!-- ============================================================ -->
-<div class="part">
-  <div class="pn">PART ONE</div>
-  <h2>Setting it up</h2>
-  <p class="pd">Who the customer is, and how the documents got made — including the awkward question
-    that follows from using models to build them.</p>
-</div>
-
-<div class="beat">
-  <div><div class="t">Beat 1</div><div class="take">shoot last</div></div>
-  <div>
-    <h3>The customer</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 1, top of the briefing</span></div>
+  <div class="beat">
+    <h3>1. Open <span class="t">0:00 to 0:50 · Tab 1, top of the briefing</span></h3>
     <div class="say">
-      <div>So this is Meridian Claims.</div>
-      <div>Mid-size claims processor, and the problem they've got is volume.</div>
-      <div class="gap"></div>
-      <div>About <b>forty thousand documents a month</b> coming in.</div>
-      <div>Claim forms, medical invoices, repair estimates, adjuster reports.</div>
-      <div>All of it scanned, and most of it pretty rough.</div>
-      <div class="gap"></div>
-      <div>Right now thirty people key that in by hand.</div>
-      <div class="gap"></div>
-      <div>They want it automated, and they gave me three targets.</div>
-      <div>Better than <b>ninety-seven percent</b> on the fields that feed payments.</div>
-      <div>Under <b>two cents</b> a document.</div>
-      <div>And then the third one, which is the one that actually shaped the build.</div>
-      <div><b>The system has to know when it isn't sure.</b></div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>Because the costs here aren't symmetric.</div>
-      <div class="gap"></div>
-      <div>If we flag something and a human looks at it, that costs a few minutes.</div>
-      <div>If we get a payout amount wrong, that's a cheque out the door</div>
-      <div>for the wrong number, to the wrong person, and now there's a recovery process.</div>
-      <div class="gap"></div>
-      <div>So one of those failures is maybe a dollar of labour</div>
-      <div>and the other one is potentially thousands.</div>
-      <div>That imbalance is the thing every decision in here comes back to.</div>
+      <p>Hi, I'm Vaughn. This is my take-home for the Forward Deployed Engineer role. I'll walk you through what I built, what the evaluation actually says, and what I'd send back to the Gemini teams.</p>
+      <p>Quick setup so you know what you're looking at. The partner is Meridian Claims Group. It's a composite I put together for this exercise, but the numbers are realistic for a mid-size claims processor. The code was written with Claude Opus 5 as a pair, the documents were drafted with Claude and Gemini, and every design decision is mine. I'll show you the ones that matter and why I made them.</p>
+      <p>Two more things up front. Everything ran on the free Gemini API tier, on purpose, and that shaped the design in a way I'll come back to. And on time: the implementation was about <span class="fill">[your hours]</span> hours. The rest of the calendar was waiting on quota, generating documents, and writing.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 2</div><div class="take">take 2</div></div>
-  <div>
-    <h3>How the documents got made</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 2 — the degraded document. Let it sit two or three seconds before you talk.</span></div>
+  <div class="beat">
+    <h3>2. The problem <span class="t">0:50 to 1:40 · Tab 1, BLUF and Context</span></h3>
+    <div class="cue"><b>Do:</b> point at the BLUF box, then scroll slightly to Context.</div>
     <div class="say">
-      <div>This is one of the eighty documents.</div>
-      <div>Skewed, faded, there's an intake stamp sitting across the total,</div>
-      <div>and the amount itself is handwritten.</div>
-      <div class="gap"></div>
-      <div>The data's synthetic, and I want to be upfront about how I made it,</div>
-      <div>because it matters for whether you should believe any of the numbers.</div>
-      <div class="gap"></div>
-      <div>I used <b>Claude Opus 5</b> to write the generator —</div>
-      <div>the label schema, the rendering code, the degradation pipeline.</div>
-      <div>And I used <b>Gemini</b> for the document side of it:</div>
-      <div>the templates, the provider names, the line item wording,</div>
-      <div>what a repair estimate actually says versus a medical invoice.</div>
-      <div class="gap"></div>
-      <div>Two models, doing two different jobs.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>Which raises the obvious objection, so let me get in front of it.</div>
-      <div class="gap"></div>
-      <div>If a model helped write these documents,</div>
-      <div>and then I turn around and test a model on them,</div>
-      <div>am I just marking my own homework?</div>
-      <div class="gap"></div>
-      <div>And the answer's no, but the reason is specific,</div>
-      <div>so it's worth me saying it properly.</div>
-      <div class="gap"></div>
-      <div><b>No label in this dataset came from a model.</b></div>
-      <div class="gap"></div>
-      <div>The ground truth is a seeded random number generator.</div>
-      <div>Forty-odd lines of Python.</div>
-      <div>It picks the claim ID, the policy number, the date,</div>
-      <div>the line items and their amounts, and then it does the arithmetic.</div>
-      <div class="gap"></div>
-      <div>That happens <b>first</b>. Written to disk, before any document exists.</div>
-      <div>Then the page gets rendered from that record.</div>
-      <div class="gap"></div>
-      <div>So a model contributed vocabulary and layout.</div>
-      <div>It never contributed an answer.</div>
-      <div>And if I'd done it the other way round —</div>
-      <div>generate documents, then have a model read them to make labels —</div>
-      <div>I'd be measuring agreement between two models</div>
-      <div>and calling it accuracy. Which is worthless.</div>
+      <p>Meridian gets about forty thousand scanned claims a month. They want six payment-critical fields pulled off each page: claim id, policy number, claimant, provider, date of service, total amount. Three requirements. Ninety-seven percent field accuracy. Under two cents a document. And the system has to flag what it isn't sure about instead of guessing, because a wrong payout costs far more than a human review.</p>
+      <p>That third one is the interesting one. Reading fields off a scan is mostly solved. Knowing when you got it wrong is not. So the harness is built around that question.</p>
     </div>
   </div>
-</div>
 
-<!-- ============================================================ -->
-<div class="part">
-  <div class="pn">PART TWO</div>
-  <h2>The architectural decisions</h2>
-  <p class="pd">Six calls, and the reason behind each. Two of them I'd defend hardest, and one of
-    them caught a bug that would have quietly invalidated everything.</p>
-</div>
-
-<div class="beat">
-  <div><div class="t">Beat 3</div><div class="take">take 3</div></div>
-  <div>
-    <h3>Decision one — schema, not parsing</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Scroll to the system flow diagram, section 01</span></div>
+  <div class="beat">
+    <h3>3. Architecture <span class="t">1:40 to 3:40 · Tab 1, section 1</span></h3>
+    <div class="cue"><b>Do:</b> scroll to 1.1 Flow. Read the arrow line with your finger on it. Then 1.3, the trade-offs table.</div>
     <div class="say">
-      <div>Okay, architecture. Six decisions, and I'll give you the reasoning on each.</div>
-      <div class="gap"></div>
-      <div>First one. Every call goes out with a <b>response schema</b> attached.</div>
-      <div>I'm not asking for JSON in a prompt and then parsing whatever comes back.</div>
-      <div class="gap"></div>
-      <div>And the reason isn't tidiness, it's what it lets me express.</div>
-      <div class="gap"></div>
-      <div>Every field comes back as a value plus a confidence,</div>
-      <div>and the value is allowed to be null.</div>
-      <div class="gap"></div>
-      <div>That null matters more than it looks like it should.</div>
-      <div>Because "this field isn't on the page" is a real answer,</div>
-      <div>and it's an answer the model can be right or wrong about.</div>
-      <div class="gap"></div>
-      <div>If I'm parsing free text, a missing field and a malformed response</div>
-      <div>look identical to me. I can't tell "it says the total is absent"</div>
-      <div>from "it broke and gave me nothing."</div>
-      <div>With a schema, those are two different outcomes, and I can score both.</div>
+      <p>Here's the flow. Labels first. I write the ground truth from a fixed seed, then render each page from its label, so no label ever depends on a model. Then the extractor: Gemini structured output against a response schema, one nullable value and one confidence per field. Every raw response goes into a cache that's committed to the repo. And the harness scores the cache. It never calls the API.</p>
+      <p>That split is the main architectural decision. Extraction and scoring are two programs. Once the responses are cached, every threshold sweep is free, tuning is reproducible against a fixed set of answers, and the demo you're about to see runs offline with identical numbers every time. The cache key is the model, the prompt version, the schema, and the image bytes, and both programs recompute it on read. If you regenerate a page and try to score it against an old response, it refuses. That failure doesn't crash, it gives you plausible wrong numbers, so it gets a check.</p>
+      <p>Four configurations come out of the same cached calls. One reader alone. The second reader alone. A cascade, where a page goes to the second reader when the first one's confidence is low, which is the standard cost saver. And double-keying: both readers on every page, and any field where they disagree goes to review. That last one comes from how claims processors already work. Two people key the same document, a supervisor settles disagreements. I automated the control they already trust.</p>
+      <p>Now the free tier. The original design escalated to a Flash-class model. Every Flash model I ran toward evaluation volume stopped after about twenty requests and returned 429s. So the second reader became an independent lite-class model instead. For a disagreement signal, independence matters more than raw capability, so the evaluation survived. The cost is that the cascade has nothing stronger to escalate to, and you'll see that in the results.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 4</div><div class="take">take 4</div></div>
-  <div>
-    <h3>Decision two — extraction and scoring are separate programs</h3>
+  <div class="beat">
+    <h3>4. Live run <span class="t">3:40 to 4:50 · Terminal</span></h3>
+    <div class="cue"><b>Do:</b> ⌘Tab to the terminal. Press return on <code>meridian-evaluate</code>. Scroll to the top of the output: the frontier table, then the paired table right under it.</div>
     <div class="say">
-      <div>Second decision, and this is the one that shaped how everything else works.</div>
-      <div class="gap"></div>
-      <div>The thing that calls the API and the thing that scores it</div>
-      <div>are two completely separate programs.</div>
-      <div class="gap"></div>
-      <div>The extractor's only job is to get raw responses and write them to disk.</div>
-      <div>It doesn't score anything. It doesn't know what a threshold is.</div>
-      <div class="gap"></div>
-      <div>Then the scorer reads those saved responses and never touches the network.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>Three things fall out of that, and all three are load-bearing.</div>
-      <div class="gap"></div>
-      <div>One. Sweeping a threshold costs nothing.</div>
-      <div>I can try every possible confidence cutoff against the whole dataset</div>
-      <div>in about a second, because the responses are already sitting there.</div>
-      <div>So the tuning is exhaustive instead of me guessing at three values.</div>
-      <div class="gap"></div>
-      <div>Two. The tuning is reproducible.</div>
-      <div>If I tuned live against the API, and the model updated underneath me,</div>
-      <div>my thresholds would be fitted to a model that no longer exists</div>
-      <div>and I'd have no way of knowing.</div>
-      <div class="gap"></div>
-      <div>Three, and this is the one you'll see in a minute —</div>
-      <div>the demo runs with <b>no API key and no internet</b>,</div>
-      <div>and gives byte-identical numbers every time.</div>
+      <p>Let me run it. No API key in this shell, you saw the echo. Enter.</p>
+      <p>That's the full evaluation, about a quarter of a second, from the committed cache. Here's the frontier. The primary reader alone: 99.2 percent of fields correct, interval 97.0 to 99.8, at a tenth of a cent a document. Notice the lower bound. It's 97.0. That's exactly Meridian's bar. Met, with no margin.</p>
+      <p>Double-keying: one hundred percent on the fields the two readers agree on, which is 96.7 percent of them, at two tenths of a cent. Looks better. But look at the paired table under it. Same forty documents, and the two systems differ on two field-instances out of two hundred forty. P equals point five. What this data actually establishes is the cost: 3.3 points of coverage go to review. The accuracy gain isn't distinguishable from noise yet. I'd rather tell you that than sell the bigger number.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 5</div><div class="take">take 5</div></div>
-  <div>
-    <h3>Decision three — the cache key, and the bug it caught</h3>
+  <div class="beat">
+    <h3>5. Two documents <span class="t">4:50 to 6:50 · Tab 3, then Tab 4</span></h3>
+    <div class="cue"><b>Do:</b> Tab 3. Point at the total and the policy number on the page.</div>
     <div class="say">
-      <div>Third one, and this is the decision I'd defend hardest,</div>
-      <div>because it caught something real.</div>
-      <div class="gap"></div>
-      <div>Every cached response is keyed on a hash of everything</div>
-      <div>that could possibly change the answer.</div>
-      <div>The model name, the prompt version, the schema, the temperature,</div>
-      <div>which repeat run it was — and <b>the bytes of the image itself</b>.</div>
-      <div class="gap"></div>
-      <div>That last one is the important bit.</div>
+      <p>Two pages tell the whole story. This is a degraded repair estimate. The total is four thousand eight hundred and four dollars. The primary reader read forty-one thousand eight hundred and four. An extra digit, on a faded scan. It also got the policy number wrong. Those are its only two errors on the test split, both on this page, and they were its two lowest confidences, 0.9 and 0.95. The second reader got the total right and the policy number wrong a different way. So under double-keying both fields went to review. On a real claim, that's a thirty-seven thousand dollar overpayment that didn't happen.</p>
     </div>
-    <p class="beatmark">— beat —</p>
+    <div class="cue"><b>Do:</b> Tab 4. Point at "Amount Due".</div>
     <div class="say">
-      <div>Because partway through, I rebuilt the dataset.</div>
-      <div>New documents, same filenames.</div>
-      <div class="gap"></div>
-      <div>And my first version of this only checked whether a file existed at the path.</div>
-      <div>So it would have happily handed me the old response</div>
-      <div>for the new document, and scored it, and printed a number.</div>
-      <div class="gap"></div>
-      <div>Nothing would have crashed. Nothing would have looked wrong.</div>
-      <div>I'd have had confident results for inputs I never actually sent.</div>
-      <div class="gap"></div>
-      <div>That's the worst failure mode available in this kind of work,</div>
-      <div>because there's no symptom.</div>
-      <div class="gap"></div>
-      <div>Now a read recomputes the key from the actual image on disk</div>
-      <div>and refuses if it doesn't match.</div>
-      <div>And I tested that against the real stale cache, not a fake one.</div>
+      <p>This one is a utility bill. It's in the corpus because it isn't a claim, and the right answer for every field is "absent". The primary said absent on all six. The second reader, on its own, invented four values: the account number as a policy number, the billing period as a date of service, the utility as the provider, and this amount due, 168 dollars 44, as a claim total. All at confidence 1.0. Under double-keying none of that reached output, because the readers disagreed. That's what the second reader is for. On this sample the primary happened to be right, so those flags were review cost. Reverse the roles and they're saved payouts.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 6</div><div class="take">take 6</div></div>
-  <div>
-    <h3>Decisions four and five — the unit, and what abstaining means</h3>
+  <div class="beat">
+    <h3>6. The rule in code <span class="t">6:50 to 7:40 · Tab 5</span></h3>
+    <div class="cue"><b>Do:</b> Tab 5. The highlighted lines are the double-key branch.</div>
     <div class="say">
-      <div>Fourth. The unit I measure is not the document.</div>
-      <div>It's the <b>field</b>. One document, six fields, six scores.</div>
-      <div class="gap"></div>
-      <div>That sounds like bookkeeping but it changes the answer.</div>
-      <div>Document-level accuracy asks "was this page perfect,"</div>
-      <div>and a page with five right fields and one wrong one</div>
-      <div>scores the same as a page that was total garbage.</div>
-      <div class="gap"></div>
-      <div>Meridian pays per field. So I score per field.</div>
-    </div>
-    <div class="say">
-      <div>Fifth decision, and this one's subtle enough that I nearly got it wrong.</div>
-      <div class="gap"></div>
-      <div>There's a difference between <b>the model saying a field is absent</b></div>
-      <div>and <b>the system refusing to answer</b>.</div>
-      <div class="gap"></div>
-      <div>The first one is a claim. The model is telling me</div>
-      <div>there's no total on this page. That can be true or false.</div>
-      <div class="gap"></div>
-      <div>The second one is us putting our hands up</div>
-      <div>and sending it to a human.</div>
-      <div class="gap"></div>
-      <div>If you collapse those two into one bucket,</div>
-      <div>you can't measure whether your flagging is any good,</div>
-      <div>because you've mixed "I know it's blank" in with "I don't know."</div>
-      <div class="gap"></div>
-      <div>So every scored field also records what the answer <b>would</b> have been</div>
-      <div>if we hadn't flagged it.</div>
-      <div>Which is the only way to ask the question that actually matters:</div>
-      <div>of the things we flagged, how many were really going to be wrong?</div>
+      <p>Here's the whole idea in ten lines. For each field, take the primary's value and the verifier's value, normalize both, so a dollar sign or a comma isn't a disagreement, and compare. Agree, and the primary's value goes out. Disagree, and the field is marked abstained and goes to the queue. The confidence we record is the lower of the two, though nothing depends on it. That's the point. This configuration needs no self-assessment from either model.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 7</div><div class="take">take 7</div></div>
-  <div>
-    <h3>Decision six — double-keying instead of escalation</h3>
+  <div class="beat">
+    <h3>7. What the eval says, and doesn't <span class="t">7:40 to 9:10 · Terminal, then Tab 1 section 2.3</span></h3>
+    <div class="cue"><b>Do:</b> terminal, scroll to the primary_solo block and find the line "calibration ... DEGENERATE: not a curve". Then Tab 1, the Cascade paragraph.</div>
     <div class="say">
-      <div>Sixth, and this is the one that changed after I had data.</div>
-      <div class="gap"></div>
-      <div>I started with the obvious design.</div>
-      <div>Cheap model first, and if it isn't confident, send it to a better model.</div>
-      <div>Everyone builds that. It's the standard cost-saver.</div>
-      <div class="gap"></div>
-      <div>It doesn't work here, and I'll show you the number in a bit.</div>
-      <div class="gap"></div>
-      <div>So what's there instead is borrowed from how they already work.</div>
-      <div class="gap"></div>
-      <div>In claims processing, the way you catch keying errors</div>
-      <div>is <b>double-keying</b>. Two operators key the same document separately,</div>
-      <div>and wherever they disagree, a supervisor looks at it.</div>
-      <div class="gap"></div>
-      <div>So: two models read every document, independently.</div>
-      <div>They agree, it goes through.</div>
-      <div>They disagree, it goes to the exception queue Meridian already staffs.</div>
-      <div class="gap"></div>
-      <div>I didn't invent a control. I automated the one their ops team already trusts,</div>
-      <div>which makes the rollout conversation about throughput</div>
-      <div>rather than about whether anyone believes the thing.</div>
-      <div class="gap"></div>
-      <div>And it paid for itself in a way I didn't expect.</div>
-      <div class="gap"></div>
-      <div>Some of the test documents aren't claims at all.</div>
-      <div>A utility bill. A vehicle registration. A timesheet.</div>
-      <div>The right answer on those is "there's nothing here."</div>
-      <div class="gap"></div>
-      <div>The second reader, on its own, <b>invented five field values</b> on those pages.</div>
-      <div>It read a utility bill's "amount due" as a claim total. Confidently.</div>
-      <div class="gap"></div>
-      <div>The first reader didn't fall for it.</div>
-      <div>So the two of them disagreed on every one of the five,</div>
-      <div>and every one went to the queue instead of into a payment.</div>
-      <div class="gap"></div>
-      <div>That's the case for the second reader.</div>
-      <div>Not accuracy on the easy pages.</div>
-      <div>Catching one model's confident invention on a page it should've rejected.</div>
+      <p>Three findings I want to be straight about. First, self-reported confidence. The second reader said 1.0 on all two hundred forty fields. The primary said 1.0 on two hundred fourteen. The harness flags the calibration curve as degenerate, because there's one bin with enough points to be a bin. You can't build a gate on a constant.</p>
+      <p>Second, the cascade. On the tuning split, no escalation threshold improved accuracy, and sending every page to the second reader made it worse, 98.75 down to 97.92, at 1.7 times the cost. The second reader isn't stronger. So tuning set the threshold to zero and the cascade is just the primary. That result is about these two readers, and it's the direct consequence of the quota problem. With a Flash-class second reader I'd rerun it.</p>
+      <p>Third, the abstention signal itself. Eight flags in two hundred forty fields. Two were real errors. Precision 25 percent, and the interval runs from 7 to 59. So I can't tell you yet whether double-keying pays for itself. I can tell you exactly what would settle it: about five hundred of Meridian's real documents, weighted toward the exceptions their contractors already flag, through this harness unchanged. The gates are written down in the briefing.</p>
     </div>
   </div>
-</div>
 
-<!-- ============================================================ -->
-<div class="part">
-  <div class="pn">PART THREE</div>
-  <h2>What the evaluation found</h2>
-  <p class="pd">Including the two results that went against me — one about my own benchmark, one
-    about a thing I was sure of.</p>
-</div>
-
-<div class="beat">
-  <div><div class="t">Beat 8</div><div class="take">take 8</div></div>
-  <div>
-    <h3>My benchmark was broken, and the cascade did nothing</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Back to Tab 1 — the "first corpus measured nothing" callout</span></div>
+  <div class="beat">
+    <h3>8. From an eval to a benchmark <span class="t">9:10 to 10:20 · Tab 2, README Dataset section</span></h3>
+    <div class="cue"><b>Do:</b> Tab 2. Scroll the README to the Dataset table (five strata) and stop there.</div>
     <div class="say">
-      <div>First version of my dataset, the cheap model got every field right.</div>
-      <div>Zero errors, out of two hundred and forty.</div>
-    </div>
-    <p class="beatmark">— beat, two seconds —</p>
-    <div class="say">
-      <div>Which is a problem, not a result.</div>
-      <div class="gap"></div>
-      <div>Because if nothing ever fails, there's nothing to measure.</div>
-      <div>My confidence curve is a single dot.</div>
-      <div>My "was the flagging any good" number is zero divided by zero.</div>
-      <div>Half the harness is switched on and reading nothing.</div>
-      <div class="gap"></div>
-      <div>So I decided <b>the test was wrong, not that I was finished</b>,</div>
-      <div>and rebuilt it harder — based on what bad scans look like,</div>
-      <div>not based on what number I wanted out the other end.</div>
-      <div class="gap"></div>
-      <div>The original result is still in the repo. I didn't quietly bin it.</div>
-    </div>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Scroll to the red "cascade escalated nothing" box</span></div>
-    <div class="say">
-      <div>And here's the cascade I mentioned.</div>
-      <div class="gap"></div>
-      <div><b>It escalated zero documents.</b> Not a handful. Zero.</div>
-      <div class="gap"></div>
-      <div>Because when you ask these models how confident they are,</div>
-      <div>they say "very." Every time.</div>
-      <div>Basically every answer comes back at the very top of the range.</div>
-      <div class="gap"></div>
-      <div>So the trigger never fires, and the clever version of the pipeline</div>
-      <div>is identical to the simple one. Same accuracy, same cost, same latency.</div>
-      <div class="gap"></div>
-      <div>I predicted that before I ran it, and then measured it</div>
-      <div>rather than quietly dropping the config.</div>
-      <div>A negative result I called in advance is worth more here</div>
-      <div>than a win I'd have had to tune into existence.</div>
+      <p>The reason I built it this way is that most of it generalizes into a benchmark for extraction with abstention. The pieces: a label-first generator with named strata, so difficulty is designed rather than discovered. A committed response cache, so anyone can reproduce the scoring without spending a cent. A fixed metric set: accuracy never without coverage, three error kinds never pooled, abstention precision from recorded counterfactuals, intervals on everything. Paired comparison between systems on the same documents, so nobody compares overlapping error bars. And reconciliation, does the itemisation add up to the total, because adjudication is the job under the transcription.</p>
+      <p>The findings tell you what such a benchmark has to contain. Out-of-distribution pages that bait a hallucination, because that's where the two readers differed. Degraded scans, because that's the only stratum with errors. And the reported artifact should be the whole cost-accuracy frontier rather than one number, because Meridian's decision is a trade between coverage and review load. What's missing is real documents. The synthetic failure distribution is my guess at theirs.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 9</div><div class="take">take 9</div></div>
-  <div>
-    <h3>The reframe, and the thing I got wrong</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 3 — the broken claim. Point at the line items, then the total.</span></div>
+  <div class="beat">
+    <h3>9. Friction, for the Gemini teams <span class="t">10:20 to 11:30 · Tab 6</span></h3>
+    <div class="cue"><b>Do:</b> Tab 6 opens at F-007. Read the confidence counts. Scroll down to F-010.</div>
     <div class="say">
-      <div>My dataset kept coming out too easy, and eventually</div>
-      <div>that told me something I'd been slow to hear.</div>
-      <div><b>I was measuring the wrong task.</b></div>
-      <div class="gap"></div>
-      <div>Reading a number off a form is basically solved.</div>
-      <div>Two errors in two hundred and forty fields.</div>
-      <div>That's not where the difficulty is anymore.</div>
-      <div class="gap"></div>
-      <div>And Meridian doesn't lose money misreading a number.</div>
-      <div>They lose money <b>paying a claim that doesn't add up</b>.</div>
-      <div class="gap"></div>
-      <div>Look at this one. Line items down the middle.</div>
-      <div>They sum to about sixty-three hundred.</div>
-      <div>The total at the bottom says fifty and a half.</div>
-      <div>One of the line items just isn't in the total.</div>
-      <div class="gap"></div>
-      <div>A person checking this catches it. That's the actual job.</div>
-      <div class="gap"></div>
-      <div>So I added reconciliation. Do the line items sum to the stated total?</div>
-      <div>And I made about a third of the claims deliberately broken —</div>
-      <div>a line left out, a line counted twice, two digits swapped,</div>
-      <div>a surcharge that isn't itemised anywhere.</div>
-      <div class="gap"></div>
-      <div>On the test set, the primary reader caught <b>all twelve</b> of the bad ones.</div>
-      <div>On the tuning set it caught twelve out of fourteen.</div>
-      <div class="gap"></div>
-      <div>And I want to be careful with that, because twelve isn't many.</div>
-      <div>The interval on twelve runs from about seventy-six percent up to a hundred.</div>
-      <div>So the honest version is: the miss rate is somewhere under one in four,</div>
-      <div>and I can't pin it tighter than that with this many bad claims.</div>
-      <div class="gap"></div>
-      <div>The second reader did let one through.</div>
-      <div>One claim that didn't add up, marked as fine.</div>
-      <div>That's a cheque that goes out.</div>
-      <div class="gap"></div>
-      <div>That's the number I'd put in front of Meridian. Not the ninety-nine.</div>
-    </div>
-    <p class="beatmark">— beat, then slow down —</p>
-    <div class="say">
-      <div>And here's the part where I was wrong.</div>
-      <div class="gap"></div>
-      <div>I assumed these models would be bad at arithmetic.</div>
-      <div>That's the received wisdom — don't let a language model do maths.</div>
-      <div class="gap"></div>
-      <div>So I built it to catch that. Two paths.</div>
-      <div>The model adds the line items up itself and gives me a verdict.</div>
-      <div>And separately, Python adds up <b>the same numbers the model read</b></div>
-      <div>and produces its own verdict.</div>
-      <div class="gap"></div>
-      <div>Identical inputs, two different adders.</div>
-      <div>So any gap between them has to be the arithmetic.</div>
-      <div class="gap"></div>
-      <div>There was no gap.</div>
-      <div><b>The model's arithmetic was a hundred percent.</b> Both models.</div>
-      <div>And the two paths failed on exactly the same documents.</div>
-      <div class="gap"></div>
-      <div>Every failure was a misread digit on a bad scan</div>
-      <div>that then poisoned the sum.</div>
-      <div>It added the wrong numbers, correctly.</div>
-      <div class="gap"></div>
-      <div>So the received wisdom is wrong for this task.</div>
-      <div>The arithmetic is free and it's reliable.</div>
-      <div>The bottleneck is reading four digits off a stamped, faded photocopy.</div>
-      <div class="gap"></div>
-      <div>Which is a completely different problem to go and fix.</div>
-      <div>It's resolution and preprocessing, not reasoning.</div>
-      <div class="gap"></div>
-      <div>And I only know that because I built the version of the experiment</div>
-      <div>that was capable of proving me wrong.</div>
+      <p>The friction log has eleven entries, written as things happened, with the error text as it appeared. Four matter most. F-007: self-reported confidence is near-constant and log probabilities aren't available for structured output. For any partner whose requirement is "know when you're unsure", a calibrated confidence output is the missing primitive. Right now a second model fills that gap at extra cost.</p>
+      <p>F-010: the free tier stopped every Flash model I pushed toward evaluation volume after about twenty requests. The whole evaluation costs about a dollar at list price. That's the tier a partner uses to decide whether Gemini fits, and it can't support an evaluation. A per-project evaluation allowance would fix it.</p>
+      <p>Two smaller ones. The same 429 message covers a rate limit and an exhausted entitlement, so a client can't tell whether to wait or stop. And batch create returns a failed precondition without naming the precondition, so I never got to measure the half-price batch mode.</p>
     </div>
   </div>
-</div>
 
-<div class="beat">
-  <div><div class="t">Beat 10</div><div class="take">take 10</div></div>
-  <div>
-    <h3>Throughput</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Scroll to the throughput table, section 01</span></div>
+  <div class="beat">
+    <h3>10. Close <span class="t">11:30 to 12:00 · Tab 1, section 4</span></h3>
     <div class="say">
-      <div>Quick one on throughput, because forty thousand a month is the real constraint.</div>
-      <div class="gap"></div>
-      <div>I ran the same workload at different levels of parallelism.</div>
-      <div>One worker: eight documents a minute.</div>
-      <div>Two: eight. Four: eight. Eight: eight.</div>
-      <div>Sixteen: <b>seven</b>.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>Flat, and then it goes backwards.</div>
-      <div><b>Sixteen workers is slower than one.</b></div>
-      <div class="gap"></div>
-      <div>Because the ceiling isn't on my machine. It's on the account.</div>
-      <div>So the extra workers just queue up and get told to wait,</div>
-      <div>and past a certain point the extra load costs you throughput outright.</div>
-      <div class="gap"></div>
-      <div>Which is a concrete answer for them.</div>
-      <div>Don't build a big worker pool — four is plenty.</div>
-      <div>And at this rate their monthly volume is about <b>eighty hours</b></div>
-      <div>of continuous running, which fits in a month</div>
-      <div>with no slack for a backlog or a reprocess.</div>
-      <div class="gap"></div>
-      <div>The thing that buys headroom is a bigger quota.</div>
-      <div>Not better code on my side.</div>
+      <p>So where this lands. The accuracy and cost bars are met, with no margin on accuracy. The "know when you're unsure" bar isn't, and I'd rather show you that clearly than paper over it. The harness is built, it reproduces from a clean clone in one command, and the next step is five hundred real documents through it unchanged. Everything I showed is in the repo, and I'm happy to walk any of it. Thanks.</p>
     </div>
   </div>
+
+  <h2>If they ask</h2>
+  <p class="small">Short spoken answers. Know these without notes; the committee's hire signal depends on it.</p>
+  <table>
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>Why labels before documents?</td><td>If labels come from a model, you're measuring agreement with that model. Writing the label first and rendering the page from it means the truth is independent of anything being tested, and I can regenerate the corpus byte for byte from the seed.</td></tr>
+      <tr><td>Why Wilson intervals?</td><td>My proportions sit near 1.0 with n between 40 and 240. The normal approximation gives intervals that go above 100 percent there. Wilson stays inside 0 to 1 and behaves at small n.</td></tr>
+      <tr><td>What is the paired comparison doing?</td><td>Every configuration is scored on the same documents, so the difference is paired. McNemar's exact test counts the instances where one system was wrong and the other right. The bootstrap resamples whole documents, because six fields on one page share the same scan and aren't independent.</td></tr>
+      <tr><td>Why did the cascade collapse to zero?</td><td>The objective maximises coverage subject to the 97 percent bar, tie-break on cost. Escalation doesn't change coverage and adds cost, and on tune it never raised accuracy because the second reader isn't stronger. So zero was the right threshold for these two readers.</td></tr>
+      <tr><td>What's in the cache key, and why not the prompt text?</td><td>Model, prompt version, schema hash, image hash, run index, temperature tag. The prompt text isn't hashed in because changing it would orphan the committed cache, so a test pins the prompt's hash to its version and fails if the text changes without a bump.</td></tr>
+      <tr><td>What would you watch in production?</td><td>Disagreement rate against its 3.3 percent baseline, daily. Adjudicator rulings on flagged items, which make abstention precision a live number. A weekly re-score of two hundred documents through the same harness, with a stop on auto-pay if the lower bound drops under 97. And the model version string, because the name is an alias.</td></tr>
+      <tr><td>Why not just pay for the API?</td><td>I could have, for a few dollars. I kept the free tier because it's what a partner's evaluation actually runs on first, and hitting the quota wall produced the most useful friction item in the log. I'd re-run the cascade on a paid tier with a Flash second reader; that's next step two.</td></tr>
+      <tr><td>How much of this did the AI do?</td><td>Claude wrote most of the code with me directing; Claude and Gemini drafted the documents. The design decisions, the metric choices, the double-keying idea, and the decision to report the negative results are mine, and I can walk any line of the harness.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small">Every number in this script is in <code>results/results.json</code> and reproduced by <code>meridian-evaluate</code>. The two document stories come from <code>cache/*/test-run1/degr-012.json</code> and <code>ood-006.json</code>.</p>
 </div>
 
-<!-- ============================================================ -->
-<div class="part">
-  <div class="pn">PART FOUR</div>
-  <h2>Working on the free tier</h2>
-  <p class="pd">What it cost, what I did about it, and why I don't think this is a complaint.</p>
-</div>
-
-<div class="beat">
-  <div><div class="t">Beat 11</div><div class="take">take 11</div></div>
-  <div>
-    <h3>The free API — limits, and what I did with them</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 5 — FRICTION.md, on F-007</span></div>
-    <div class="say">
-      <div>I should be clear about something that shaped a lot of this.</div>
-      <div><b>I built the whole thing on the free tier.</b></div>
-      <div class="gap"></div>
-      <div>And I want to frame that properly, because I don't think it's a complaint.</div>
-      <div class="gap"></div>
-      <div>My read is that the free tier is doing what it's designed to do.</div>
-      <div>It's an introduction. It's there so you can try the model,</div>
-      <div>see the shape of it, decide if it's worth a conversation.</div>
-      <div>It is not there to let you characterise the model's full capability.</div>
-      <div class="gap"></div>
-      <div>So I'm not going to stand here and tell you the free tier is broken.</div>
-      <div>What I'll tell you is what it cost me, specifically,</div>
-      <div>because I wrote it all down as it happened.</div>
-    </div>
-    <div class="say">
-      <div>Eleven entries in the friction log.</div>
-      <div>All written at the time, with the actual error text.</div>
-      <div>If I wasn't sure something really happened, I left it out —</div>
-      <div>six things I can prove are worth more than twenty I half-remember.</div>
-      <div class="gap"></div>
-      <div>Four that actually changed what I built.</div>
-    </div>
-    <div class="say">
-      <div>One. The model list and the model endpoint disagreed.</div>
-      <div><code>models.list</code> showed me two-point-five Flash and Pro,</div>
-      <div>with content generation listed as supported.</div>
-      <div>Calling them came back four-oh-four, "no longer available to new users."</div>
-      <div class="gap"></div>
-      <div>So from inside the program I had no reliable way to know what I could call.</div>
-      <div>I ended up probing every candidate with a one-token request</div>
-      <div>and treating that as the real answer.</div>
-    </div>
-    <div class="say">
-      <div>Two. The Pro tier came back four-two-nine on the very first request.</div>
-      <div>Zero calls made. "You've exceeded your quota, check your billing."</div>
-      <div class="gap"></div>
-      <div>And that same message, word for word, is also what you get</div>
-      <div>when you're just sending requests too fast.</div>
-      <div class="gap"></div>
-      <div>One of those is permanent and needs a billing change.</div>
-      <div>The other clears in about four seconds.</div>
-      <div>Nothing in the status, the message, or the headers tells them apart,</div>
-      <div>so I spent real time diagnosing by experiment.</div>
-      <div class="gap"></div>
-      <div>That one's cheap to fix and it'd save a lot of people a lot of time.</div>
-    </div>
-    <div class="say">
-      <div>Three. Every Flash-tier model runs out after roughly twenty requests a day.</div>
-      <div>I migrated across four different models before I stopped</div>
-      <div>and changed the architecture instead.</div>
-      <div class="gap"></div>
-      <div>That's what killed the escalation design.</div>
-      <div>I couldn't get enough calls through a stronger model</div>
-      <div>to evaluate it, so I went to two independent readers</div>
-      <div>of the same tier — which, as it turned out, fits their operation better anyway.</div>
-      <div class="gap"></div>
-      <div>The lite models were completely fine, for what it's worth.</div>
-      <div>Three hundred and twenty calls, zero errors.</div>
-    </div>
-    <div class="say">
-      <div>And four. Batch never ran at all.</div>
-      <div class="gap"></div>
-      <div>Batch is the right answer for their overnight volume —</div>
-      <div>half the cost, twenty-four hour turnaround.</div>
-      <div>Every submission came back four hundred, "precondition check failed."</div>
-      <div class="gap"></div>
-      <div>Which doesn't say which precondition.</div>
-      <div class="gap"></div>
-      <div>I isolated it properly — one-line text request, no schema, no image,</div>
-      <div>two different models, same failure.</div>
-      <div>Meanwhile <code>batches.list</code> works fine on the same client.</div>
-      <div>So the endpoint's reachable and I'm authenticated.</div>
-      <div class="gap"></div>
-      <div>My guess is it needs billing enabled, but that's my guess.</div>
-      <div>The docs don't mention a tier requirement for batch at all,</div>
-      <div>and they don't document that error.</div>
-      <div class="gap"></div>
-      <div>So the batch path is written, and it's marked <b>unverified</b>,</div>
-      <div>and I'm not claiming a cost saving I never actually measured.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>Here's the part I'd actually want passed along, though.</div>
-      <div class="gap"></div>
-      <div>The whole evaluation, at list price, costs about a dollar.</div>
-      <div>The money was never the issue. The quota was.</div>
-      <div class="gap"></div>
-      <div>And evaluation is the specific thing somebody does</div>
-      <div>right before they decide whether to build on you.</div>
-      <div class="gap"></div>
-      <div>So the tier that a prospective customer uses to make that call</div>
-      <div>is the tier that's least able to answer the question.</div>
-      <div class="gap"></div>
-      <div>That's not a bug. It's a gap between what the tier is for</div>
-      <div>and what people are actually trying to do with it.</div>
-      <div>Even a one-off allowance of a couple of thousand requests per project</div>
-      <div>would close it.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<div class="part">
-  <div class="pn">PART FIVE</div>
-  <h2>From an evaluation to a benchmark</h2>
-  <p class="pd">These are not the same thing. The difference is where the research value is.</p>
-</div>
-
-<div class="beat">
-  <div><div class="t">Beat 12</div><div class="take">take 12</div></div>
-  <div>
-    <h3>Eval versus benchmark, and what's actually interesting here</h3>
-    <div class="say">
-      <div>Last thing, and it's the part I find most interesting.</div>
-      <div class="gap"></div>
-      <div>What I built is an <b>evaluation</b>. It is not a benchmark.</div>
-      <div>Those get used interchangeably and they're really not the same,</div>
-      <div>and the difference is where the research value sits.</div>
-    </div>
-    <div class="say">
-      <div>An evaluation is fitted to one deployment.</div>
-      <div>Meridian's six fields. Meridian's ninety-seven percent.</div>
-      <div>Meridian's two cents and their exception queue.</div>
-      <div class="gap"></div>
-      <div>It answers exactly one question — can we ship this, for them, now.</div>
-      <div>It's allowed to be small and idiosyncratic.</div>
-      <div>And when the deployment changes, you throw it away. That's fine.</div>
-      <div>That's what it's for.</div>
-      <div class="gap"></div>
-      <div>A benchmark is a measuring instrument.</div>
-      <div>Lots of people, lots of models, over years.</div>
-      <div>It has to survive being optimised against.</div>
-      <div class="gap"></div>
-      <div>Which means it needs things my eval doesn't have.</div>
-      <div>Headroom, so it doesn't saturate the week a new model ships.</div>
-      <div>Exact scoring, so there's no annotator drift and no judge model.</div>
-      <div>And it has to be hard to game by memorising.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>So — is there a benchmark hiding in here? I think there's one.</div>
-      <div>And it's not the extraction. It's the reconciliation.</div>
-    </div>
-    <div class="say">
-      <div>Here's why that task has the right shape.</div>
-      <div class="gap"></div>
-      <div>The answer is a single bit. Does it reconcile, yes or no.</div>
-      <div>No rubric, no judge model, no human annotation.</div>
-      <div>The ground truth comes out of the generator that made the page,</div>
-      <div>so it's exact by construction.</div>
-      <div class="gap"></div>
-      <div>And it's procedurally generated, which means two things.</div>
-      <div>I can mint an unlimited number of fresh instances —</div>
-      <div>so <b>contamination stops being a worry</b>,</div>
-      <div>because next year's test set doesn't exist yet.</div>
-      <div class="gap"></div>
-      <div>And I can turn the difficulty with a dial rather than rebuilding the set.</div>
-    </div>
-    <div class="say">
-      <div>That dial is the bit I'd actually want a researcher to look at.</div>
-      <div class="gap"></div>
-      <div>The size of the discrepancy is a continuous variable.</div>
-      <div>A line item left out of a total is a twelve-hundred-dollar gap. That's easy.</div>
-      <div>Two transposed digits is a ninety-cent gap on a five-thousand-dollar claim.</div>
-      <div>That's genuinely hard, and it's the one that actually gets paid out.</div>
-      <div class="gap"></div>
-      <div>So instead of a score, you get a curve.</div>
-      <div>Accuracy against how big the error was.</div>
-      <div>And a curve tells you where the model breaks down, not just that it does.</div>
-      <div class="gap"></div>
-      <div>You can do the same with scan quality, or the number of line items.</div>
-      <div>Three independent dials, and you can turn them one at a time.</div>
-    </div>
-    <p class="beatmark">— beat —</p>
-    <div class="say">
-      <div>And then the piece I'd argue is the real research question.</div>
-      <div class="gap"></div>
-      <div>Because of how I set it up, this task <b>attributes the failure</b>.</div>
-      <div class="gap"></div>
-      <div>Getting a reconciliation wrong can happen three ways.</div>
-      <div>You misread the digits. Perception.</div>
-      <div>You read them right and add them wrong. Computation.</div>
-      <div>Or you get both right and apply the wrong rule. Decision.</div>
-      <div class="gap"></div>
-      <div>Most benchmarks give you a number that blends all three together,</div>
-      <div>and you can't tell which one to go and work on.</div>
-      <div class="gap"></div>
-      <div>This one separates them, because I have the model's line items,</div>
-      <div>the model's sum, my own sum of the model's line items,</div>
-      <div>and the true sum from the generator.</div>
-      <div>Four quantities, and the differences between them localise the error.</div>
-      <div class="gap"></div>
-      <div>And when I ran that, the answer was unambiguous.</div>
-      <div>Computation was perfect. It's all perception.</div>
-      <div class="gap"></div>
-      <div>That's a claim about where the capability ceiling is on this class of task,</div>
-      <div>and it points at the vision side rather than the reasoning side.</div>
-      <div>Which is a far more useful thing to hand a researcher</div>
-      <div>than "the model scored eighty-eight."</div>
-    </div>
-    <div class="say">
-      <div>The other thing a researcher would want out of this,</div>
-      <div>and it's the one I couldn't deliver, is calibration.</div>
-      <div class="gap"></div>
-      <div>Right now I can't measure it, because the confidence signal is a constant.</div>
-      <div>Nearly every prediction lands in one bucket.</div>
-      <div>My calibration error looks fantastic and it means nothing —</div>
-      <div>it's what you get when something always says "certain" and is usually right.</div>
-      <div class="gap"></div>
-      <div>But this task is a good place to study that,</div>
-      <div>and better than most of the ones people use,</div>
-      <div>because correctness here is exact and cheap and unlimited.</div>
-      <div class="gap"></div>
-      <div>You don't need anyone to label anything.</div>
-      <div>You can generate ten thousand instances at a known difficulty</div>
-      <div>and ask whether the model's stated confidence predicts its own correctness.</div>
-      <div class="gap"></div>
-      <div>And on the evidence I've got, it doesn't. At all.</div>
-      <div>Which is a training question rather than a prompting one —</div>
-      <div>I tried three different ways to get an uncertainty signal out of these models</div>
-      <div>and none of them worked.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<div class="beat">
-  <div><div class="t">Close</div><div class="take">take 13</div></div>
-  <div>
-    <h3>Demo, gaps, out</h3>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 4 — hit enter NOW. Keep talking over it.</span></div>
-    <div class="say">
-      <div>I've kicked off the whole evaluation while I've been talking.</div>
-      <div><b>No API key. No internet.</b></div>
-      <div class="gap"></div>
-      <div>It's scoring saved responses that are committed to the repo,</div>
-      <div>so it gives the same numbers on any machine, every time.</div>
-      <div>That was deliberate — a demo that needs a live API</div>
-      <div>is a demo that breaks while somebody's watching it.</div>
-    </div>
-    <div class="say">
-      <div>Where it falls short, and I'd rather say this than have you find it.</div>
-      <div class="gap"></div>
-      <div>I can't demonstrate calibration, for the reason I just gave.</div>
-      <div>My own harness marks that chart unusable</div>
-      <div>instead of drawing a line through one point.</div>
-      <div class="gap"></div>
-      <div>Forty test documents isn't many.</div>
-      <div>My lower bound is <b>ninety-seven point zero</b> against a ninety-seven target.</div>
-      <div>That's no room at all. It's sitting on the line.</div>
-      <div>And the run-to-run noise I measured earlier was about half a point.</div>
-      <div>So it passes on paper, and I wouldn't call it a pass in the room.</div>
-      <div class="gap"></div>
-      <div>And this is one run on the final dataset.</div>
-      <div>I measured run-to-run variance three times over on the earlier version,</div>
-      <div>and it moved by about half a point. I haven't repeated that here yet.</div>
-      <div>It's a quota reset and about twenty cents away.</div>
-    </div>
-    <div class="cue"><span class="lab">Screen</span><span class="txt">Tab 1 — stay put</span></div>
-    <div class="say">
-      <div>What I'd do next isn't more code.</div>
-      <div>It's five hundred of their real documents,</div>
-      <div>weighted towards the ones their people already flag as problems,</div>
-      <div>through this exact harness with nothing changed.</div>
-      <div class="gap"></div>
-      <div>All the measuring equipment is built. It needs harder inputs.</div>
-    </div>
-    <p class="beatmark">— beat, then land it —</p>
-    <div class="say">
-      <div>So that's the pipeline, the evaluation, and the friction.</div>
-      <div class="gap"></div>
-      <div>The short version is that <b>the easy part was easy</b>,</div>
-      <div>and <b>the thing they actually asked for is the thing that's still open</b>.</div>
-      <div class="gap"></div>
-      <div>And I'd rather hand you a measurement that says that plainly</div>
-      <div>than a number that covers it up.</div>
-    </div>
-  </div>
-</div>
-
-<div class="qa">
-  <h2>Not for the recording — prep for the live round</h2>
-  <p class="why">Don't answer these on camera; there's nobody there. Know them cold, don't script them.</p>
-
-  <div class="q">
-    <p class="ask">"You used models to generate the documents and then tested a model on them."</p>
-    <p>Right, and the labels are the reason that's okay. The ground truth is a seeded RNG in about
-      forty lines of Python, written to disk before any document exists. A model contributed
-      vocabulary and layout. It never contributed an answer. If I'd generated documents first and
-      then had a model read them to produce labels, I'd be measuring inter-model agreement and
-      calling it accuracy.</p>
-  </div>
-
-  <div class="q">
-    <p class="ask">"Why two small models instead of escalating to a bigger one?"</p>
-    <p>I tried, and the free tier kills every Flash model after about twenty requests a day. I
-      migrated across four of them before changing the design instead. And for a disagreement signal
-      what matters is that the readers are independent, not that one's smarter. It cost me the
-      escalation story, not the mechanism.</p>
-  </div>
-
-  <div class="q">
-    <p class="ask">"Your calibration error is tiny, that's good."</p>
-    <p>I'd push back on that. It's tiny because it's measuring a constant — nearly every prediction
-      sits in one bucket, so there's nothing there to resolve. That's why the harness marks it
-      degenerate rather than reporting it.</p>
-  </div>
-
-  <div class="q">
-    <p class="ask">"What would you actually build as a benchmark, concretely?"</p>
-    <p>Procedurally generated claim pages with a parametric discrepancy: magnitude, scan quality, and
-      line-item count as three independent dials. Report accuracy as a surface over those, not a
-      scalar. Score the verdict bit exactly, and report perception error and computation error
-      separately by comparing the model's sum against my sum of its own extractions. Unlimited fresh
-      instances, so contamination isn't a factor.</p>
-  </div>
-
-  <div class="q">
-    <p class="ask">"How long did this take?"</p>
-    <p>The pipeline and harness fit the two hours. Where I went past it was regenerating the dataset
-      twice, and both times the reason is in the README's corpus history — the benchmark wasn't measuring
-      anything, so it wasn't finished.</p>
-  </div>
-</div>
-
-<footer>
-  <p><b>Thirteen takes.</b> No target runtime — this version is built to cover everything properly
-    rather than hit a clock.</p>
-  <p><b>Shoot beat 1 and the terminal beat last.</b> First takes are stiff, and you want to know the
-    command ran before you keep it.</p>
-  <p><b>The three beats that carry the most weight</b> are 5 (the cache bug), 9 (being wrong about
-    arithmetic), and 12 (eval versus benchmark). If you only rehearse three, rehearse those.</p>
-  <p><b>End on the last two lines and stop.</b> Don't add a summary — that's where people ramble.</p>
-</footer>
-
-</div>
+</body>
+</html>

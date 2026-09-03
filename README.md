@@ -489,6 +489,7 @@ retry libraries, additional document types.
 
 ## Next step
 
-Ingest 500 real Meridian documents, weighted toward the exceptions
-their contractors already flag, and re-run this harness unchanged. The
-instrumentation is built; it needs harder inputs.
+Ingest 500 real Meridian documents, weighted toward the exceptions their
+contractors already flag, and re-run this harness unchanged. Everything
+measured here can be measured again on those documents without touching the
+code.

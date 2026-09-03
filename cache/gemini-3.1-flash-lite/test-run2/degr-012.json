@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "c9bf48061feeb8c391d7",
+  "cost_usd": 0.0009595,
+  "doc_id": "degr-012",
+  "error": null,
+  "latency_s": 2.936,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "3085dacccd1db7e4",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-64620"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "10 Apr 2026"
+    },
+    "line_items": [
+      {
+        "amount": "2368.04",
+        "description": "Parts & body panel"
+      },
+      {
+        "amount": "422.45",
+        "description": "Towing & recovery"
+      },
+      {
+        "amount": "763.70",
+        "description": "Diagnostic scan & assess"
+      },
+      {
+        "amount": "512.97",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "737.23",
+        "description": "Labor & bodywork"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9752-PZ"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4804.39",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "4804.39"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 407,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "8400e95a88a996603af2",
+  "cost_usd": 0.0014463,
+  "doc_id": "degr-005",
+  "error": null,
+  "latency_s": 2.107,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "b698cc9608d663c3",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-22204"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Rafael Castellanos"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-02-26"
+    },
+    "line_items": [
+      {
+        "amount": "1124.99 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "683.25 USD",
+        "description": "Professional services"
+      },
+      {
+        "amount": "2319.12 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "1940.05 USD",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "883.10 USD",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8744-DD"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6950.51",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "7010.51 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 411,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,857 @@
+{
+  "_corpus": "Corpus v1 is not retained in this repository; data/ holds corpus v3.",
+  "_reproduce": "Not reproducible from this repository. The v1 corpus and its response cache were superseded; this file is the recorded evidence for the hardening decision.",
+  "_what": "Saturation evidence for corpus v1, scored by the harness at the time.",
+  "_why_it_matters": "The primary reader (then named cheap_solo) made no errors on 240 field-instances. With no errors the calibration curve has one bucket, abstention precision is 0/0, and no cascade can beat a single model. The corpus was too easy to measure anything, and was rebuilt.",
+  "result": {
+    "api_call_errors": 0,
+    "by_field": {
+      "claim_id": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "claimant_name": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "date_of_service": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.42835,
+          "low": 0.16108,
+          "n": 40,
+          "point": 0.275
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "policy_number": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "provider_name": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "total_amount": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.087622,
+          "low": 0.0,
+          "n": 40,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.261121,
+          "low": 0.054595,
+          "n": 40,
+          "point": 0.125
+        },
+        "n_instances": 40,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.912378,
+          "n": 40,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      }
+    },
+    "by_stratum": {
+      "ambiguous": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.800543,
+          "low": 0.546669,
+          "n": 48,
+          "point": 0.6875
+        },
+        "n_instances": 48,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "clean": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.050651,
+          "low": 0.0,
+          "n": 72,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.949349,
+          "n": 72,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.050651,
+          "low": 0.0,
+          "n": 72,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.800619,
+          "low": 0.594943,
+          "n": 72,
+          "point": 0.708333
+        },
+        "n_instances": 72,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.949349,
+          "n": 72,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.949349,
+          "n": 72,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "degraded": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.817584,
+          "low": 0.568207,
+          "n": 48,
+          "point": 0.708333
+        },
+        "n_instances": 48,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "incomplete": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.0741,
+          "low": 0.0,
+          "n": 48,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 0.817584,
+          "low": 0.568207,
+          "n": 48,
+          "point": 0.708333
+        },
+        "n_instances": 48,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.9259,
+          "n": 48,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      },
+      "ood": {
+        "abstention_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "abstention_rate": {
+          "high": 0.137976,
+          "low": 0.0,
+          "n": 24,
+          "point": 0.0
+        },
+        "abstention_recall": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null
+        },
+        "coverage": {
+          "high": 1.0,
+          "low": 0.862024,
+          "n": 24,
+          "point": 1.0
+        },
+        "error_rate_on_covered": {
+          "high": 0.137976,
+          "low": 0.0,
+          "n": 24,
+          "point": 0.0
+        },
+        "errors": {
+          "hallucinated_field": 0,
+          "missed_field": 0,
+          "wrong_value": 0
+        },
+        "exact_match_on_covered": {
+          "high": 1.0,
+          "low": 0.862024,
+          "n": 24,
+          "point": 1.0
+        },
+        "n_instances": 24,
+        "normalized_match_on_all": {
+          "high": 1.0,
+          "low": 0.862024,
+          "n": 24,
+          "point": 1.0
+        },
+        "normalized_match_on_covered": {
+          "high": 1.0,
+          "low": 0.862024,
+          "n": 24,
+          "point": 1.0
+        },
+        "would_be_wrong_total": 0
+      }
+    },
+    "calibration": {
+      "buckets": [
+        {
+          "bucket": "0.0-0.1",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.1-0.2",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.2-0.3",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.3-0.4",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.4-0.5",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.5-0.6",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.6-0.7",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.7-0.8",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "bucket": "0.8-0.9",
+          "gap": null,
+          "mean_confidence": null,
+          "n": 0,
+          "observed_accuracy": null
+        },
+        {
+          "accuracy_ci": {
+            "high": 1.0,
+            "low": 0.984246,
+            "n": 240,
+            "point": 1.0
+          },
+          "bucket": "0.9-1.0",
+          "gap": 0.000208,
+          "mean_confidence": 0.999792,
+          "n": 240,
+          "observed_accuracy": 1.0
+        }
+      ],
+      "degenerate": true,
+      "ece": 0.000208,
+      "occupied_buckets": 1
+    },
+    "config": "cheap_solo",
+    "cost": {
+      "mean_usd_per_doc": 0.00090134,
+      "monthly_usd_at_40k_docs": 36.05,
+      "total_usd": 0.036053
+    },
+    "escalation_rate": null,
+    "latency": {
+      "_note": "serial wall-clock as measured; dual_verify's two calls are independent and could run concurrently (not measured)",
+      "mean_s": 4.244,
+      "p50_s": 2.476,
+      "p95_s": 6.784
+    },
+    "n_documents": 40,
+    "overall": {
+      "abstention_precision": {
+        "high": null,
+        "low": null,
+        "n": 0,
+        "point": null
+      },
+      "abstention_rate": {
+        "high": 0.015754,
+        "low": 0.0,
+        "n": 240,
+        "point": 0.0
+      },
+      "abstention_recall": {
+        "high": null,
+        "low": null,
+        "n": 0,
+        "point": null
+      },
+      "coverage": {
+        "high": 1.0,
+        "low": 0.984246,
+        "n": 240,
+        "point": 1.0
+      },
+      "error_rate_on_covered": {
+        "high": 0.015754,
+        "low": 0.0,
+        "n": 240,
+        "point": 0.0
+      },
+      "errors": {
+        "hallucinated_field": 0,
+        "missed_field": 0,
+        "wrong_value": 0
+      },
+      "exact_match_on_covered": {
+        "high": 0.785284,
+        "low": 0.674031,
+        "n": 240,
+        "point": 0.733333
+      },
+      "n_instances": 240,
+      "normalized_match_on_all": {
+        "high": 1.0,
+        "low": 0.984246,
+        "n": 240,
+        "point": 1.0
+      },
+      "normalized_match_on_covered": {
+        "high": 1.0,
+        "low": 0.984246,
+        "n": 240,
+        "point": 1.0
+      },
+      "would_be_wrong_total": 0
+    },
+    "payment_critical": {
+      "abstention_precision": {
+        "high": null,
+        "low": null,
+        "n": 0,
+        "point": null
+      },
+      "abstention_rate": {
+        "high": 0.087622,
+        "low": 0.0,
+        "n": 40,
+        "point": 0.0
+      },
+      "abstention_recall": {
+        "high": null,
+        "low": null,
+        "n": 0,
+        "point": null
+      },
+      "coverage": {
+        "high": 1.0,
+        "low": 0.912378,
+        "n": 40,
+        "point": 1.0
+      },
+      "error_rate_on_covered": {
+        "high": 0.087622,
+        "low": 0.0,
+        "n": 40,
+        "point": 0.0
+      },
+      "errors": {
+        "hallucinated_field": 0,
+        "missed_field": 0,
+        "wrong_value": 0
+      },
+      "exact_match_on_covered": {
+        "high": 0.261121,
+        "low": 0.054595,
+        "n": 40,
+        "point": 0.125
+      },
+      "n_instances": 40,
+      "normalized_match_on_all": {
+        "high": 1.0,
+        "low": 0.912378,
+        "n": 40,
+        "point": 1.0
+      },
+      "normalized_match_on_covered": {
+        "high": 1.0,
+        "low": 0.912378,
+        "n": 40,
+        "point": 1.0
+      },
+      "would_be_wrong_total": 0
+    },
+    "run": 1,
+    "split": "tune",
+    "thresholds": {
+      "tau_abstain": 0.0,
+      "tau_escalate": 0.0
+    }
+  }
+}

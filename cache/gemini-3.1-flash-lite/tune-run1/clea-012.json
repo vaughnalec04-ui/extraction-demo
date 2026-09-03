@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "19b0c527a389b825d30e",
+  "cost_usd": 0.0009655,
+  "doc_id": "clea-012",
+  "error": null,
+  "latency_s": 4.82,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "76b7d32a02b327f1",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-74940"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Yolanda Kowalczyk"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "January 6, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "2237.04",
+        "description": "Parts - trim"
+      },
+      {
+        "amount": "641.35",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "1025.77",
+        "description": "Sublet - glass"
+      },
+      {
+        "amount": "409.73",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "1423.10",
+        "description": "Parts - body panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8697-CH"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Cedar Vale Family Practice"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5736.99",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5902.16"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 411,
+    "thinking_tokens": 0
+  }
+}

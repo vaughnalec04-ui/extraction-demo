@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "ac10d8c48ae9d59792d8",
+  "cost_usd": 0.0013688,
+  "doc_id": "ambi-005",
+  "error": null,
+  "latency_s": 1.95,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "2e6c26eb5af72140",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-91461"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Simone Lindqvist"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "23 Jun 2026"
+    },
+    "line_items": [
+      {
+        "amount": "901.49 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "1458.71 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "2326.62 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1147.21 USD",
+        "description": "Facility fee"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8199-JS"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Harbor Point Imaging Center"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5834.03",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5834.03 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 380,
+    "thinking_tokens": 0
+  }
+}

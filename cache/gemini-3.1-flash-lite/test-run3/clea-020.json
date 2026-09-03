@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "6e18cdeedc549be04e1c",
+  "cost_usd": 0.000967,
+  "doc_id": "clea-020",
+  "error": null,
+  "latency_s": 3.297,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "b0fb8422575351e1",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-38398"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Priya Lindqvist"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "May 14, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1609.83",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "1289.57",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "1364.11",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "2157.26",
+        "description": "Parts - trim"
+      },
+      {
+        "amount": "1326.53",
+        "description": "Labour - refinish"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1731-WK"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "7747.30",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "7747.30"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 412,
+    "thinking_tokens": 0
+  }
+}

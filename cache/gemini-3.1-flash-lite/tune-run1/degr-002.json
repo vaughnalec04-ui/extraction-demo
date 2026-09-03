@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "9f48322e69a717088357",
+  "cost_usd": 0.000958,
+  "doc_id": "degr-002",
+  "error": null,
+  "latency_s": 2.245,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "4b06e3333d848759",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-16610"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Aisha Quintero"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-01-16"
+    },
+    "line_items": [
+      {
+        "amount": "$1202.04",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$1154.22",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$684.29",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$1901.48",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1133.27",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9722-YK"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Anders & Pike Diagnostic Labs"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6075.30",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$7277.34"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 406,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "b9fe128704f58fec98c9",
+  "cost_usd": 0.0009145,
+  "doc_id": "degr-013",
+  "error": null,
+  "latency_s": 5.413,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "ec8dd9b3db155a13",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-60602"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Ingrid Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "08/28/2026"
+    },
+    "line_items": [
+      {
+        "amount": "301.82 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "368.22 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "710.46 USD",
+        "description": "Professional services"
+      },
+      {
+        "amount": "2082.73 USD",
+        "description": "Laboratory panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7463-TH"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Fairhaven Urgent Care"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3463.23",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "1377.50 USD"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 377,
+    "thinking_tokens": 0
+  }
+}

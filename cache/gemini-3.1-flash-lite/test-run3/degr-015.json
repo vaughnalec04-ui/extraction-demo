@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "43808f69db5596433735",
+  "cost_usd": 0.0009565,
+  "doc_id": "degr-015",
+  "error": null,
+  "latency_s": 3.607,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "5f426b0e183c5d58",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-46920"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Fenella Delacroix"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "24 Aug 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1482.12",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "937.43",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1484.64",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1440.39",
+        "description": "Professional services"
+      },
+      {
+        "amount": "191.87",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2271-RA"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5536.45",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5536.45"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 405,
+    "thinking_tokens": 0
+  }
+}

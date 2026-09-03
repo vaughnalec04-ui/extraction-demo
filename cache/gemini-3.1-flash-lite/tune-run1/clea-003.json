@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "c441d2b09fcb77b49b38",
+  "cost_usd": 0.000871,
+  "doc_id": "clea-003",
+  "error": null,
+  "latency_s": 3.14,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "0b9e52df8b30cfe4",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-99476"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Hugo Delacroix"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "01/13/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$222.10",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$2,280.20",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$1,515.14",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1058-GF"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4017.44",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3,117.44"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 348,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "f419e37f7c516855c3ea",
+  "cost_usd": 0.0014463,
+  "doc_id": "clea-001",
+  "error": null,
+  "latency_s": 2.524,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "c461c0c5fb22e84b",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-57457"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Dimitri Rasmussen"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-06-01"
+    },
+    "line_items": [
+      {
+        "amount": "$2,237.74",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$833.84",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$1,448.32",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$532.66",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "$1,246.26",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1334-VC"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6298.82",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5,052.56"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 411,
+    "thinking_tokens": 0
+  }
+}

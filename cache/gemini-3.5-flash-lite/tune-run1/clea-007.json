@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "5bede108a2f81ce127af",
+  "cost_usd": 0.0013513,
+  "doc_id": "clea-007",
+  "error": null,
+  "latency_s": 2.766,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "aee6b49497fa9b34",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-84870"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Lourdes Castellanos"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "August 13, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$49.63",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$842.99",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$2149.98",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$740.40",
+        "description": "Laboratory panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-3089-AY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3783.00",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3783.00"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 373,
+    "thinking_tokens": 0
+  }
+}

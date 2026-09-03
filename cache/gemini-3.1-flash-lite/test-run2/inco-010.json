@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "ebd19b3179f4e6342f77",
+  "cost_usd": 0.0008605,
+  "doc_id": "inco-010",
+  "error": null,
+  "latency_s": 4.978,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "b018c0eb05306e27",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-95240"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Dimitri Hargreaves"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "02/13/2026"
+    },
+    "line_items": [
+      {
+        "amount": "1259.15",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "157.37",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1930.04",
+        "description": "Laboratory panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3346.56",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3346.56"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 341,
+    "thinking_tokens": 0
+  }
+}

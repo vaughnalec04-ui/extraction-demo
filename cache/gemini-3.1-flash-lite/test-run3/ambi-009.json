@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "9b41a8f8520377b7c743",
+  "cost_usd": 0.000955,
+  "doc_id": "ambi-009",
+  "error": null,
+  "latency_s": 5.142,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "2ca4f007fe062346",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-61150"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Nadia Quintero"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "January 22, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$1300.89",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$1851.92",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$248.10",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$1493.49",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$1141.62",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2342-RE"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Anders & Pike Diagnostic Labs"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6036.02",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$6036.02"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 404,
+    "thinking_tokens": 0
+  }
+}

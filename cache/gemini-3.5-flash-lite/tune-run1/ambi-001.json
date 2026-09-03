@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "dd7a89abe2cf0cb54ab8",
+  "cost_usd": 0.0012763,
+  "doc_id": "ambi-001",
+  "error": null,
+  "latency_s": 2.585,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "c54600e3a62ba1f0",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-21053"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Curtis Kowalczyk"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "07/11/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$112.48",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$427.25",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$1,737.39",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8525-GL"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2277.12",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$539.73"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 343,
+    "thinking_tokens": 0
+  }
+}

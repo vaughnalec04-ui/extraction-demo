@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "7a3896cc03e43549da3e",
+  "cost_usd": 0.000919,
+  "doc_id": "clea-010",
+  "error": null,
+  "latency_s": 4.997,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "b5aa79ec244986b6",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-61079"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Priya Yamamoto"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-02-17"
+    },
+    "line_items": [
+      {
+        "amount": "$1,767.92",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$464.33",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$1,983.50",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1,318.44",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-4286-EP"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Harbor Point Imaging Center"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5534.19",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5,534.19"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 380,
+    "thinking_tokens": 0
+  }
+}

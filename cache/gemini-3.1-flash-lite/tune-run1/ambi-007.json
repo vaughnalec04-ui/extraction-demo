@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "dd3e08da9a273ff92341",
+  "cost_usd": 0.000958,
+  "doc_id": "ambi-007",
+  "error": null,
+  "latency_s": 3.492,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "fde2037c1b12280c",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-95018"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Beatriz Thibodeaux"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-01-27"
+    },
+    "line_items": [
+      {
+        "amount": "$442.27",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$1743.87",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$1912.69",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1566.34",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$299.38",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-3530-RZ"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Harbor Point Imaging Center"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5964.55",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5964.55"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 406,
+    "thinking_tokens": 0
+  }
+}

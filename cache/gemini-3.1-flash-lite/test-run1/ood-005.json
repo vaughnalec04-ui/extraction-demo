@@ -1,0 +1,54 @@
+{
+  "attempts": 1,
+  "cache_key": "a07ce00717128139e10b",
+  "cost_usd": 0.0006685,
+  "doc_id": "ood-005",
+  "error": null,
+  "latency_s": 5.089,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "29dd7889f1478f37",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "B. Hollingsworth"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": null,
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": null
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 213,
+    "thinking_tokens": 0
+  }
+}

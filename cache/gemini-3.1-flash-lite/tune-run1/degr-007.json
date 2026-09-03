@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "1ed2179d6eb42ef81d10",
+  "cost_usd": 0.000922,
+  "doc_id": "degr-007",
+  "error": null,
+  "latency_s": 5.652,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "e21c9f2efee380cb",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-80249"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Dimitri Ferraro"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-06-15"
+    },
+    "line_items": [
+      {
+        "amount": "276.02 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "1351.72 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1753.52 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "93.41 USD",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-4853-DJ"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3474.67",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3474.67 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 382,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "a0146d86035baf680991",
+  "cost_usd": 0.0009505,
+  "doc_id": "inco-005",
+  "error": null,
+  "latency_s": 4.883,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "109430a1e0c48d98",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-68611"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "March 3, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "958.15",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1129.60",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1471.24",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "2029.68",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "2336.41",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1473-WX"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "7925.08",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "7925.08"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 401,
+    "thinking_tokens": 0
+  }
+}

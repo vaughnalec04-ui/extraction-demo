@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "883ad70da72e66190451",
+  "cost_usd": 0.0008695,
+  "doc_id": "degr-010",
+  "error": null,
+  "latency_s": 2.169,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "78bc2fd5ac9506a6",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-61402"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Delphine Lindqvist"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "18 Mar 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$931.92",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$1,336.51",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$1,079.52",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5585-MP"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3347.95",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3,347.95"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 347,
+    "thinking_tokens": 0
+  }
+}

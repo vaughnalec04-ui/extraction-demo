@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "c6fc6fa4fe9707463437",
+  "cost_usd": 0.0009415,
+  "doc_id": "inco-009",
+  "error": null,
+  "latency_s": 4.108,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "213c6790280268f4",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-93666"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Aisha Rasmussen"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "25 Jan 2026"
+    },
+    "line_items": [
+      {
+        "amount": "385.50",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "1535.41",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "2292.45",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "926.41",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "1840.86",
+        "description": "Facility fee"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9179-WL"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6980.63",
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": null
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 395,
+    "thinking_tokens": 0
+  }
+}

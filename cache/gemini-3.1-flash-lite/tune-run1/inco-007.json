@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "7229d791fa6260c13232",
+  "cost_usd": 0.000859,
+  "doc_id": "inco-007",
+  "error": null,
+  "latency_s": 3.031,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "b7c0d4484b40d6ed",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-87206"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Hugo Quintero"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-07-20"
+    },
+    "line_items": [
+      {
+        "amount": "$1974.13",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$1361.84",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$612.61",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7826-YS"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3948.58",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3948.58"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 340,
+    "thinking_tokens": 0
+  }
+}

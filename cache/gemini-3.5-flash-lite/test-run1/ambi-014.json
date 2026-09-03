@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "ae3244253185733e13c9",
+  "cost_usd": 0.0013638,
+  "doc_id": "ambi-014",
+  "error": null,
+  "latency_s": 2.198,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "67c13dcbad458175",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-78599"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Marcus Marchetti"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-02-16"
+    },
+    "line_items": [
+      {
+        "amount": "521.32 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1700.41 USD",
+        "description": "Professional services"
+      },
+      {
+        "amount": "404.02 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "259.72 USD",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9735-ER"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Summit Ridge Collision Repair"
+    },
+    "reconciliation": {
+      "confidence": 0.95,
+      "line_items_sum": "2885.47",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 0.95,
+      "value": "2885.47 USD"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 378,
+    "thinking_tokens": 0
+  }
+}

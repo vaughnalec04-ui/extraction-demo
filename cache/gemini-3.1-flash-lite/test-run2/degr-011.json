@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "fae7d1b7052cd96d9e75",
+  "cost_usd": 0.0009655,
+  "doc_id": "degr-011",
+  "error": null,
+  "latency_s": 4.238,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "16224b96117207c2",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-26442"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Yolanda Rasmussen"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "January 26, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$1,894.31",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$1,308.95",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$683.84",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$1,564.09",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$2,326.67",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9128-VS"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Pinehurst Radiology Group"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "7777.86",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$7,687.86"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 411,
+    "thinking_tokens": 0
+  }
+}

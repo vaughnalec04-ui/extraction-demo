@@ -1,0 +1,54 @@
+{
+  "attempts": 1,
+  "cache_key": "a0a212ed61d82bdad99a",
+  "cost_usd": 0.000661,
+  "doc_id": "ood-003",
+  "error": null,
+  "latency_s": 1.514,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "d35a574219de355f",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": null,
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": null
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 208,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "969af56d1a57224bd98d",
+  "cost_usd": 0.0009505,
+  "doc_id": "clea-009",
+  "error": null,
+  "latency_s": 5.696,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "b15bf9e60e9485f5",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-44504"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Delphine Sandoval"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "14 Jun 2026"
+    },
+    "line_items": [
+      {
+        "amount": "438.03",
+        "description": "Professional services"
+      },
+      {
+        "amount": "414.82",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "137.32",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "385.51",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "1,919.75",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9081-LZ"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Fairhaven Urgent Care"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3295.43",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3,295.43"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 401,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "77901c83b2b4e329de57",
+  "cost_usd": 0.0009115,
+  "doc_id": "ambi-010",
+  "error": null,
+  "latency_s": 4.114,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "934c53b4a856e3b2",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-35293"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Rafael Yamamoto"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-01-16"
+    },
+    "line_items": [
+      {
+        "amount": "687.57 USD",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "1064.65 USD",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "53.39 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1963.10 USD",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1991-GF"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3768.71",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3768.71 USD"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 375,
+    "thinking_tokens": 0
+  }
+}

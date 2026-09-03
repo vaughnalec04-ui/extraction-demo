@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "e99f1364cf71051f578a",
+  "cost_usd": 0.0009175,
+  "doc_id": "ambi-002",
+  "error": null,
+  "latency_s": 4.802,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "78bc23439e24c7d3",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-26920"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Oscar Ferraro"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-07-06"
+    },
+    "line_items": [
+      {
+        "amount": "1853.95 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "339.28 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "187.51 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "555.21 USD",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9186-RL"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Pinehurst Radiology Group"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2935.95",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "4789.90 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 379,
+    "thinking_tokens": 0
+  }
+}

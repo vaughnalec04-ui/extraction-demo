@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "3440f3b0dc47fe939c2d",
+  "cost_usd": 0.0009175,
+  "doc_id": "clea-002",
+  "error": null,
+  "latency_s": 2.378,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "a904fe163a0fe0ce",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-54974"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Yamamoto"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "04/11/2026"
+    },
+    "line_items": [
+      {
+        "amount": "964.15 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "1655.37 USD",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "101.97 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1308.68 USD",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7300-NR"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4030.17",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "4994.32 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 379,
+    "thinking_tokens": 0
+  }
+}

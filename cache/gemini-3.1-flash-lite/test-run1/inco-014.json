@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "b5bd660645ec204940e1",
+  "cost_usd": 0.000853,
+  "doc_id": "inco-014",
+  "error": null,
+  "latency_s": 6.381,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "dc89c6cd045daeac",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-97906"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Curtis Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [
+      {
+        "amount": "$2333.82",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1170.50",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$1908.07",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-4555-VT"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Pinehurst Radiology Group"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5412.39",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5412.39"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 336,
+    "thinking_tokens": 0
+  }
+}

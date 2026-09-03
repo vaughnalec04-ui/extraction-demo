@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "11a02e59df55e79a22fe",
+  "cost_usd": 0.0009205,
+  "doc_id": "degr-008",
+  "error": null,
+  "latency_s": 8.432,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "22d644dd3a27abc6",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-47626"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Simone Lindqvist"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-07-27"
+    },
+    "line_items": [
+      {
+        "amount": "$1,657.31",
+        "description": "Parts - body panel"
+      },
+      {
+        "amount": "$762.23",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "$2,002.96",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "$216.61",
+        "description": "Labour - refinish"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8816-GY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4639.11",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$4,639.11"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 381,
+    "thinking_tokens": 0
+  }
+}

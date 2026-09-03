@@ -1,0 +1,67 @@
+{
+  "attempts": 2,
+  "cache_key": "67497413f5cc95c2d108",
+  "cost_usd": 0.0012913,
+  "doc_id": "clea-022",
+  "error": null,
+  "latency_s": 2.469,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "e8d10ac5a5286642",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-39769"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Simone Quintero"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "22 Apr 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$1,618.59",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$2,062.13",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "$1,154.76",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5728-BF"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Cedar Vale Family Practice"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4835.48",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$6,454.07"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 349,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "3d7dd7f88b3debe74fd4",
+  "cost_usd": 0.0013563,
+  "doc_id": "inco-006",
+  "error": null,
+  "latency_s": 2.195,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "baba501773154950",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-24701"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-06-18"
+    },
+    "line_items": [
+      {
+        "amount": "1264.70 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "1898.18 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "292.27 USD",
+        "description": "Professional services"
+      },
+      {
+        "amount": "713.18 USD",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5820-ZF"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Harbor Point Imaging Center"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4168.33",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "4168.33 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 375,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "attempts": 1,
+  "cache_key": "c4a22d6499f85e7ac879",
+  "cost_usd": 0.0009738,
+  "doc_id": "ood-002",
+  "error": null,
+  "latency_s": 1.881,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "f4da509cf5f789a2",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "CORWIN MUNICIPAL POWER & WATER"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": null,
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$168.44"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 222,
+    "thinking_tokens": 0
+  }
+}

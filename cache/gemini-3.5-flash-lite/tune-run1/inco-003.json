@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "602deed1e3cf514c6aef",
+  "cost_usd": 0.0014238,
+  "doc_id": "inco-003",
+  "error": null,
+  "latency_s": 2.167,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "c22834aa03d91eff",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-42538"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Lourdes Castellanos"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-06-11"
+    },
+    "line_items": [
+      {
+        "amount": "1196.79 USD",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "99.21 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "331.98 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "1095.55 USD",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "1874.01 USD",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-8589-XG"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4597.54",
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": null
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 402,
+    "thinking_tokens": 0
+  }
+}

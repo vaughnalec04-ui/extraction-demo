@@ -1,0 +1,59 @@
+{
+  "attempts": 1,
+  "cache_key": "6515256807b1c6afb322",
+  "cost_usd": 0.0007645,
+  "doc_id": "ood-002",
+  "error": null,
+  "latency_s": 4.129,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "f4da509cf5f789a2",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "Jul 1 - Jul 31"
+    },
+    "line_items": [
+      {
+        "amount": "$142.18",
+        "description": "Usage Charge"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "884-2201-9"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "CORWIN MUNICIPAL POWER & WATER"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "142.18",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$168.44"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 277,
+    "thinking_tokens": 0
+  }
+}

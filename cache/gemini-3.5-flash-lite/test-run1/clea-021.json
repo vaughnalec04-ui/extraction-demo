@@ -1,0 +1,67 @@
+{
+  "attempts": 3,
+  "cache_key": "3cc42494fc7ea3411277",
+  "cost_usd": 0.0012863,
+  "doc_id": "clea-021",
+  "error": null,
+  "latency_s": 2.082,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "8ac62d43fcaf6cbc",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-78548"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Lourdes Kowalczyk"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "08/09/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$114.55",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$2222.63",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$1756.33",
+        "description": "Laboratory panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2349-VN"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Anders & Pike Diagnostic Labs"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4093.51",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$2337.18"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 347,
+    "thinking_tokens": 0
+  }
+}

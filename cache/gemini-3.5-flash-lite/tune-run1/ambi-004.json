@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "2f6787cae77a9ae5d0b5",
+  "cost_usd": 0.0013713,
+  "doc_id": "ambi-004",
+  "error": null,
+  "latency_s": 1.976,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "bd76263bdfb8d2ec",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-54649"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Tomas Achebe"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "May 11, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "710.67 USD",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "1234.71 USD",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "68.29 USD",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "1765.34 USD",
+        "description": "Parts - trim"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-4577-JR"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3779.01",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3779.01 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 381,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "attempts": 2,
+  "cache_key": "69ddd3205bf66c80fb25",
+  "cost_usd": 0.0013638,
+  "doc_id": "inco-013",
+  "error": null,
+  "latency_s": 2.155,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "a52d560745f33b3f",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-40299"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "04/19/2026"
+    },
+    "line_items": [
+      {
+        "amount": "864.82 USD",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "1198.19 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1569.91 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "1192.65 USD",
+        "description": "Facility fee"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-3934-MS"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Anders & Pike Diagnostic Labs"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4825.57",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3632.92 USD"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 378,
+    "thinking_tokens": 0
+  }
+}

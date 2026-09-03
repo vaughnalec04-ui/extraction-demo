@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "391746abdec77f10865f",
+  "cost_usd": 0.000958,
+  "doc_id": "ambi-003",
+  "error": null,
+  "latency_s": 4.815,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "fc2e145505b2ec3c",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-29678"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Simone Lindqvist"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "01/14/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$52.98",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1,114.04",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$2,077.99",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$1,077.99",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$927.53",
+        "description": "Facility fee"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2104-ST"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Northgate Orthopedic Associates"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5250.53",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5,160.53"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 406,
+    "thinking_tokens": 0
+  }
+}

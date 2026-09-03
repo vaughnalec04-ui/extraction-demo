@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "36ceb97d071048eaa699",
+  "cost_usd": 0.0009145,
+  "doc_id": "degr-006",
+  "error": null,
+  "latency_s": 4.387,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "fe42dad752fd301f",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-22681"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Nadia Mwangi"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "12 Jul 2026"
+    },
+    "line_items": [
+      {
+        "amount": "178.14 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "1707.78 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "1122.78 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "2572.39 USD",
+        "description": "Anaesthesia"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-3185-KG"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5581.09",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5581.09 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 377,
+    "thinking_tokens": 0
+  }
+}

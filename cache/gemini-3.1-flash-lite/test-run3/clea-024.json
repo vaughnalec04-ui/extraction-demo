@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "129106779304617a3c69",
+  "cost_usd": 0.0009175,
+  "doc_id": "clea-024",
+  "error": null,
+  "latency_s": 1.831,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "7392a339f6bf9e72",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-23081"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Marchetti"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-02-17"
+    },
+    "line_items": [
+      {
+        "amount": "884.90",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "1808.97",
+        "description": "Sublet - glass"
+      },
+      {
+        "amount": "798.81",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "2064.62",
+        "description": "Parts - trim"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7418-LS"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5557.30",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5557.30"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 379,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "0a02bc6977a15d71d179",
+  "cost_usd": 0.0013538,
+  "doc_id": "clea-013",
+  "error": null,
+  "latency_s": 1.938,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "894b65eebd652756",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-21417"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Thibodeaux"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "March 7, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$314.07",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$432.69",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$2059.55",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$773.86",
+        "description": "Anaesthesia"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9632-DY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3580.17",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$2806.31"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 374,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "0ad0fd03bbcfb73a31e1",
+  "cost_usd": 0.0014463,
+  "doc_id": "clea-005",
+  "error": null,
+  "latency_s": 2.32,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "89b9b414d2010e9f",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-40602"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Oscar Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "January 19, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1986.44 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "629.59 USD",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "2064.64 USD",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "875.93 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "1344.81 USD",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1205-GV"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6901.41",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "6901.41 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 411,
+    "thinking_tokens": 0
+  }
+}

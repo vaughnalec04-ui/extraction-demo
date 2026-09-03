@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "427dc6f958db0edd03e9",
+  "cost_usd": 0.000976,
+  "doc_id": "clea-016",
+  "error": null,
+  "latency_s": 5.007,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "e49cfa875833dd0e",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-89356"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Nadia Okonkwo"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "February 14, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1914.86 USD",
+        "description": "Parts - body panel"
+      },
+      {
+        "amount": "2113.41 USD",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "1255.15 USD",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "561.43 USD",
+        "description": "Labour - refinish"
+      },
+      {
+        "amount": "267.69 USD",
+        "description": "Paint materials"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2378-VT"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6112.54",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "6112.54 USD"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 418,
+    "thinking_tokens": 0
+  }
+}

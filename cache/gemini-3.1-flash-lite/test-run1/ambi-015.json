@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "bf6c247645428f478f12",
+  "cost_usd": 0.0008725,
+  "doc_id": "ambi-015",
+  "error": null,
+  "latency_s": 2.601,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "fa1608ade1a664de",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-34492"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Ingrid Novotny"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "August 22, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$396.21",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$975.97",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$1,800.18",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-6589-RH"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Trellis Road Chiropractic"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3172.36",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3,172.36"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 349,
+    "thinking_tokens": 0
+  }
+}

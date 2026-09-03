@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "a02453ca64d0a3133926",
+  "cost_usd": 0.0012838,
+  "doc_id": "inco-004",
+  "error": null,
+  "latency_s": 2.211,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "b32dcd956bbf1c34",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-78634"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Yolanda Thibodeaux"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [
+      {
+        "amount": "1113.64 USD",
+        "description": "Labour - refinish"
+      },
+      {
+        "amount": "1769.51 USD",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "221.99 USD",
+        "description": "Paint materials"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1407-GC"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3105.14",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3105.14 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 346,
+    "thinking_tokens": 0
+  }
+}

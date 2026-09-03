@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "d691bdba8b3536c13c5d",
+  "cost_usd": 0.000859,
+  "doc_id": "degr-003",
+  "error": null,
+  "latency_s": 1.653,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "6d19233898611e55",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-64559"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Oscar Sandoval"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "17 Aug 2026"
+    },
+    "line_items": [
+      {
+        "amount": "599.20",
+        "description": "Professional services"
+      },
+      {
+        "amount": "334.54",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "174.11",
+        "description": "Physical therapy unit"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2739-EE"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "1107.85",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$1107.85"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 340,
+    "thinking_tokens": 0
+  }
+}

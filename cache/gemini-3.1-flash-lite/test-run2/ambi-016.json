@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "9b0225bac086bd606de8",
+  "cost_usd": 0.0008755,
+  "doc_id": "ambi-016",
+  "error": null,
+  "latency_s": 2.053,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "0099d0d7eba5771f",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-83243"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Dimitri Okonkwo"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "04/23/2026"
+    },
+    "line_items": [
+      {
+        "amount": "1292.08",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "212.58",
+        "description": "Sublet - glass"
+      },
+      {
+        "amount": "837.09",
+        "description": "Labour - bodywork"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-1990-XR"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2341.75",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "2341.75"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 351,
+    "thinking_tokens": 0
+  }
+}

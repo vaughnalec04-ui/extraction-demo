@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "cf2d00239792789f7fcb",
+  "cost_usd": 0.000868,
+  "doc_id": "clea-018",
+  "error": null,
+  "latency_s": 1.634,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "1d12137bfaf886ea",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-28747"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Delphine Mwangi"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "01/17/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$793.01",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$855.77",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "$1363.58",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-6163-VE"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3012.36",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3012.36"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 346,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "bf86acb55a4c509cbb66",
+  "cost_usd": 0.000853,
+  "doc_id": "inco-001",
+  "error": null,
+  "latency_s": 3.537,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "68bc46094452fe5b",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-43894"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Anton Okonkwo"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "February 19, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$710.85",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$925.30",
+        "description": "Professional services"
+      },
+      {
+        "amount": "$1117.39",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2753.54",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$1636.15"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 336,
+    "thinking_tokens": 0
+  }
+}

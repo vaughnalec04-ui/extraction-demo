@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "94f3623b20ff38793b3f",
+  "cost_usd": 0.0009565,
+  "doc_id": "inco-016",
+  "error": null,
+  "latency_s": 4.981,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "62421c59c615930c",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-89734"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-02-22"
+    },
+    "line_items": [
+      {
+        "amount": "$968.53",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "$578.69",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "$116.02",
+        "description": "Labour - refinish"
+      },
+      {
+        "amount": "$271.37",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "$1410.78",
+        "description": "Parts - body panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7652-PH"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3345.39",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$3345.39"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 405,
+    "thinking_tokens": 0
+  }
+}

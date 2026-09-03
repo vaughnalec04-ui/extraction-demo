@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "91c864c811802996a2de",
+  "cost_usd": 0.0008935,
+  "doc_id": "inco-015",
+  "error": null,
+  "latency_s": 3.068,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "849267ac37aa9562",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-61781"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Delphine Rasmussen"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [
+      {
+        "amount": "$171.86",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "$1848.83",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$194.86",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$2362.07",
+        "description": "Anaesthesia"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5186-ZY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4577.62",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$4577.62"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 363,
+    "thinking_tokens": 0
+  }
+}

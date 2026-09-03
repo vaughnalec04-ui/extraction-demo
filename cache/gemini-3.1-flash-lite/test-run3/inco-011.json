@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "721f319a2a36db1bf7e4",
+  "cost_usd": 0.0008515,
+  "doc_id": "inco-011",
+  "error": null,
+  "latency_s": 3.711,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "cf1a95e305750538",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-99115"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Priya Achebe"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "line_items": [
+      {
+        "amount": "1997.48",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "2256.57",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "533.66",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9229-JY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Harbor Point Imaging Center"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "4787.71",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "5687.71"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 335,
+    "thinking_tokens": 0
+  }
+}

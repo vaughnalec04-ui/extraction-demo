@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "7ad6849f30382b004355",
+  "cost_usd": 0.0008725,
+  "doc_id": "degr-014",
+  "error": null,
+  "latency_s": 1.724,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "6efda42103888396",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-12328"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Dolores Hargreaves"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "March 26, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "18.20 USD",
+        "description": "Professional services"
+      },
+      {
+        "amount": "1696.57 USD",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "1529.75 USD",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2835-WT"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Summit Ridge Collision Repair"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3244.52",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3244.52 USD"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 349,
+    "thinking_tokens": 0
+  }
+}

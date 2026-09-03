@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "1e1deabd92d521963bb2",
+  "cost_usd": 0.0009685,
+  "doc_id": "ambi-012",
+  "error": null,
+  "latency_s": 3.055,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "0f78a34a28da4f84",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-24561"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Yolanda Bhattacharya"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "01/19/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$713.58",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "$297.16",
+        "description": "Parts - trim"
+      },
+      {
+        "amount": "$1,681.98",
+        "description": "Parts - body panel"
+      },
+      {
+        "amount": "$578.01",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "$1,793.52",
+        "description": "Hazardous waste disposal"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9739-BN"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5064.25",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5,216.99"
+    }
+  },
+  "run": 2,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 413,
+    "thinking_tokens": 0
+  }
+}

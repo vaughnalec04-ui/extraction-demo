@@ -1,0 +1,20 @@
+# secrets
+.env
+.env.local
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+
+# local scratch
+scratch/
+*.log
+.DS_Store
+
+# packaging
+build/
+dist/
+.eggs/

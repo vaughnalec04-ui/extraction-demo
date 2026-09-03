@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "5ad5dd0885bc1b50b23c",
+  "cost_usd": 0.0014388,
+  "doc_id": "clea-019",
+  "error": null,
+  "latency_s": 2.016,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "ff88789368023aab",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-94684"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Nadia Marchetti"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "02/13/2026"
+    },
+    "line_items": [
+      {
+        "amount": "$2,251.78",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "$329.50",
+        "description": "Facility fee"
+      },
+      {
+        "amount": "$2,291.43",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "$1,926.39",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "$1,694.68",
+        "description": "Diagnostic imaging"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9760-CL"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Summit Ridge Collision Repair"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "8493.78",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$8,493.78"
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 408,
+    "thinking_tokens": 0
+  }
+}

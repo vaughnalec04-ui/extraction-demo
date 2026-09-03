@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "90cb6b53e88027ec4df9",
+  "cost_usd": 0.0008755,
+  "doc_id": "clea-004",
+  "error": null,
+  "latency_s": 3.446,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "3032a1bf18e90033",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-27036"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Fenella Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "February 27, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "195.62 USD",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "725.36 USD",
+        "description": "Parts - body panel"
+      },
+      {
+        "amount": "1615.47 USD",
+        "description": "Sublet - glass"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-7730-EP"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2536.45",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "2536.45 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 351,
+    "thinking_tokens": 0
+  }
+}

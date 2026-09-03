@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "4a5043793b58421d666e",
+  "cost_usd": 0.000973,
+  "doc_id": "ambi-008",
+  "error": null,
+  "latency_s": 3.632,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "f223735dc05cc39d",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-30105"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Delphine Bhattacharya"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "02/05/2026"
+    },
+    "line_items": [
+      {
+        "amount": "1641.87 USD",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "800.20 USD",
+        "description": "Labour - refinish"
+      },
+      {
+        "amount": "2190.86 USD",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "2302.07 USD",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "1986.07 USD",
+        "description": "Paint materials"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5596-HT"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Cedar Vale Family Practice"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "8921.07",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "8921.07 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 416,
+    "thinking_tokens": 0
+  }
+}

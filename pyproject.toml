@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meridian-extraction"
+version = "0.1.0"
+description = "Field extraction and evaluation harness for scanned claims documents, on the Gemini API."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Vaughn Nahapetian"}]
+classifiers = ["License :: OSI Approved :: MIT License"]
+dependencies = [
+    "google-genai==1.47.0",
+    "Pillow==11.3.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2"]
+
+[project.urls]
+Repository = "https://github.com/vaughnalec04-ui/extraction-demo"
+
+[project.scripts]
+meridian-generate = "meridian.dataset.generate:main"
+meridian-extract = "meridian.extract:main"
+meridian-evaluate = "meridian.harness.run:main"
+meridian-throughput = "meridian.throughput:main"
+meridian-batch = "meridian.batch:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

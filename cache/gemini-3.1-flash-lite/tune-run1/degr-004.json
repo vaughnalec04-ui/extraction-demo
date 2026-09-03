@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "5effb0a2e7c21eebbc2a",
+  "cost_usd": 0.000871,
+  "doc_id": "degr-004",
+  "error": null,
+  "latency_s": 3.181,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "79b7b548b40956c4",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-12981"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Sandoval"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "February 15, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$2254.95",
+        "description": "Parts - trim"
+      },
+      {
+        "amount": "$1704.79",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "$1527.66",
+        "description": "Labour - bodywork"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-3466-XY"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Meadowlark Physical Therapy"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5487.40",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5487.40"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 348,
+    "thinking_tokens": 0
+  }
+}

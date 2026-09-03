@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "4027037bef1fa29ff7a2",
+  "cost_usd": 0.0013538,
+  "doc_id": "inco-008",
+  "error": null,
+  "latency_s": 4.965,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "b8ead3477a779e34",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-35146"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": null
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "2026-05-13"
+    },
+    "line_items": [
+      {
+        "amount": "$294.11",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "$748.85",
+        "description": "Hazardous waste disposal"
+      },
+      {
+        "amount": "$212.80",
+        "description": "Labour - bodywork"
+      },
+      {
+        "amount": "$748.91",
+        "description": "Parts - trim"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-2835-HM"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Summit Ridge Collision Repair"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "2004.67",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$2,004.67"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 374,
+    "thinking_tokens": 0
+  }
+}

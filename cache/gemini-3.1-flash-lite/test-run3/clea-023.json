@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "80ab1065a67a5daac965",
+  "cost_usd": 0.0009085,
+  "doc_id": "clea-023",
+  "error": null,
+  "latency_s": 2.278,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "0aef8bc2aadd08e7",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-97431"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Tomas Ferraro"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "July 18, 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1608.48",
+        "description": "Laboratory panel"
+      },
+      {
+        "amount": "2047.37",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "1939.93",
+        "description": "Professional services"
+      },
+      {
+        "amount": "787.10",
+        "description": "Materials / supplies"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-9473-XM"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Cedar Vale Family Practice"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "6382.88",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "6292.88"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 373,
+    "thinking_tokens": 0
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "7c6eca1224147a8a7c98",
+  "cost_usd": 0.0008695,
+  "doc_id": "clea-017",
+  "error": null,
+  "latency_s": 3.269,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "dd502dbcd7d7069b",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-60247"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Yolanda Kowalczyk"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "10 May 2026"
+    },
+    "line_items": [
+      {
+        "amount": "$2014.05",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "$1406.66",
+        "description": "Physical therapy unit"
+      },
+      {
+        "amount": "$1971.29",
+        "description": "Professional services"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-6953-PG"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Riverside Emergency Physicians"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "5392.00",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "$5392.00"
+    }
+  },
+  "run": 3,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 347,
+    "thinking_tokens": 0
+  }
+}

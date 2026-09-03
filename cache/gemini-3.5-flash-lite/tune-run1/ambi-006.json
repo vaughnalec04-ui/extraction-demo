@@ -1,0 +1,71 @@
+{
+  "attempts": 1,
+  "cache_key": "cb875e4b4dd88697cae8",
+  "cost_usd": 0.0013663,
+  "doc_id": "ambi-006",
+  "error": null,
+  "latency_s": 2.388,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "453efc63eabbf59a",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-39021"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Reuben Castellanos"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "02/26/2026"
+    },
+    "line_items": [
+      {
+        "amount": "638.68 USD",
+        "description": "Diagnostic imaging"
+      },
+      {
+        "amount": "183.04 USD",
+        "description": "Durable medical equipment"
+      },
+      {
+        "amount": "2367.26 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "678.49 USD",
+        "description": "Laboratory panel"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-6094-LV"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Kingsbury Motor Works"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "3867.47",
+      "reconciles": true
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": "3867.47 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 379,
+    "thinking_tokens": 0
+  }
+}

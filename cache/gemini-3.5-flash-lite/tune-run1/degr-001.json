@@ -1,0 +1,67 @@
+{
+  "attempts": 1,
+  "cache_key": "9a1692c1257034d76efb",
+  "cost_usd": 0.0013088,
+  "doc_id": "degr-001",
+  "error": null,
+  "latency_s": 19.248,
+  "model": "gemini-3.5-flash-lite",
+  "request": {
+    "image_sha": "2e02dba5cd9982e8",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 0.99,
+      "value": "CLM-53519"
+    },
+    "claimant_name": {
+      "confidence": 0.99,
+      "value": "Tomas Hargreaves"
+    },
+    "date_of_service": {
+      "confidence": 0.99,
+      "value": "7 Aug 2026"
+    },
+    "line_items": [
+      {
+        "amount": "60.63 USD",
+        "description": "Anaesthesia"
+      },
+      {
+        "amount": "2211.77 USD",
+        "description": "Materials / supplies"
+      },
+      {
+        "amount": "1569.80 USD",
+        "description": "Durable medical equipment"
+      }
+    ],
+    "policy_number": {
+      "confidence": 0.99,
+      "value": "MP-4012-XT"
+    },
+    "provider_name": {
+      "confidence": 0.99,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 0.99,
+      "line_items_sum": "3842.20",
+      "reconciles": false
+    },
+    "total_amount": {
+      "confidence": 0.99,
+      "value": "2272.40 USD"
+    }
+  },
+  "run": 1,
+  "split": "tune",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 356,
+    "thinking_tokens": 0
+  }
+}

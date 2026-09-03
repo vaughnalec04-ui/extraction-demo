@@ -1,0 +1,75 @@
+{
+  "attempts": 1,
+  "cache_key": "e624aab46258ad315f8c",
+  "cost_usd": 0.000952,
+  "doc_id": "inco-012",
+  "error": null,
+  "latency_s": 3.916,
+  "model": "gemini-3.1-flash-lite",
+  "request": {
+    "image_sha": "7dd02b165845cd62",
+    "prompt_version": "v2-reconciliation",
+    "schema_sha": "dfffeb80741089d0",
+    "temperature": 0.0
+  },
+  "response": {
+    "claim_id": {
+      "confidence": 1.0,
+      "value": "CLM-96961"
+    },
+    "claimant_name": {
+      "confidence": 1.0,
+      "value": "Hugo Boateng"
+    },
+    "date_of_service": {
+      "confidence": 1.0,
+      "value": "15 Jun 2026"
+    },
+    "line_items": [
+      {
+        "amount": "1428.68",
+        "description": "Towing / recovery"
+      },
+      {
+        "amount": "1710.16",
+        "description": "Parts - trim"
+      },
+      {
+        "amount": "1959.73",
+        "description": "Sublet - glass"
+      },
+      {
+        "amount": "2044.99",
+        "description": "Paint materials"
+      },
+      {
+        "amount": "1636.67",
+        "description": "Labour - refinish"
+      }
+    ],
+    "policy_number": {
+      "confidence": 1.0,
+      "value": "MP-5515-EJ"
+    },
+    "provider_name": {
+      "confidence": 1.0,
+      "value": "Blackwell Auto Body & Frame"
+    },
+    "reconciliation": {
+      "confidence": 1.0,
+      "line_items_sum": "8780.23",
+      "reconciles": null
+    },
+    "total_amount": {
+      "confidence": 1.0,
+      "value": null
+    }
+  },
+  "run": 1,
+  "split": "test",
+  "usage": {
+    "input_tokens": 1396,
+    "output_tokens": 402,
+    "thinking_tokens": 0
+  }
+}

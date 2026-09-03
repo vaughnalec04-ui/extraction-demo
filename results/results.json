@@ -1,0 +1,4201 @@
+{
+  "configs": {
+    "cascade": {
+      "runs": [
+        {
+          "api_call_errors": 0,
+          "by_field": {
+            "claim_id": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "claimant_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "date_of_service": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.479823,
+                "low": 0.200845,
+                "n": 40,
+                "point": 0.325
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "policy_number": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 1
+              },
+              "exact_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            },
+            "provider_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "total_amount": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 1
+              },
+              "exact_match_on_covered": {
+                "high": 0.290723,
+                "low": 0.070612,
+                "n": 40,
+                "point": 0.15
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            }
+          },
+          "by_stratum": {
+            "ambiguous": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.83434,
+                "low": 0.59003,
+                "n": 48,
+                "point": 0.729167
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "clean": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.776744,
+                "low": 0.566077,
+                "n": 72,
+                "point": 0.680556
+              },
+              "n_instances": 72,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "degraded": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.65762,
+                "low": 0.0,
+                "n": 2,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.139757,
+                "low": 0.011502,
+                "n": 48,
+                "point": 0.041667
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 2
+              },
+              "exact_match_on_covered": {
+                "high": 0.783232,
+                "low": 0.525401,
+                "n": 48,
+                "point": 0.666667
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "normalized_match_on_covered": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "would_be_wrong_total": 2
+            },
+            "incomplete": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.882697,
+                "low": 0.657411,
+                "n": 48,
+                "point": 0.791667
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "ood": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.137976,
+                "low": 0.0,
+                "n": 24,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.137976,
+                "low": 0.0,
+                "n": 24,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "n_instances": 24,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            }
+          },
+          "calibration": {
+            "buckets": [
+              {
+                "bucket": "0.0-0.1",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.1-0.2",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.2-0.3",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.3-0.4",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.4-0.5",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.5-0.6",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.6-0.7",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.7-0.8",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.793451,
+                  "low": 0.0,
+                  "n": 1,
+                  "point": 0.0
+                },
+                "bucket": "0.8-0.9",
+                "gap": 0.9,
+                "mean_confidence": 0.9,
+                "n": 1,
+                "observed_accuracy": 0.0
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.999261,
+                  "low": 0.976684,
+                  "n": 239,
+                  "point": 0.995816
+                },
+                "bucket": "0.9-1.0",
+                "gap": 0.002636,
+                "mean_confidence": 0.998452,
+                "n": 239,
+                "observed_accuracy": 0.995816
+              }
+            ],
+            "degenerate": false,
+            "ece": 0.006375,
+            "occupied_buckets": 2
+          },
+          "config": "cascade",
+          "cost": {
+            "mean_usd_per_doc": 0.00131936,
+            "monthly_usd_at_40k_docs": 52.77,
+            "total_usd": 0.052775
+          },
+          "escalation_rate": 0.0,
+          "latency": {
+            "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
+            "mean_s": 2.764,
+            "p50_s": 2.171,
+            "p95_s": 8.219
+          },
+          "n_documents": 40,
+          "overall": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.015754,
+              "low": 0.0,
+              "n": 240,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.65762,
+              "low": 0.0,
+              "n": 2,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.984246,
+              "n": 240,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.02987,
+              "low": 0.002288,
+              "n": 240,
+              "point": 0.008333
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 2
+            },
+            "exact_match_on_covered": {
+              "high": 0.792931,
+              "low": 0.682788,
+              "n": 240,
+              "point": 0.741667
+            },
+            "n_instances": 240,
+            "normalized_match_on_all": {
+              "high": 0.997712,
+              "low": 0.97013,
+              "n": 240,
+              "point": 0.991667
+            },
+            "normalized_match_on_covered": {
+              "high": 0.997712,
+              "low": 0.97013,
+              "n": 240,
+              "point": 0.991667
+            },
+            "would_be_wrong_total": 2
+          },
+          "payment_critical": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.087622,
+              "low": 0.0,
+              "n": 40,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.793451,
+              "low": 0.0,
+              "n": 1,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.912378,
+              "n": 40,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.128814,
+              "low": 0.004427,
+              "n": 40,
+              "point": 0.025
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 1
+            },
+            "exact_match_on_covered": {
+              "high": 0.290723,
+              "low": 0.070612,
+              "n": 40,
+              "point": 0.15
+            },
+            "n_instances": 40,
+            "normalized_match_on_all": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "normalized_match_on_covered": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "would_be_wrong_total": 1
+          },
+          "reconciliation": {
+            "bad_claim_recall_code": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "bad_claim_recall_model": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "code_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "line_item_count_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "line_item_sum_accuracy": {
+              "high": 0.969534,
+              "low": 0.770395,
+              "n": 34,
+              "point": 0.911765
+            },
+            "model_arithmetic_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "model_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "n": 34,
+            "n_inconsistent_claims": 12
+          },
+          "run": 1,
+          "split": "test",
+          "thresholds": {
+            "tau_abstain": 0.0,
+            "tau_escalate": 0.0
+          }
+        }
+      ],
+      "thresholds_from_tune": {
+        "bar_met_on_tune": true,
+        "tau_abstain": 0.0,
+        "tau_escalate": 0.0,
+        "tune_accuracy_on_covered": 0.9875,
+        "tune_coverage": 1.0
+      },
+      "variance": {
+        "abstention_precision": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "runs": [],
+          "spread": null
+        },
+        "cost_per_doc": {
+          "max": 0.00131936,
+          "median": 0.001319,
+          "min": 0.00131936,
+          "runs": [
+            0.00131936
+          ],
+          "spread": 0.0
+        },
+        "coverage": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "ece": {
+          "max": 0.006375,
+          "median": 0.006375,
+          "min": 0.006375,
+          "runs": [
+            0.006375
+          ],
+          "spread": 0.0
+        },
+        "normalized_match_on_covered": {
+          "max": 0.991667,
+          "median": 0.991667,
+          "min": 0.991667,
+          "runs": [
+            0.991667
+          ],
+          "spread": 0.0
+        },
+        "p50_latency_s": {
+          "max": 2.171,
+          "median": 2.171,
+          "min": 2.171,
+          "runs": [
+            2.171
+          ],
+          "spread": 0.0
+        },
+        "payment_critical_accuracy": {
+          "max": 0.975,
+          "median": 0.975,
+          "min": 0.975,
+          "runs": [
+            0.975
+          ],
+          "spread": 0.0
+        },
+        "recon_code_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "recon_model_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        }
+      }
+    },
+    "double_key": {
+      "runs": [
+        {
+          "api_call_errors": 0,
+          "by_field": {
+            "claim_id": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "claimant_name": {
+              "abstention_precision": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "abstention_rate": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "error_rate_on_covered": {
+                "high": 0.089667,
+                "low": 0.0,
+                "n": 39,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.910333,
+                "n": 39,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.910333,
+                "n": 39,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "date_of_service": {
+              "abstention_precision": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "abstention_rate": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "error_rate_on_covered": {
+                "high": 0.089667,
+                "low": 0.0,
+                "n": 39,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.464213,
+                "low": 0.185659,
+                "n": 39,
+                "point": 0.307692
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.910333,
+                "n": 39,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "policy_number": {
+              "abstention_precision": {
+                "high": 0.79234,
+                "low": 0.061492,
+                "n": 3,
+                "point": 0.333333
+              },
+              "abstention_rate": {
+                "high": 0.198642,
+                "low": 0.025836,
+                "n": 40,
+                "point": 0.075
+              },
+              "abstention_recall": {
+                "high": 1.0,
+                "low": 0.206549,
+                "n": 1,
+                "point": 1.0
+              },
+              "coverage": {
+                "high": 0.974164,
+                "low": 0.801358,
+                "n": 40,
+                "point": 0.925
+              },
+              "error_rate_on_covered": {
+                "high": 0.094058,
+                "low": 0.0,
+                "n": 37,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.905942,
+                "n": 37,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.974164,
+                "low": 0.801358,
+                "n": 40,
+                "point": 0.925
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.905942,
+                "n": 37,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 1
+            },
+            "provider_name": {
+              "abstention_precision": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "abstention_rate": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "error_rate_on_covered": {
+                "high": 0.089667,
+                "low": 0.0,
+                "n": 39,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.910333,
+                "n": 39,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.910333,
+                "n": 39,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "total_amount": {
+              "abstention_precision": {
+                "high": 0.905469,
+                "low": 0.094531,
+                "n": 2,
+                "point": 0.5
+              },
+              "abstention_rate": {
+                "high": 0.165039,
+                "low": 0.013821,
+                "n": 40,
+                "point": 0.05
+              },
+              "abstention_recall": {
+                "high": 1.0,
+                "low": 0.206549,
+                "n": 1,
+                "point": 1.0
+              },
+              "coverage": {
+                "high": 0.986179,
+                "low": 0.834961,
+                "n": 40,
+                "point": 0.95
+              },
+              "error_rate_on_covered": {
+                "high": 0.09181,
+                "low": 0.0,
+                "n": 38,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.273269,
+                "low": 0.057539,
+                "n": 38,
+                "point": 0.131579
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.986179,
+                "low": 0.834961,
+                "n": 40,
+                "point": 0.95
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.90819,
+                "n": 38,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 1
+            }
+          },
+          "by_stratum": {
+            "ambiguous": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.83434,
+                "low": 0.59003,
+                "n": 48,
+                "point": 0.729167
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "clean": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.776744,
+                "low": 0.566077,
+                "n": 72,
+                "point": 0.680556
+              },
+              "n_instances": 72,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "degraded": {
+              "abstention_precision": {
+                "high": 0.938508,
+                "low": 0.20766,
+                "n": 3,
+                "point": 0.666667
+              },
+              "abstention_rate": {
+                "high": 0.168354,
+                "low": 0.021483,
+                "n": 48,
+                "point": 0.0625
+              },
+              "abstention_recall": {
+                "high": 1.0,
+                "low": 0.34238,
+                "n": 2,
+                "point": 1.0
+              },
+              "coverage": {
+                "high": 0.978517,
+                "low": 0.831646,
+                "n": 48,
+                "point": 0.9375
+              },
+              "error_rate_on_covered": {
+                "high": 0.078652,
+                "low": 0.0,
+                "n": 45,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.804713,
+                "low": 0.543352,
+                "n": 45,
+                "point": 0.688889
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 0.978517,
+                "low": 0.831646,
+                "n": 48,
+                "point": 0.9375
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.921348,
+                "n": 45,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 2
+            },
+            "incomplete": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.882697,
+                "low": 0.657411,
+                "n": 48,
+                "point": 0.791667
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "ood": {
+              "abstention_precision": {
+                "high": 0.434482,
+                "low": 0.0,
+                "n": 5,
+                "point": 0.0
+              },
+              "abstention_rate": {
+                "high": 0.404705,
+                "low": 0.092448,
+                "n": 24,
+                "point": 0.208333
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 0.907552,
+                "low": 0.595295,
+                "n": 24,
+                "point": 0.791667
+              },
+              "error_rate_on_covered": {
+                "high": 0.168179,
+                "low": 0.0,
+                "n": 19,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.831821,
+                "n": 19,
+                "point": 1.0
+              },
+              "n_instances": 24,
+              "normalized_match_on_all": {
+                "high": 0.907552,
+                "low": 0.595295,
+                "n": 24,
+                "point": 0.791667
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.831821,
+                "n": 19,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            }
+          },
+          "calibration": {
+            "buckets": [
+              {
+                "bucket": "0.0-0.1",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.1-0.2",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.2-0.3",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.3-0.4",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.4-0.5",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.5-0.6",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.6-0.7",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.7-0.8",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.793451,
+                  "low": 0.0,
+                  "n": 1,
+                  "point": 0.0
+                },
+                "bucket": "0.8-0.9",
+                "gap": 0.9,
+                "mean_confidence": 0.9,
+                "n": 1,
+                "observed_accuracy": 0.0
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.999261,
+                  "low": 0.976684,
+                  "n": 239,
+                  "point": 0.995816
+                },
+                "bucket": "0.9-1.0",
+                "gap": 0.002636,
+                "mean_confidence": 0.998452,
+                "n": 239,
+                "observed_accuracy": 0.995816
+              }
+            ],
+            "degenerate": false,
+            "ece": 0.006375,
+            "occupied_buckets": 2
+          },
+          "config": "double_key",
+          "cost": {
+            "mean_usd_per_doc": 0.00220855,
+            "monthly_usd_at_40k_docs": 88.34,
+            "total_usd": 0.088342
+          },
+          "escalation_rate": null,
+          "latency": {
+            "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
+            "mean_s": 6.001,
+            "p50_s": 5.583,
+            "p95_s": 10.567
+          },
+          "n_documents": 40,
+          "overall": {
+            "abstention_precision": {
+              "high": 0.590725,
+              "low": 0.071479,
+              "n": 8,
+              "point": 0.25
+            },
+            "abstention_rate": {
+              "high": 0.064385,
+              "low": 0.016985,
+              "n": 240,
+              "point": 0.033333
+            },
+            "abstention_recall": {
+              "high": 1.0,
+              "low": 0.34238,
+              "n": 2,
+              "point": 1.0
+            },
+            "coverage": {
+              "high": 0.983015,
+              "low": 0.935615,
+              "n": 240,
+              "point": 0.966667
+            },
+            "error_rate_on_covered": {
+              "high": 0.016288,
+              "low": 0.0,
+              "n": 232,
+              "point": 0.0
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 0
+            },
+            "exact_match_on_covered": {
+              "high": 0.79347,
+              "low": 0.681425,
+              "n": 232,
+              "point": 0.741379
+            },
+            "n_instances": 240,
+            "normalized_match_on_all": {
+              "high": 0.983015,
+              "low": 0.935615,
+              "n": 240,
+              "point": 0.966667
+            },
+            "normalized_match_on_covered": {
+              "high": 1.0,
+              "low": 0.983712,
+              "n": 232,
+              "point": 1.0
+            },
+            "would_be_wrong_total": 2
+          },
+          "payment_critical": {
+            "abstention_precision": {
+              "high": 0.905469,
+              "low": 0.094531,
+              "n": 2,
+              "point": 0.5
+            },
+            "abstention_rate": {
+              "high": 0.165039,
+              "low": 0.013821,
+              "n": 40,
+              "point": 0.05
+            },
+            "abstention_recall": {
+              "high": 1.0,
+              "low": 0.206549,
+              "n": 1,
+              "point": 1.0
+            },
+            "coverage": {
+              "high": 0.986179,
+              "low": 0.834961,
+              "n": 40,
+              "point": 0.95
+            },
+            "error_rate_on_covered": {
+              "high": 0.09181,
+              "low": 0.0,
+              "n": 38,
+              "point": 0.0
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 0
+            },
+            "exact_match_on_covered": {
+              "high": 0.273269,
+              "low": 0.057539,
+              "n": 38,
+              "point": 0.131579
+            },
+            "n_instances": 40,
+            "normalized_match_on_all": {
+              "high": 0.986179,
+              "low": 0.834961,
+              "n": 40,
+              "point": 0.95
+            },
+            "normalized_match_on_covered": {
+              "high": 1.0,
+              "low": 0.90819,
+              "n": 38,
+              "point": 1.0
+            },
+            "would_be_wrong_total": 1
+          },
+          "reconciliation": {
+            "bad_claim_recall_code": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "bad_claim_recall_model": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "code_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "line_item_count_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "line_item_sum_accuracy": {
+              "high": 0.969534,
+              "low": 0.770395,
+              "n": 34,
+              "point": 0.911765
+            },
+            "model_arithmetic_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "model_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "n": 34,
+            "n_inconsistent_claims": 12
+          },
+          "run": 1,
+          "split": "test",
+          "thresholds": {
+            "tau_abstain": 0.0,
+            "tau_escalate": 0.0
+          }
+        }
+      ],
+      "thresholds_from_tune": {
+        "bar_met_on_tune": true,
+        "tau_abstain": 0.0,
+        "tau_escalate": 0.0,
+        "tune_accuracy_on_covered": 0.987395,
+        "tune_coverage": 0.991667
+      },
+      "variance": {
+        "abstention_precision": {
+          "max": 0.25,
+          "median": 0.25,
+          "min": 0.25,
+          "runs": [
+            0.25
+          ],
+          "spread": 0.0
+        },
+        "cost_per_doc": {
+          "max": 0.00220855,
+          "median": 0.002209,
+          "min": 0.00220855,
+          "runs": [
+            0.00220855
+          ],
+          "spread": 0.0
+        },
+        "coverage": {
+          "max": 0.966667,
+          "median": 0.966667,
+          "min": 0.966667,
+          "runs": [
+            0.966667
+          ],
+          "spread": 0.0
+        },
+        "ece": {
+          "max": 0.006375,
+          "median": 0.006375,
+          "min": 0.006375,
+          "runs": [
+            0.006375
+          ],
+          "spread": 0.0
+        },
+        "normalized_match_on_covered": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "p50_latency_s": {
+          "max": 5.583,
+          "median": 5.583,
+          "min": 5.583,
+          "runs": [
+            5.583
+          ],
+          "spread": 0.0
+        },
+        "payment_critical_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "recon_code_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "recon_model_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        }
+      }
+    },
+    "primary_solo": {
+      "runs": [
+        {
+          "api_call_errors": 0,
+          "by_field": {
+            "claim_id": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "claimant_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "date_of_service": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.479823,
+                "low": 0.200845,
+                "n": 40,
+                "point": 0.325
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "policy_number": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 1
+              },
+              "exact_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            },
+            "provider_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "total_amount": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 1
+              },
+              "exact_match_on_covered": {
+                "high": 0.290723,
+                "low": 0.070612,
+                "n": 40,
+                "point": 0.15
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            }
+          },
+          "by_stratum": {
+            "ambiguous": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.83434,
+                "low": 0.59003,
+                "n": 48,
+                "point": 0.729167
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "clean": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.776744,
+                "low": 0.566077,
+                "n": 72,
+                "point": 0.680556
+              },
+              "n_instances": 72,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "degraded": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.65762,
+                "low": 0.0,
+                "n": 2,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.139757,
+                "low": 0.011502,
+                "n": 48,
+                "point": 0.041667
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 2
+              },
+              "exact_match_on_covered": {
+                "high": 0.783232,
+                "low": 0.525401,
+                "n": 48,
+                "point": 0.666667
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "normalized_match_on_covered": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "would_be_wrong_total": 2
+            },
+            "incomplete": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.882697,
+                "low": 0.657411,
+                "n": 48,
+                "point": 0.791667
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "ood": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.137976,
+                "low": 0.0,
+                "n": 24,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.137976,
+                "low": 0.0,
+                "n": 24,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "n_instances": 24,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            }
+          },
+          "calibration": {
+            "buckets": [
+              {
+                "bucket": "0.0-0.1",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.1-0.2",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.2-0.3",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.3-0.4",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.4-0.5",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.5-0.6",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.6-0.7",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.7-0.8",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.793451,
+                  "low": 0.0,
+                  "n": 1,
+                  "point": 0.0
+                },
+                "bucket": "0.8-0.9",
+                "gap": 0.9,
+                "mean_confidence": 0.9,
+                "n": 1,
+                "observed_accuracy": 0.0
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.999261,
+                  "low": 0.976684,
+                  "n": 239,
+                  "point": 0.995816
+                },
+                "bucket": "0.9-1.0",
+                "gap": 0.002636,
+                "mean_confidence": 0.998452,
+                "n": 239,
+                "observed_accuracy": 0.995816
+              }
+            ],
+            "degenerate": false,
+            "ece": 0.006375,
+            "occupied_buckets": 2
+          },
+          "config": "primary_solo",
+          "cost": {
+            "mean_usd_per_doc": 0.00131936,
+            "monthly_usd_at_40k_docs": 52.77,
+            "total_usd": 0.052775
+          },
+          "escalation_rate": null,
+          "latency": {
+            "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
+            "mean_s": 2.764,
+            "p50_s": 2.171,
+            "p95_s": 8.219
+          },
+          "n_documents": 40,
+          "overall": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.015754,
+              "low": 0.0,
+              "n": 240,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.65762,
+              "low": 0.0,
+              "n": 2,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.984246,
+              "n": 240,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.02987,
+              "low": 0.002288,
+              "n": 240,
+              "point": 0.008333
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 2
+            },
+            "exact_match_on_covered": {
+              "high": 0.792931,
+              "low": 0.682788,
+              "n": 240,
+              "point": 0.741667
+            },
+            "n_instances": 240,
+            "normalized_match_on_all": {
+              "high": 0.997712,
+              "low": 0.97013,
+              "n": 240,
+              "point": 0.991667
+            },
+            "normalized_match_on_covered": {
+              "high": 0.997712,
+              "low": 0.97013,
+              "n": 240,
+              "point": 0.991667
+            },
+            "would_be_wrong_total": 2
+          },
+          "payment_critical": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.087622,
+              "low": 0.0,
+              "n": 40,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.793451,
+              "low": 0.0,
+              "n": 1,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.912378,
+              "n": 40,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.128814,
+              "low": 0.004427,
+              "n": 40,
+              "point": 0.025
+            },
+            "errors": {
+              "hallucinated_field": 0,
+              "missed_field": 0,
+              "wrong_value": 1
+            },
+            "exact_match_on_covered": {
+              "high": 0.290723,
+              "low": 0.070612,
+              "n": 40,
+              "point": 0.15
+            },
+            "n_instances": 40,
+            "normalized_match_on_all": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "normalized_match_on_covered": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "would_be_wrong_total": 1
+          },
+          "reconciliation": {
+            "bad_claim_recall_code": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "bad_claim_recall_model": {
+              "high": 1.0,
+              "low": 0.757506,
+              "n": 12,
+              "point": 1.0
+            },
+            "code_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "line_item_count_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "line_item_sum_accuracy": {
+              "high": 0.969534,
+              "low": 0.770395,
+              "n": 34,
+              "point": 0.911765
+            },
+            "model_arithmetic_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "model_verdict": {
+              "accuracy": {
+                "high": 1.0,
+                "low": 0.898485,
+                "n": 34,
+                "point": 1.0
+              },
+              "false_flag": 0,
+              "false_pass": 0,
+              "no_verdict": 0
+            },
+            "n": 34,
+            "n_inconsistent_claims": 12
+          },
+          "run": 1,
+          "split": "test",
+          "thresholds": {
+            "tau_abstain": 0.0,
+            "tau_escalate": 0.0
+          }
+        }
+      ],
+      "thresholds_from_tune": {
+        "bar_met_on_tune": true,
+        "tau_abstain": 0.0,
+        "tau_escalate": 0.0,
+        "tune_accuracy_on_covered": 0.9875,
+        "tune_coverage": 1.0
+      },
+      "variance": {
+        "abstention_precision": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "runs": [],
+          "spread": null
+        },
+        "cost_per_doc": {
+          "max": 0.00131936,
+          "median": 0.001319,
+          "min": 0.00131936,
+          "runs": [
+            0.00131936
+          ],
+          "spread": 0.0
+        },
+        "coverage": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "ece": {
+          "max": 0.006375,
+          "median": 0.006375,
+          "min": 0.006375,
+          "runs": [
+            0.006375
+          ],
+          "spread": 0.0
+        },
+        "normalized_match_on_covered": {
+          "max": 0.991667,
+          "median": 0.991667,
+          "min": 0.991667,
+          "runs": [
+            0.991667
+          ],
+          "spread": 0.0
+        },
+        "p50_latency_s": {
+          "max": 2.171,
+          "median": 2.171,
+          "min": 2.171,
+          "runs": [
+            2.171
+          ],
+          "spread": 0.0
+        },
+        "payment_critical_accuracy": {
+          "max": 0.975,
+          "median": 0.975,
+          "min": 0.975,
+          "runs": [
+            0.975
+          ],
+          "spread": 0.0
+        },
+        "recon_code_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "recon_model_verdict_accuracy": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        }
+      }
+    },
+    "verifier_solo": {
+      "runs": [
+        {
+          "api_call_errors": 0,
+          "by_field": {
+            "claim_id": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "claimant_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 1,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            },
+            "date_of_service": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 1,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.4543,
+                "low": 0.180748,
+                "n": 40,
+                "point": 0.3
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            },
+            "policy_number": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.561497,
+                "low": 0.0,
+                "n": 3,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.198642,
+                "low": 0.025836,
+                "n": 40,
+                "point": 0.075
+              },
+              "errors": {
+                "hallucinated_field": 1,
+                "missed_field": 0,
+                "wrong_value": 2
+              },
+              "exact_match_on_covered": {
+                "high": 0.974164,
+                "low": 0.801358,
+                "n": 40,
+                "point": 0.925
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.974164,
+                "low": 0.801358,
+                "n": 40,
+                "point": 0.925
+              },
+              "normalized_match_on_covered": {
+                "high": 0.974164,
+                "low": 0.801358,
+                "n": 40,
+                "point": 0.925
+              },
+              "would_be_wrong_total": 3
+            },
+            "provider_name": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 1,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            },
+            "total_amount": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.087622,
+                "low": 0.0,
+                "n": 40,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.793451,
+                "low": 0.0,
+                "n": 1,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.912378,
+                "n": 40,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.128814,
+                "low": 0.004427,
+                "n": 40,
+                "point": 0.025
+              },
+              "errors": {
+                "hallucinated_field": 1,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.529676,
+                "low": 0.24223,
+                "n": 40,
+                "point": 0.375
+              },
+              "n_instances": 40,
+              "normalized_match_on_all": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "normalized_match_on_covered": {
+                "high": 0.995573,
+                "low": 0.871186,
+                "n": 40,
+                "point": 0.975
+              },
+              "would_be_wrong_total": 1
+            }
+          },
+          "by_stratum": {
+            "ambiguous": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.866922,
+                "low": 0.634607,
+                "n": 48,
+                "point": 0.770833
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "clean": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.050651,
+                "low": 0.0,
+                "n": 72,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.824062,
+                "low": 0.624241,
+                "n": 72,
+                "point": 0.736111
+              },
+              "n_instances": 72,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.949349,
+                "n": 72,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "degraded": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.65762,
+                "low": 0.0,
+                "n": 2,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.139757,
+                "low": 0.011502,
+                "n": 48,
+                "point": 0.041667
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 2
+              },
+              "exact_match_on_covered": {
+                "high": 0.800543,
+                "low": 0.546669,
+                "n": 48,
+                "point": 0.6875
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "normalized_match_on_covered": {
+                "high": 0.988498,
+                "low": 0.860243,
+                "n": 48,
+                "point": 0.958333
+              },
+              "would_be_wrong_total": 2
+            },
+            "incomplete": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.0741,
+                "low": 0.0,
+                "n": 48,
+                "point": 0.0
+              },
+              "errors": {
+                "hallucinated_field": 0,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.913045,
+                "low": 0.704222,
+                "n": 48,
+                "point": 0.833333
+              },
+              "n_instances": 48,
+              "normalized_match_on_all": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "normalized_match_on_covered": {
+                "high": 1.0,
+                "low": 0.9259,
+                "n": 48,
+                "point": 1.0
+              },
+              "would_be_wrong_total": 0
+            },
+            "ood": {
+              "abstention_precision": {
+                "high": null,
+                "low": null,
+                "n": 0,
+                "point": null
+              },
+              "abstention_rate": {
+                "high": 0.137976,
+                "low": 0.0,
+                "n": 24,
+                "point": 0.0
+              },
+              "abstention_recall": {
+                "high": 0.434482,
+                "low": 0.0,
+                "n": 5,
+                "point": 0.0
+              },
+              "coverage": {
+                "high": 1.0,
+                "low": 0.862024,
+                "n": 24,
+                "point": 1.0
+              },
+              "error_rate_on_covered": {
+                "high": 0.404705,
+                "low": 0.092448,
+                "n": 24,
+                "point": 0.208333
+              },
+              "errors": {
+                "hallucinated_field": 5,
+                "missed_field": 0,
+                "wrong_value": 0
+              },
+              "exact_match_on_covered": {
+                "high": 0.907552,
+                "low": 0.595295,
+                "n": 24,
+                "point": 0.791667
+              },
+              "n_instances": 24,
+              "normalized_match_on_all": {
+                "high": 0.907552,
+                "low": 0.595295,
+                "n": 24,
+                "point": 0.791667
+              },
+              "normalized_match_on_covered": {
+                "high": 0.907552,
+                "low": 0.595295,
+                "n": 24,
+                "point": 0.791667
+              },
+              "would_be_wrong_total": 5
+            }
+          },
+          "calibration": {
+            "buckets": [
+              {
+                "bucket": "0.0-0.1",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.1-0.2",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.2-0.3",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.3-0.4",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.4-0.5",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.5-0.6",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.6-0.7",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.7-0.8",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "bucket": "0.8-0.9",
+                "gap": null,
+                "mean_confidence": null,
+                "n": 0,
+                "observed_accuracy": null
+              },
+              {
+                "accuracy_ci": {
+                  "high": 0.985801,
+                  "low": 0.94103,
+                  "n": 240,
+                  "point": 0.970833
+                },
+                "bucket": "0.9-1.0",
+                "gap": 0.029167,
+                "mean_confidence": 1.0,
+                "n": 240,
+                "observed_accuracy": 0.970833
+              }
+            ],
+            "degenerate": true,
+            "ece": 0.029167,
+            "occupied_buckets": 1
+          },
+          "config": "verifier_solo",
+          "cost": {
+            "mean_usd_per_doc": 0.00088919,
+            "monthly_usd_at_40k_docs": 35.57,
+            "total_usd": 0.035568
+          },
+          "escalation_rate": null,
+          "latency": {
+            "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
+            "mean_s": 3.236,
+            "p50_s": 3.237,
+            "p95_s": 5.127
+          },
+          "n_documents": 40,
+          "overall": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.015754,
+              "low": 0.0,
+              "n": 240,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.35433,
+              "low": 0.0,
+              "n": 7,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.984246,
+              "n": 240,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.05897,
+              "low": 0.014199,
+              "n": 240,
+              "point": 0.029167
+            },
+            "errors": {
+              "hallucinated_field": 5,
+              "missed_field": 0,
+              "wrong_value": 2
+            },
+            "exact_match_on_covered": {
+              "high": 0.808149,
+              "low": 0.700378,
+              "n": 240,
+              "point": 0.758333
+            },
+            "n_instances": 240,
+            "normalized_match_on_all": {
+              "high": 0.985801,
+              "low": 0.94103,
+              "n": 240,
+              "point": 0.970833
+            },
+            "normalized_match_on_covered": {
+              "high": 0.985801,
+              "low": 0.94103,
+              "n": 240,
+              "point": 0.970833
+            },
+            "would_be_wrong_total": 7
+          },
+          "payment_critical": {
+            "abstention_precision": {
+              "high": null,
+              "low": null,
+              "n": 0,
+              "point": null
+            },
+            "abstention_rate": {
+              "high": 0.087622,
+              "low": 0.0,
+              "n": 40,
+              "point": 0.0
+            },
+            "abstention_recall": {
+              "high": 0.793451,
+              "low": 0.0,
+              "n": 1,
+              "point": 0.0
+            },
+            "coverage": {
+              "high": 1.0,
+              "low": 0.912378,
+              "n": 40,
+              "point": 1.0
+            },
+            "error_rate_on_covered": {
+              "high": 0.128814,
+              "low": 0.004427,
+              "n": 40,
+              "point": 0.025
+            },
+            "errors": {
+              "hallucinated_field": 1,
+              "missed_field": 0,
+              "wrong_value": 0
+            },
+            "exact_match_on_covered": {
+              "high": 0.529676,
+              "low": 0.24223,
+              "n": 40,
+              "point": 0.375
+            },
+            "n_instances": 40,
+            "normalized_match_on_all": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "normalized_match_on_covered": {
+              "high": 0.995573,
+              "low": 0.871186,
+              "n": 40,
+              "point": 0.975
+            },
+            "would_be_wrong_total": 1
+          },
+          "reconciliation": {
+            "bad_claim_recall_code": {
+              "high": 0.985135,
+              "low": 0.64612,
+              "n": 12,
+              "point": 0.916667
+            },
+            "bad_claim_recall_model": {
+              "high": 0.985135,
+              "low": 0.64612,
+              "n": 12,
+              "point": 0.916667
+            },
+            "code_verdict": {
+              "accuracy": {
+                "high": 0.994789,
+                "low": 0.850844,
+                "n": 34,
+                "point": 0.970588
+              },
+              "false_flag": 0,
+              "false_pass": 1,
+              "no_verdict": 0
+            },
+            "line_item_count_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "line_item_sum_accuracy": {
+              "high": 0.969534,
+              "low": 0.770395,
+              "n": 34,
+              "point": 0.911765
+            },
+            "model_arithmetic_accuracy": {
+              "high": 1.0,
+              "low": 0.898485,
+              "n": 34,
+              "point": 1.0
+            },
+            "model_verdict": {
+              "accuracy": {
+                "high": 0.994789,
+                "low": 0.850844,
+                "n": 34,
+                "point": 0.970588
+              },
+              "false_flag": 0,
+              "false_pass": 1,
+              "no_verdict": 0
+            },
+            "n": 34,
+            "n_inconsistent_claims": 12
+          },
+          "run": 1,
+          "split": "test",
+          "thresholds": {
+            "tau_abstain": 0.0,
+            "tau_escalate": 0.0
+          }
+        }
+      ],
+      "thresholds_from_tune": {
+        "bar_met_on_tune": true,
+        "tau_abstain": 0.0,
+        "tau_escalate": 0.0,
+        "tune_accuracy_on_covered": 0.979167,
+        "tune_coverage": 1.0
+      },
+      "variance": {
+        "abstention_precision": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "runs": [],
+          "spread": null
+        },
+        "cost_per_doc": {
+          "max": 0.00088919,
+          "median": 0.000889,
+          "min": 0.00088919,
+          "runs": [
+            0.00088919
+          ],
+          "spread": 0.0
+        },
+        "coverage": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "runs": [
+            1.0
+          ],
+          "spread": 0.0
+        },
+        "ece": {
+          "max": 0.029167,
+          "median": 0.029167,
+          "min": 0.029167,
+          "runs": [
+            0.029167
+          ],
+          "spread": 0.0
+        },
+        "normalized_match_on_covered": {
+          "max": 0.970833,
+          "median": 0.970833,
+          "min": 0.970833,
+          "runs": [
+            0.970833
+          ],
+          "spread": 0.0
+        },
+        "p50_latency_s": {
+          "max": 3.237,
+          "median": 3.237,
+          "min": 3.237,
+          "runs": [
+            3.237
+          ],
+          "spread": 0.0
+        },
+        "payment_critical_accuracy": {
+          "max": 0.975,
+          "median": 0.975,
+          "min": 0.975,
+          "runs": [
+            0.975
+          ],
+          "spread": 0.0
+        },
+        "recon_code_verdict_accuracy": {
+          "max": 0.970588,
+          "median": 0.970588,
+          "min": 0.970588,
+          "runs": [
+            0.970588
+          ],
+          "spread": 0.0
+        },
+        "recon_model_verdict_accuracy": {
+          "max": 0.970588,
+          "median": 0.970588,
+          "min": 0.970588,
+          "runs": [
+            0.970588
+          ],
+          "spread": 0.0
+        }
+      }
+    }
+  },
+  "coverage": {
+    "excluded": [],
+    "n_scored": 40,
+    "n_total": 40,
+    "scored": [
+      "ambi-009",
+      "ambi-010",
+      "ambi-011",
+      "ambi-012",
+      "ambi-013",
+      "ambi-014",
+      "ambi-015",
+      "ambi-016",
+      "clea-013",
+      "clea-014",
+      "clea-015",
+      "clea-016",
+      "clea-017",
+      "clea-018",
+      "clea-019",
+      "clea-020",
+      "clea-021",
+      "clea-022",
+      "clea-023",
+      "clea-024",
+      "degr-009",
+      "degr-010",
+      "degr-011",
+      "degr-012",
+      "degr-013",
+      "degr-014",
+      "degr-015",
+      "degr-016",
+      "inco-009",
+      "inco-010",
+      "inco-011",
+      "inco-012",
+      "inco-013",
+      "inco-014",
+      "inco-015",
+      "inco-016",
+      "ood-005",
+      "ood-006",
+      "ood-007",
+      "ood-008"
+    ]
+  },
+  "frontier": [
+    {
+      "abstention_precision": null,
+      "accuracy_ci": {
+        "high": 0.997712,
+        "low": 0.97013,
+        "n": 240,
+        "point": 0.991667
+      },
+      "accuracy_on_covered": 0.991667,
+      "config": "cascade",
+      "cost_per_doc": 0.001319,
+      "coverage": 1.0,
+      "ece": 0.006375,
+      "monthly_usd_at_40k_docs": 52.77,
+      "p50_latency_s": 2.171,
+      "payment_critical_accuracy": 0.975,
+      "recon_bad_claim_recall": 1.0,
+      "recon_code_verdict_accuracy": 1.0,
+      "recon_false_pass_code": 0,
+      "recon_false_pass_model": 0,
+      "recon_model_verdict_accuracy": 1.0
+    },
+    {
+      "abstention_precision": 0.25,
+      "accuracy_ci": {
+        "high": 1.0,
+        "low": 0.983712,
+        "n": 232,
+        "point": 1.0
+      },
+      "accuracy_on_covered": 1.0,
+      "config": "double_key",
+      "cost_per_doc": 0.002209,
+      "coverage": 0.966667,
+      "ece": 0.006375,
+      "monthly_usd_at_40k_docs": 88.34,
+      "p50_latency_s": 5.583,
+      "payment_critical_accuracy": 1.0,
+      "recon_bad_claim_recall": 1.0,
+      "recon_code_verdict_accuracy": 1.0,
+      "recon_false_pass_code": 0,
+      "recon_false_pass_model": 0,
+      "recon_model_verdict_accuracy": 1.0
+    },
+    {
+      "abstention_precision": null,
+      "accuracy_ci": {
+        "high": 0.997712,
+        "low": 0.97013,
+        "n": 240,
+        "point": 0.991667
+      },
+      "accuracy_on_covered": 0.991667,
+      "config": "primary_solo",
+      "cost_per_doc": 0.001319,
+      "coverage": 1.0,
+      "ece": 0.006375,
+      "monthly_usd_at_40k_docs": 52.77,
+      "p50_latency_s": 2.171,
+      "payment_critical_accuracy": 0.975,
+      "recon_bad_claim_recall": 1.0,
+      "recon_code_verdict_accuracy": 1.0,
+      "recon_false_pass_code": 0,
+      "recon_false_pass_model": 0,
+      "recon_model_verdict_accuracy": 1.0
+    },
+    {
+      "abstention_precision": null,
+      "accuracy_ci": {
+        "high": 0.985801,
+        "low": 0.94103,
+        "n": 240,
+        "point": 0.970833
+      },
+      "accuracy_on_covered": 0.970833,
+      "config": "verifier_solo",
+      "cost_per_doc": 0.000889,
+      "coverage": 1.0,
+      "ece": 0.029167,
+      "monthly_usd_at_40k_docs": 35.57,
+      "p50_latency_s": 3.237,
+      "payment_critical_accuracy": 0.975,
+      "recon_bad_claim_recall": 0.916667,
+      "recon_code_verdict_accuracy": 0.970588,
+      "recon_false_pass_code": 1,
+      "recon_false_pass_model": 1,
+      "recon_model_verdict_accuracy": 0.970588
+    }
+  ],
+  "meta": {
+    "documents_excluded": [],
+    "documents_scored": 40,
+    "exclusion_reason": null,
+    "meridian_bar": 0.97,
+    "models": {
+      "primary": "gemini-3.5-flash-lite",
+      "verifier": "gemini-3.1-flash-lite"
+    },
+    "runs": 1,
+    "split_scored": "test",
+    "thresholds_tuned_on": "tune split, run 1, never test",
+    "tuning_objective": "maximise coverage subject to normalized accuracy on covered >= 0.97"
+  },
+  "thresholds": {
+    "cascade": {
+      "bar_met_on_tune": true,
+      "tau_abstain": 0.0,
+      "tau_escalate": 0.0,
+      "tune_accuracy_on_covered": 0.9875,
+      "tune_coverage": 1.0
+    },
+    "double_key": {
+      "bar_met_on_tune": true,
+      "tau_abstain": 0.0,
+      "tau_escalate": 0.0,
+      "tune_accuracy_on_covered": 0.987395,
+      "tune_coverage": 0.991667
+    },
+    "primary_solo": {
+      "bar_met_on_tune": true,
+      "tau_abstain": 0.0,
+      "tau_escalate": 0.0,
+      "tune_accuracy_on_covered": 0.9875,
+      "tune_coverage": 1.0
+    },
+    "verifier_solo": {
+      "bar_met_on_tune": true,
+      "tau_abstain": 0.0,
+      "tau_escalate": 0.0,
+      "tune_accuracy_on_covered": 0.979167,
+      "tune_coverage": 1.0
+    }
+  }
+}

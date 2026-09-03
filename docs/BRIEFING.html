@@ -4,317 +4,216 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meridian Extraction Briefing</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
 <style>
   :root {
-    --ground: #F5F7F9;
-    --paper: #FFFFFF;
-    --ink: #1B2430;
-    --ink-2: #3C4858;
-    --muted: #66707E;
-    --rule: #D8DEE6;
-    --rule-2: #E9EDF2;
-    --accent: #24466B;
-    --good: #2F6B45;
-    --bad: #8C2F2F;
-    --code-bg: #EEF1F5;
-    --sans: "Public Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-    --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    --bg: #FFFFFF;
+    --ink: #1F2328;
+    --ink-2: #444C56;
+    --muted: #6B7480;
+    --rule: #C9CED6;
+    --rule-2: #E3E7EC;
+    --head-bg: #F3F5F7;
+    --link: #1F4E8C;
+    --code-bg: #F0F2F4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #131820; --paper: #1A2029; --ink: #E7EBF0; --ink-2: #C5CCD6;
-      --muted: #98A2AF; --rule: #2B3440; --rule-2: #232B35; --accent: #8FB3DC;
-      --good: #7CC08F; --bad: #E08A8A; --code-bg: #232B35;
+      --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9;
+      --rule: #3A424C; --rule-2: #2A3139; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
     }
   }
   :root[data-theme="dark"] {
-    --ground: #131820; --paper: #1A2029; --ink: #E7EBF0; --ink-2: #C5CCD6;
-    --muted: #98A2AF; --rule: #2B3440; --rule-2: #232B35; --accent: #8FB3DC;
-    --good: #7CC08F; --bad: #E08A8A; --code-bg: #232B35;
+    --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9;
+    --rule: #3A424C; --rule-2: #2A3139; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
   }
-
-  html { background: var(--ground); }
+  html { background: var(--bg); }
   body {
-    margin: 0; background: var(--ground); color: var(--ink);
-    font-family: var(--sans); font-size: 16px; line-height: 1.55;
-    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font); font-size: 15.5px; line-height: 1.5;
+    font-variant-numeric: tabular-nums;
   }
-  .paper {
-    max-width: 880px; margin: 32px auto 64px; padding: 48px 56px 56px;
-    background: var(--paper); border: 1px solid var(--rule);
-  }
-  @media (max-width: 720px) {
-    .paper { margin: 0; padding: 28px 20px 40px; border-left: 0; border-right: 0; }
-    body { font-size: 15px; }
-  }
-  .measure { max-width: 68ch; }
-  p, li { color: var(--ink-2); }
-  p { margin: 0 0 14px; }
-  strong { color: var(--ink); font-weight: 600; }
-  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
-  a:hover, a:focus-visible { border-bottom-color: var(--accent); outline: none; }
-  code {
-    font-family: var(--mono); font-size: 0.88em; background: var(--code-bg);
-    padding: 1px 5px; border-radius: 3px; color: var(--ink);
-  }
-
-  .eyebrow {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--accent); margin: 0 0 10px;
-  }
-  h1 {
-    font-size: 28px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em;
-    margin: 0 0 22px; text-wrap: balance; max-width: 30ch;
-  }
-  .meta {
-    display: grid; grid-template-columns: 9em 1fr; gap: 6px 18px; margin: 0;
-    padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-    font-size: 14px;
-  }
-  .meta dt { color: var(--muted); margin: 0; }
-  .meta dd { margin: 0; color: var(--ink-2); }
-  @media (max-width: 520px) { .meta { grid-template-columns: 1fr; gap: 2px; } .meta dt { margin-top: 8px; } }
-
-  section { margin-top: 44px; }
-  h2 {
-    display: flex; align-items: baseline; gap: 14px;
-    font-size: 20px; line-height: 1.3; font-weight: 600; margin: 0 0 16px;
-    padding-bottom: 10px; border-bottom: 1px solid var(--rule);
-  }
-  h2 .n { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; }
-  h3 { font-size: 16px; font-weight: 600; margin: 26px 0 10px; color: var(--ink); }
-  ul, ol { margin: 0 0 14px; padding-left: 1.2em; }
-  li { margin: 0 0 8px; }
-  li::marker { color: var(--muted); }
-
-  .flow {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
-    list-style: none; padding: 0; margin: 6px 0 20px;
-  }
-  .flow li {
-    position: relative; margin: 0; padding: 12px 12px 12px 14px;
-    border: 1px solid var(--rule); background: var(--ground); font-size: 13px; line-height: 1.45;
-  }
-  .flow li b { display: block; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
-  .flow li + li::before {
-    content: ""; position: absolute; left: -10px; top: 50%; width: 10px; height: 1px; background: var(--muted);
-  }
-  @media (max-width: 720px) {
-    .flow { grid-template-columns: 1fr; }
-    .flow li + li::before { left: 50%; top: -10px; width: 1px; height: 10px; }
-  }
-
-  .table-wrap { overflow-x: auto; margin: 6px 0 18px; }
+  .memo { max-width: 780px; margin: 0 auto; padding: 40px 28px 64px; }
+  @media (max-width: 600px) { .memo { padding: 24px 16px 48px; } }
+  h1 { font-size: 22px; line-height: 1.3; font-weight: 700; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+  .hdr { margin: 0 0 22px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); font-size: 14.5px; }
+  .hdr div { display: grid; grid-template-columns: 5.5em 1fr; gap: 0 12px; padding: 2px 0; }
+  .hdr b { font-weight: 600; color: var(--ink-2); }
+  h2 { font-size: 17px; font-weight: 700; margin: 30px 0 10px; }
+  h3 { font-size: 15.5px; font-weight: 700; margin: 18px 0 6px; }
+  p { margin: 0 0 12px; color: var(--ink); }
+  ul, ol { margin: 0 0 12px; padding-left: 1.4em; }
+  li { margin: 0 0 6px; }
+  a { color: var(--link); }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--code-bg); padding: 0 4px; border-radius: 3px; }
+  .bluf { padding: 10px 14px; border-left: 3px solid var(--ink); background: var(--head-bg); margin: 0 0 18px; }
+  .bluf p { margin: 0; }
+  .tw { overflow-x: auto; margin: 8px 0 16px; }
   table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.4; }
-  caption { text-align: left; caption-side: top; font-size: 13px; color: var(--muted); padding: 0 0 8px; }
-  th, td { padding: 8px 12px 8px 0; vertical-align: top; text-align: left; border-bottom: 1px solid var(--rule-2); }
-  th {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--accent); border-bottom: 1px solid var(--rule); white-space: nowrap;
-  }
-  td.num, th.num { text-align: right; white-space: nowrap; }
-  td:last-child, th:last-child { padding-right: 0; }
-  tr:last-child td { border-bottom: 1px solid var(--rule); }
-  td .bad { color: var(--bad); font-weight: 600; }
-  .compact td, .compact th { padding-top: 6px; padding-bottom: 6px; }
-
-  .note { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
-  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 13px; }
-  footer p { color: var(--muted); margin: 0 0 6px; }
-
-  @media print {
-    html, body { background: #fff; }
-    .paper { border: 0; margin: 0; padding: 0; max-width: none; }
-    a { border-bottom: 0; color: inherit; }
-    section { break-inside: avoid-page; }
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  th, td { border: 1px solid var(--rule); padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: var(--head-bg); font-weight: 600; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  .small { font-size: 13.5px; color: var(--muted); }
+  .foot { margin-top: 32px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 13.5px; color: var(--muted); }
+  @media print { .memo { max-width: none; padding: 0; } a { color: inherit; text-decoration: none; } }
 </style>
 </head>
 <body>
 
-<div class="paper">
-  <header>
-    <p class="eyebrow">Partner Engineering Briefing</p>
-    <h1>Meridian Claims Group: payment-field extraction on the Gemini API</h1>
-    <dl class="meta">
-      <dt>Prepared by</dt><dd>Vaughn Nahapetian, 3 September 2026</dd>
-      <dt>Repository</dt><dd><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. After install, <code>meridian-evaluate</code> reproduces every figure here offline, with no API key.</dd>
-      <dt>Figures</dt><dd>From <code>results/results.json</code>: corpus v3, test split, 40 documents, 240 field-instances, one run at temperature 0. Brackets are Wilson 95% intervals.</dd>
-      <dt>Scope</dt><dd>Meridian is a composite partner profile built for this exercise. The corpus is synthetic: labels were written first and each page rendered from its label, so no label depends on a model. Its failure distribution is a guess about theirs.</dd>
-    </dl>
-  </header>
+<div class="memo">
+  <h1>Meridian Claims Group: field extraction on the Gemini API</h1>
+  <p class="sub">Partner Engineering Briefing</p>
+  <div class="hdr">
+    <div><b>To</b><span>GDM partner engineering; core modeling and product for section 3</span></div>
+    <div><b>From</b><span>Vaughn Nahapetian</span></div>
+    <div><b>Date</b><span>3 September 2026</span></div>
+    <div><b>Repo</b><span><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. <code>pip install -e .</code> then <code>meridian-evaluate</code> reproduces every number below from the committed response cache. No API key needed.</span></div>
+    <div><b>Numbers</b><span><code>results/results.json</code>: corpus v3, test split, 40 documents / 240 field-instances, one run at temperature 0. Brackets are 95% Wilson intervals.</span></div>
+  </div>
 
-  <section id="bottom-line">
-    <h2>Bottom line</h2>
-    <div class="measure">
-      <p>Meridian receives about 40,000 scanned claims documents a month. It needs six payment-critical fields read at 97% field accuracy, under $0.02 a document, by a system that flags what it is unsure of. On a corpus built to their failure modes:</p>
-      <ul>
-        <li><strong>Accuracy is met with no margin.</strong> One lite-class reader, <code>gemini-3.5-flash-lite</code>, reads 99.2% [97.0–99.8] of fields correctly with no abstention at $0.00132 a document. The lower bound is the bar.</li>
-        <li><strong>Two readers double-keyed reach 100% [98.4–100] on the 96.7% of fields they agree on</strong>, at $0.00221. Disagreements go to review, the control Meridian's own processors already run. On the same documents the two systems differ on two field-instances (p&nbsp;=&nbsp;0.50); what this sample establishes is the 3.3 points of coverage the second reader costs.</li>
-        <li><strong>Cost is not the constraint.</strong> The dearest configuration is about a ninth of the budget. Quota is: on this tier, 40,000 documents is 83 hours of continuous running with no headroom.</li>
-        <li><strong>Knowing when it is unsure is the open requirement.</strong> Self-reported confidence is near-constant, 1.0 on all 240 instances for one reader, and cannot gate anything. Disagreement between readers is the one signal that carried information: of 8 flags, 2 were real errors. A precision of 25% [7.1–59.1] is not a number to build on yet.</li>
-      </ul>
-      <p><strong>Recommendation.</strong> Run this harness unchanged on 500 of Meridian's own documents, weighted toward the exceptions their contractors already flag, before choosing a configuration. The gates are in section 2.</p>
-    </div>
-  </section>
+  <div class="bluf">
+    <p><b>BLUF.</b> The accuracy and cost bars are met; the "know when you're unsure" bar is not, and that is the one that protects payouts. One lite reader (<code>gemini-3.5-flash-lite</code>) reads 99.2% [97.0–99.8] of fields correctly at $0.0013 a document with nothing routed to review; the lower bound of that interval is exactly the 97% target, so there is no margin. Two lite readers double-keyed (values compared, disagreements to review) get 100% [98.4–100] on the 96.7% of fields they agree on, at $0.0022 a document. On the same documents that is a difference of two field-instances (p = 0.50), so what the data establishes is the 3.3 points of coverage the second reader costs, not an accuracy gain. Self-reported confidence is near-constant (1.0 on 240 of 240 instances for one reader) and can't gate anything. Disagreement between readers is the only signal that carried information, and with 8 flags in 240 instances its precision is 25% [7.1–59.1]. Recommendation: don't commit to a configuration yet. Run this harness unchanged on about 500 real Meridian documents weighted toward the exceptions their contractors already flag; gates are in 2.5. Ask of GDM: a calibrated confidence primitive for structured output (section 3, F-007).</p>
+  </div>
 
-  <section id="architecture">
-    <h2><span class="n">1</span>Architecture: design, flow and trade-offs</h2>
-    <ol class="flow">
-      <li><b>Labels</b>Authored first from a fixed seed: six fields, line items, stated total.</li>
-      <li><b>Documents</b>Rendered from the labels. Five strata; scanner noise and JPEG loss on every page.</li>
-      <li><b>Extractor</b>Gemini structured output against a response schema: a nullable value and a confidence per field.</li>
-      <li><b>Response cache</b>Every raw response, keyed on model, prompt version, schema and image bytes. Committed.</li>
-      <li><b>Harness</b>Scores the cache offline. Four configurations from the same calls. Never calls the API.</li>
-    </ol>
-    <div class="measure">
-      <p>Extraction and scoring are separate programs. Thresholds are chosen from cached responses, so sweeps cost nothing, tuning is reproducible, and the demo replays offline with identical numbers. The cache key is recomputed on every read, so a regenerated page cannot be scored against an old response: that failure does not crash and produces plausible wrong numbers.</p>
-    </div>
+  <h2>Context</h2>
+  <p>Meridian is a composite partner profile I put together for this exercise. They receive about 40,000 scanned claims documents a month and need six payment-critical fields extracted: claim id, policy number, claimant, provider, date of service and total amount. Their stated requirements: 97% field accuracy, under $0.02 a document, and the system has to flag what it isn't sure of rather than guess, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness against a synthetic corpus of 80 documents. Labels were written first and each page rendered from its label, so no label depends on a model; the failure distribution is my guess at theirs, not theirs. Everything ran on the free tier, which forced one design change (1.3) and produced most of section 3.</p>
 
-    <div class="measure">
-      <p>Four configurations are resolved from the same cached calls: the primary reader alone; the verifier alone; a cascade that sends a page to the verifier when the primary's own confidence is low, the standard cost saver; and double-keying, both readers on every page with disagreement routed to review, which needs no self-assessment from either model.</p>
-    </div>
+  <h2>1. Architecture</h2>
+  <h3>1.1 Flow</h3>
+  <p>Labels (authored first, seeded) → rendered pages (five strata, scanner noise and JPEG loss on every page) → extractor (Gemini structured output against a response schema, one nullable value and one confidence per field) → response cache (every raw response, keyed on model, prompt version, schema and image bytes, committed to the repo) → harness (scores the cache offline, never calls the API).</p>
+  <p>Extraction and scoring are separate programs on purpose. Thresholds are chosen from cached responses, so sweeps cost no calls, tuning is reproducible against a fixed set of responses, and the demo replays offline with identical numbers. Both programs recompute the cache key on read, so a regenerated page can't be scored against an old response. That failure mode doesn't crash; it produces plausible wrong numbers, which is why it gets a check.</p>
 
-    <div class="table-wrap">
-      <table>
-        <caption>Decisions made during implementation</caption>
-        <thead><tr><th>Decision</th><th>Chosen</th><th>Rejected</th><th>Why</th></tr></thead>
-        <tbody>
-          <tr><td>Ground truth</td><td>Labels first; pages rendered from them</td><td>Labels from model output, or hand-labelling generated pages</td><td>Labels from a model measure agreement, not accuracy</td></tr>
-          <tr><td>Output contract</td><td>Response schema: nullable value and confidence per field</td><td>Prompt and parse</td><td>"Absent" is an answer, not a parse failure, so hallucinated fields can be counted</td></tr>
-          <tr><td>Uncertainty signal</td><td>Disagreement between two readers</td><td>Self-reported confidence; log probabilities; self-consistency</td><td>Confidence is near-constant; log probabilities are unavailable (F-006); five samples at temperature 1 agreed 5 of 5 (F-007)</td></tr>
-          <tr><td>Second reader</td><td>An independent lite-class model, <code>gemini-3.1-flash-lite</code></td><td>A Flash-tier model</td><td>Free-tier quota stopped each Flash model run toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability. The cost: the cascade has nothing stronger to escalate to</td></tr>
-          <tr><td>Scoring</td><td>From the committed cache</td><td>Live calls</td><td>Free sweeps, reproducible tuning, a demo that cannot drift</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="note">Not built, because the brief is architecture and evaluation rather than production hardening: authentication, containers, CI, a database, a job queue, a UI, retry libraries.</p>
-  </section>
+  <h3>1.2 Configurations</h3>
+  <p>Four, all resolved from the same cached calls.</p>
+  <ul>
+    <li><code>primary_solo</code>: one reader, <code>gemini-3.5-flash-lite</code>. Abstain on low self-reported confidence.</li>
+    <li><code>verifier_solo</code>: the second reader, <code>gemini-3.1-flash-lite</code>, on its own. Same rule.</li>
+    <li><code>cascade</code>: the primary reads; the page goes to the verifier when the primary's confidence is low. The standard cost saver.</li>
+    <li><code>double_key</code>: both readers on every page; a field goes to review when their normalized values disagree. This is the automated version of the double-keying control Meridian's processors already run with people.</li>
+  </ul>
 
-  <section id="evaluation">
-    <h2><span class="n">2</span>Evaluation: define, measure, monitor</h2>
+  <h3>1.3 Trade-offs</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Decision</th><th>What I did</th><th>What I didn't</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Ground truth</td><td>Wrote labels first and rendered pages from them</td><td>Label model output, or hand-label generated pages</td><td>Labels that come from a model measure agreement with the model, not accuracy</td></tr>
+        <tr><td>Output contract</td><td>Response schema with a nullable value and a confidence per field</td><td>Prompt and parse</td><td>"Absent" is a real answer rather than a parse failure, so hallucinated fields can be counted</td></tr>
+        <tr><td>Uncertainty signal</td><td>Disagreement between two readers</td><td>Self-reported confidence; log probabilities; self-consistency</td><td>Confidence is near-constant. Log probabilities aren't available on this API (F-006). Five samples at temperature 1 came back identical, 5 of 5 (F-007)</td></tr>
+        <tr><td>Second reader</td><td>An independent lite-class model</td><td>A Flash-tier model</td><td>Free-tier quota stopped each Flash model I ran toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability. The cost of this choice is that the cascade has nothing stronger to escalate to</td></tr>
+        <tr><td>Scoring</td><td>From the committed cache</td><td>Live calls</td><td>Free sweeps, reproducible tuning, an offline demo</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">Not built, on purpose: auth, containers, CI, a database, a job queue, a UI, retry libraries. The brief was architecture and evaluation, not production hardening.</p>
 
-    <h3>Define</h3>
-    <div class="measure">
-      <ul>
-        <li>The unit is the field-instance, one field on one document, because Meridian pays per field. Exact and normalized match are both reported and never merged.</li>
-        <li>Three error kinds, never pooled, because their costs differ: a wrong value is a wrong payout, a missed field is a rekey, a hallucinated field is a payment on a page that is not a claim.</li>
-        <li>Accuracy is never shown without coverage. Abstention precision uses the recorded counterfactual for every flag: what would have gone out without it.</li>
-        <li>Calibration in ten confidence bins with expected calibration error, flagged degenerate when one bin holds the predictions. Wilson 95% intervals on every proportion.</li>
-        <li>Configurations are compared paired, on the same documents: McNemar's exact test on discordant instances, and a bootstrap that resamples documents, since six fields on one page share one scan.</li>
-        <li>Reconciliation, whether the line items sum to the stated total: the adjudication under the transcription, where a processor loses money.</li>
-      </ul>
-      <p>Protocol: 80 documents in five strata (clean 24, ambiguous 16, degraded 16, incomplete 16, out-of-distribution 8), split 40 tune and 40 test before the first API call. Thresholds were swept on tune only. Test was scored once.</p>
-    </div>
+  <h2>2. Evaluation</h2>
+  <h3>2.1 Definitions</h3>
+  <ul>
+    <li>Unit: the field-instance, one field on one document. Meridian pays per field.</li>
+    <li>Exact and normalized match are both reported and never merged. Normalization takes money to cents, dates to ISO, names to case- and punctuation-folded form with token order kept.</li>
+    <li>Three error kinds, never pooled, because they cost different things: wrong value (a wrong payout), missed field (a rekey), hallucinated field (a payment on a page that isn't a claim).</li>
+    <li>Accuracy is never reported without coverage; a system that abstains on everything scores 100%. Abstention precision uses the recorded counterfactual for each flag, meaning what would have gone out without it.</li>
+    <li>Calibration: ten confidence bins and expected calibration error, flagged degenerate when one bin holds everything. 95% Wilson intervals on every proportion, because n is small and the rates sit near 1.0, where the normal approximation breaks.</li>
+    <li>Configurations are compared paired, on the same documents: McNemar's exact test on discordant instances, plus a bootstrap that resamples documents, since six fields on one page share one scan.</li>
+    <li>Reconciliation: does the itemisation sum to the stated total. Field reading is transcription; this is the adjudication step under it, and it's where a processor actually loses money.</li>
+  </ul>
 
-    <h3>Measure</h3>
-    <div class="table-wrap">
-      <table>
-        <caption>Test split, 240 field-instances, normalized match</caption>
-        <thead><tr><th>Configuration</th><th class="num">Accuracy on covered</th><th class="num">Coverage</th><th class="num">Wrong / missed / hallucinated</th><th class="num">$ per document</th><th class="num">p50 latency</th></tr></thead>
-        <tbody>
-          <tr><td><code>primary_solo</code></td><td class="num">99.2% [97.0–99.8]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / 0</td><td class="num">$0.00132</td><td class="num">2.2 s</td></tr>
-          <tr><td><code>verifier_solo</code></td><td class="num">97.1% [94.1–98.6]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / <span class="bad">5</span></td><td class="num">$0.00089</td><td class="num">3.2 s</td></tr>
-          <tr><td><code>cascade</code></td><td class="num">99.2% [97.0–99.8]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / 0</td><td class="num">$0.00132</td><td class="num">2.2 s</td></tr>
-          <tr><td><code>double_key</code></td><td class="num">100% [98.4–100]</td><td class="num">96.7%</td><td class="num">0 / 0 / 0</td><td class="num">$0.00221</td><td class="num">5.6 s</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="measure">
-      <p><strong>The cascade had nothing to escalate to.</strong> Tuning set its escalation threshold to zero, so on test it is the primary alone. On tune no threshold raised accuracy, and escalating every page lowered it from 98.75% to 97.92% at 1.7 times the cost: the second reader is not stronger. The primary's confidence is 1.0 on 214 of 240 instances, yet its two test errors were its two lowest confidences, 0.90 and 0.95, on one degraded page. Five errors decide nothing about the signal. A cascade needs a stronger second reader before the trigger matters.</p>
-      <p><strong>Double-keying earns its cost on hallucinations.</strong> Alone, the verifier invented five values on out-of-distribution pages, reading a utility bill's "Amount Due" as a claim total. Under double-keying none reached output. The primary was right on those pages, so here the flags were review cost; with the roles reversed they would have been saved payouts. On <code>total_amount</code>, the payment field: primary alone 97.5% [87.1–99.6], double-keying 100% [90.8–100].</p>
-      <p><strong>Reconciliation.</strong> 34 test documents carry an itemisation and a stated total; 12 are inconsistent by construction. The primary caught all 12 [75.8–100]; the verifier missed one, a claim that would have been paid. Model arithmetic was correct on every document; every verdict failure is a misread digit on a degraded scan (line items read correctly 91.2% [77.0–97.0]).</p>
-      <p><strong>Not established.</strong> 240 field-instances and 8 flags are small. This corpus has one complete run; three runs on the previous corpus moved accuracy 0.4 points, so treat any figure as ±0.4. Calibration cannot be shown with 239 of 240 predictions in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]) and where double-keying's coverage drops most (93.8%; 79.2% on out-of-distribution pages).</p>
-    </div>
+  <h3>2.2 Protocol</h3>
+  <p>80 documents in five strata (clean 24, ambiguous 16, degraded 16, incomplete 16, out-of-distribution 8), split 40 tune / 40 test before the first API call. Thresholds were swept on tune only. Test was scored once.</p>
 
-    <h3>Monitor</h3>
-    <div class="measure">
-      <p>Per document, the pipeline already emits: reader disagreement by field and stratum; each flagged item's adjudication outcome, which makes abstention precision a running measurement; cost from usage metadata; p50 and p95 latency with the 429 and 503 rate; and the model version string. Proposed for Meridian to confirm:</p>
-      <ul>
-        <li><strong>Daily.</strong> Disagreement rate against its baseline of 3.3% of fields. Above twice baseline, someone is paged: the input mix moved or a model changed.</li>
-        <li><strong>Weekly.</strong> Re-score a 200-document sample with this harness unchanged, adjudicators' final values as labels. Human-check 2% of agreed items: agreement between two readers is the one error the system cannot see.</li>
-        <li><strong>Gate.</strong> Accuracy on covered, lower bound, at or above 97% on the weekly sample. Below it, automatic payment stops and the queue takes everything until the cause is found.</li>
-        <li><strong>Model change.</strong> The model name is an alias. Any change in the returned version re-runs the harness on the committed corpus before the next batch.</li>
-        <li><strong>Pilot gates</strong> for the 500-document run: lower bound at or above 97% on covered; coverage at or above 90%, set against the queue's capacity; at least one flag in three a real error. If double-keying misses the last gate, the primary alone with sampled audit is the honest alternative.</li>
-      </ul>
-      <p>Throughput is bound by quota, not client code: about 8 documents a minute from 1 to 8 workers and 12% slower at 16, behind one shared rate gate. The Batch API is the right mode for overnight bulk at half the price; <code>batches.create</code> failed a precondition on this tier (F-011), so no batch figure is claimed.</p>
-    </div>
-  </section>
+  <h3>2.3 Results</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Configuration</th><th class="n">Accuracy on covered</th><th class="n">Coverage</th><th class="n">Wrong / missed / hallucinated</th><th class="n">$ per doc</th><th class="n">p50</th></tr></thead>
+      <tbody>
+        <tr><td><code>primary_solo</code></td><td class="n">99.2% [97.0–99.8]</td><td class="n">100%</td><td class="n">2 / 0 / 0</td><td class="n">$0.00132</td><td class="n">2.2 s</td></tr>
+        <tr><td><code>verifier_solo</code></td><td class="n">97.1% [94.1–98.6]</td><td class="n">100%</td><td class="n">2 / 0 / 5</td><td class="n">$0.00089</td><td class="n">3.2 s</td></tr>
+        <tr><td><code>cascade</code></td><td class="n">99.2% [97.0–99.8]</td><td class="n">100%</td><td class="n">2 / 0 / 0</td><td class="n">$0.00132</td><td class="n">2.2 s</td></tr>
+        <tr><td><code>double_key</code></td><td class="n">100% [98.4–100]</td><td class="n">96.7%</td><td class="n">0 / 0 / 0</td><td class="n">$0.00221</td><td class="n">5.6 s</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Cascade. Tuning set the escalation threshold to zero, so on test the cascade is just the primary. On tune, no threshold raised accuracy, and escalating every page lowered it from 98.75% to 97.92% at 1.7 times the cost, because the second reader isn't stronger than the first. The primary's confidence is 1.0 on 214 of 240 instances. Its two test errors were its two lowest confidences (0.90 and 0.95, both on one degraded page), but with five errors across both splits I can't say whether that is signal. What I can say is that a cascade needs a stronger second reader before the trigger matters.</p>
+  <p>Double-keying. On its own, the verifier invented five values on out-of-distribution pages, for example a utility bill's "Amount Due" read as a claim total. Under double-keying none of them reached output. The primary happened to be right on those pages, so here the flags were review cost; if the roles had been reversed they would have been saved payouts. On <code>total_amount</code> specifically: primary alone 97.5% [87.1–99.6], double-keyed 100% [90.8–100].</p>
+  <p>Reconciliation. 34 test documents have an itemisation and a stated total; 12 are inconsistent by construction. The primary caught all 12 [75.8–100]. The verifier missed one, a claim that would have been paid. The models' arithmetic was right on every document; every verdict failure traces to a misread digit on a degraded scan (line items read correctly 91.2% [77.0–97.0]).</p>
+  <p>Caveats. 240 field-instances and 8 flags are small numbers. This corpus has one complete run; three runs on the previous corpus moved accuracy 0.4 points, so read any single figure as ±0.4. Calibration can't be assessed with 239 of 240 predictions in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]) and the one where double-keying's coverage drops most (93.8%, and 79.2% on out-of-distribution pages).</p>
 
-  <section id="friction">
-    <h2><span class="n">3</span>Friction log and engineering signal</h2>
-    <div class="measure">
-      <p>Eleven entries were logged as they happened, with the error text as it appeared; the full log is <code>FRICTION.md</code>. The six that matter to GDM, ordered by how much they would change what a partner can build:</p>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <caption>Actionable feedback, with the team it is for</caption>
-        <thead><tr><th>Entry</th><th>What happened</th><th>Effect on this build</th><th>What would help</th><th>Team</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>F-007, F-006</td>
-            <td>Self-reported confidence is near-constant: 1.0 on 240 of 240 instances for one reader and 214 of 240 for the other, after a schema instruction to use the full range. Log probabilities are unavailable; five samples at temperature 1 agreed 5 of 5.</td>
-            <td>No usable uncertainty signal from one reader. Abstention needed a second model at 1.7 times the cost.</td>
-            <td>A calibrated confidence primitive for structured output: log probabilities on schema fields, or an uncertainty scalar the model need not introspect to produce. For any "know when unsure" requirement, this is the missing piece.</td>
-            <td>Core modeling</td>
-          </tr>
-          <tr>
-            <td>F-010</td>
-            <td>Free-tier quota stopped each Flash model run toward evaluation volume after about 20 successful requests, then 429 in 0.2 s. Lite-tier models were unaffected.</td>
-            <td>The capability-tier comparison never ran; about 90 minutes lost across four model migrations.</td>
-            <td>A per-project evaluation allowance of a few thousand requests, or per-project daily limits instead of per-model. The whole evaluation costs about a dollar at list price; the tier a partner uses to decide is the tier least able to answer.</td>
-            <td>Product</td>
-          </tr>
-          <tr>
-            <td>F-008, F-009</td>
-            <td>One 429 message covers an exhausted entitlement and a rate limit. Per-model limits are no longer in the rate-limit documentation.</td>
-            <td>Pacing was found by backing off until calls succeeded. A client cannot tell whether to wait or stop.</td>
-            <td>Distinguish the two conditions in the error body; return the limit and reset time in headers.</td>
-            <td>API surface, documentation</td>
-          </tr>
-          <tr>
-            <td>F-011</td>
-            <td><code>batches.create</code> returns 400 FAILED_PRECONDITION with the precondition unnamed. <code>batches.list</code> succeeds.</td>
-            <td>Batch mode implemented against the SDK contract, never submitted. The 50% batch price is not claimed.</td>
-            <td>Name the precondition: billing tier, model, request size.</td>
-            <td>API surface</td>
-          </tr>
-          <tr>
-            <td>F-002</td>
-            <td><code>models.list()</code> advertises models that <code>generateContent</code> refuses as no longer available to new users.</td>
-            <td>Two model migrations before the first successful call.</td>
-            <td>Filter the list by entitlement, or return entitlement per model.</td>
-            <td>API surface</td>
-          </tr>
-          <tr>
-            <td>Context caching</td>
-            <td><code>cached_tokens</code> was 0 across 200 calls: the page image precedes the shared prompt, so no prefix is shared, and the prompt is about 350 tokens against a 4,096-token minimum, of about 1,400 input tokens a document.</td>
-            <td>No saving measured. Prompt-first ordering is the change to try; it alters every cache key, so it waited until after scoring.</td>
-            <td>Document part ordering for multimodal caching; a lower minimum for short structured-output prompts.</td>
-            <td>Documentation, product</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <h3>2.4 Monitoring in production</h3>
+  <p>The pipeline already emits, per document: reader disagreement by field and stratum; the adjudicator's ruling on each flagged item, which turns abstention precision into a running number; cost from usage metadata; p50 and p95 latency with the 429 and 503 rate; and the model version string on each response. What I would set up with Meridian, subject to their confirmation:</p>
+  <ul>
+    <li>Daily: disagreement rate against its baseline of 3.3% of fields. Above twice baseline, page someone; either the input mix moved or a model changed.</li>
+    <li>Weekly: re-score a 200-document sample with this harness unchanged, using adjudicators' final values as labels. Human-check 2% of agreed items, because two readers agreeing on a wrong value is the failure the system can't see on its own.</li>
+    <li>Kill switch: if accuracy on covered (lower bound) drops below 97% on the weekly sample, auto-pay stops and everything goes to the queue until the cause is found.</li>
+    <li>Model version: the model name is an alias. Any change in the returned version re-runs the harness on the committed corpus before the next batch.</li>
+  </ul>
+  <p>Throughput is bound by quota, not by the client: about 8 documents a minute from 1 to 8 workers and 12% slower at 16, behind one shared rate gate. 40,000 documents is about 83 hours of continuous running with no headroom. The Batch API is the right mode for overnight bulk at half the price, but <code>batches.create</code> failed a precondition on this tier (F-011), so I am not claiming a batch cost.</p>
 
-  <section id="next">
-    <h2>Next</h2>
-    <div class="measure">
-      <ol>
-        <li>Ingest 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness unchanged. The instrumentation is built; it needs harder inputs.</li>
-        <li>Re-run the cascade with a Flash-tier second reader once quota allows. The negative result here is about the readers, not the pattern.</li>
-        <li>Re-run calibration the day a confidence primitive exists. Section 2 is ready for it.</li>
-      </ol>
-    </div>
-    <footer>
-      <p>Code written with Claude (Opus 5); this briefing drafted with Claude and Gemini. Every figure in it is in <code>results/results.json</code> and is reproduced by <code>meridian-evaluate</code> from the committed response cache.</p>
-    </footer>
-  </section>
+  <h3>2.5 Pilot gates</h3>
+  <p>For the 500-document run, proceed with double-keying if: accuracy on covered, lower bound, is at or above 97%; coverage is at or above 90% (to be set against the exception queue's capacity); and at least one flag in three is a real error. If the last gate fails, the second reader is buying insurance the numbers don't show, and the primary alone with a sampled audit is the honest alternative.</p>
+
+  <h2>3. Friction log and feedback for GDM</h2>
+  <p>I logged 11 items as they happened, with the error text as it appeared; the full log is <code>FRICTION.md</code> in the repo. The six that matter to GDM, in order of how much they would change what a partner can build:</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Item</th><th>What happened</th><th>Impact on this build</th><th>Ask</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>F-007, F-006</td>
+          <td>Self-reported confidence is near-constant: 1.0 on 240 of 240 instances for one reader and 214 of 240 for the other, after a schema instruction to use the full range. Log probabilities aren't available. Five samples at temperature 1 came back identical.</td>
+          <td>No usable uncertainty signal from one reader. Abstention needed a second model at 1.7 times the cost.</td>
+          <td>A calibrated confidence primitive for structured output: log probabilities on schema fields, or an uncertainty scalar the model doesn't have to introspect to produce. Any partner with a "know when you're unsure" requirement is blocked on this.</td>
+          <td>Core modeling</td>
+        </tr>
+        <tr>
+          <td>F-010</td>
+          <td>Free-tier quota stopped each Flash model I ran toward evaluation volume after about 20 successful requests, then returned 429 in 0.2 s. Lite-tier models were unaffected.</td>
+          <td>The capability-tier comparison never ran. About 90 minutes lost across four model migrations.</td>
+          <td>A per-project evaluation allowance of a few thousand requests, or per-project daily limits instead of per-model. The whole evaluation costs about a dollar at list price. This is the tier partners use to decide whether Gemini fits, and it can't support an evaluation.</td>
+          <td>Product</td>
+        </tr>
+        <tr>
+          <td>F-008, F-009</td>
+          <td>One 429 message covers two conditions, an exhausted entitlement and a rate limit. Per-model limits are no longer in the rate-limit documentation.</td>
+          <td>Pacing had to be found by backing off until calls succeeded. A client can't tell whether to wait or stop.</td>
+          <td>Distinguish the two conditions in the error body. Return the limit and reset time in headers.</td>
+          <td>API surface, docs</td>
+        </tr>
+        <tr>
+          <td>F-011</td>
+          <td><code>batches.create</code> returns 400 FAILED_PRECONDITION without naming the precondition. <code>batches.list</code> works.</td>
+          <td>Batch mode is implemented against the SDK contract and was never submitted. I'm not claiming the 50% batch price.</td>
+          <td>Name the precondition in the error: billing tier, model, request size.</td>
+          <td>API surface</td>
+        </tr>
+        <tr>
+          <td>F-002</td>
+          <td><code>models.list()</code> advertises models that <code>generateContent</code> then refuses as no longer available to new users.</td>
+          <td>Two model migrations before the first successful call.</td>
+          <td>Filter the list by entitlement, or return entitlement per model.</td>
+          <td>API surface</td>
+        </tr>
+        <tr>
+          <td>Context caching</td>
+          <td><code>cached_tokens</code> was 0 across 200 calls. The page image comes before the shared prompt in the request, so no two requests share a prefix, and the prompt is about 350 tokens against a 4,096-token minimum, out of about 1,400 input tokens a document.</td>
+          <td>No caching saving measured. Prompt-first ordering is the thing to try; it changes every cache key, so I left it until after scoring.</td>
+          <td>Document part ordering for multimodal caching. A lower minimum for short structured-output prompts.</td>
+          <td>Docs, product</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>4. Next steps</h2>
+  <ol>
+    <li>Ingest about 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness unchanged. The instrumentation exists; it needs harder inputs.</li>
+    <li>Re-run the cascade with a Flash-tier second reader once quota allows. The negative result is about these two readers, not the pattern.</li>
+    <li>Re-run calibration the day a confidence primitive exists. Section 2 is ready for it.</li>
+  </ol>
+
+  <p class="foot">Code written with Claude (Opus 5); this briefing drafted with Claude and Gemini. Every figure in it is in <code>results/results.json</code> and is reproduced by <code>meridian-evaluate</code> from the committed response cache.</p>
 </div>
 
 </body>

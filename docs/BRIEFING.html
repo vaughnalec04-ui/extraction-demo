@@ -1,729 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meridian Extraction Briefing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
 <style>
-  :root{
-    --ground:#FBFBFC; --raise:#FFFFFF; --ink:#16181D; --ink-2:#3A4049;
-    --muted:#5C6270; --rule:#E2E6EC; --rule-2:#EFF2F6;
-    --accent:#1B4D7A; --accent-soft:#EAF0F6;
-    --good:#1F6F4A; --warn:#8F5510; --bad:#A32B28;
-    --good-bg:#E9F2EC; --warn-bg:#F7EFE3; --bad-bg:#F7EAE9;
-    --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
-    --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
-    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  :root {
+    --ground: #F5F7F9;
+    --paper: #FFFFFF;
+    --ink: #1B2430;
+    --ink-2: #3C4858;
+    --muted: #66707E;
+    --rule: #D8DEE6;
+    --rule-2: #E9EDF2;
+    --accent: #24466B;
+    --good: #2F6B45;
+    --bad: #8C2F2F;
+    --code-bg: #EEF1F5;
+    --sans: "Public Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
   }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --ground:#101317; --raise:#171B21; --ink:#E8EBEF; --ink-2:#C2C8D1;
-      --muted:#8B93A1; --rule:#272D36; --rule-2:#1E232A;
-      --accent:#79AEDC; --accent-soft:#182530;
-      --good:#5FBF8C; --warn:#D9A15C; --bad:#E08A85;
-      --good-bg:#152420; --warn-bg:#2A2117; --bad-bg:#2A1917;
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131820; --paper: #1A2029; --ink: #E7EBF0; --ink-2: #C5CCD6;
+      --muted: #98A2AF; --rule: #2B3440; --rule-2: #232B35; --accent: #8FB3DC;
+      --good: #7CC08F; --bad: #E08A8A; --code-bg: #232B35;
     }
   }
-  :root[data-theme="dark"]{
-    --ground:#101317; --raise:#171B21; --ink:#E8EBEF; --ink-2:#C2C8D1;
-    --muted:#8B93A1; --rule:#272D36; --rule-2:#1E232A;
-    --accent:#79AEDC; --accent-soft:#182530;
-    --good:#5FBF8C; --warn:#D9A15C; --bad:#E08A85;
-    --good-bg:#152420; --warn-bg:#2A2117; --bad-bg:#2A1917;
+  :root[data-theme="dark"] {
+    --ground: #131820; --paper: #1A2029; --ink: #E7EBF0; --ink-2: #C5CCD6;
+    --muted: #98A2AF; --rule: #2B3440; --rule-2: #232B35; --accent: #8FB3DC;
+    --good: #7CC08F; --bad: #E08A8A; --code-bg: #232B35;
   }
 
-  *{box-sizing:border-box}
-  body{background:var(--ground);color:var(--ink);font-family:var(--serif);
-       font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1000px;margin:0 auto;padding:0 28px 96px}
+  html { background: var(--ground); }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  .paper {
+    max-width: 880px; margin: 32px auto 64px; padding: 48px 56px 56px;
+    background: var(--paper); border: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) {
+    .paper { margin: 0; padding: 28px 20px 40px; border-left: 0; border-right: 0; }
+    body { font-size: 15px; }
+  }
+  .measure { max-width: 68ch; }
+  p, li { color: var(--ink-2); }
+  p { margin: 0 0 14px; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  a:hover, a:focus-visible { border-bottom-color: var(--accent); outline: none; }
+  code {
+    font-family: var(--mono); font-size: 0.88em; background: var(--code-bg);
+    padding: 1px 5px; border-radius: 3px; color: var(--ink);
+  }
 
-  /* ---------- masthead ---------- */
-  .mast{padding:56px 0 28px;border-bottom:2px solid var(--ink)}
-  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
-           text-transform:uppercase;color:var(--accent);font-weight:600}
-  h1{font-family:var(--sans);font-weight:700;font-size:clamp(30px,4.6vw,46px);
-     line-height:1.08;letter-spacing:-.022em;margin:14px 0 0;text-wrap:balance}
-  .sub{font-size:18px;color:var(--ink-2);margin:12px 0 0;max-width:60ch}
-  .meta{display:flex;flex-wrap:wrap;gap:0 32px;margin-top:22px;
-        font-family:var(--mono);font-size:12px;color:var(--muted)}
-  .meta b{color:var(--ink-2);font-weight:500}
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 10px;
+  }
+  h1 {
+    font-size: 28px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em;
+    margin: 0 0 22px; text-wrap: balance; max-width: 30ch;
+  }
+  .meta {
+    display: grid; grid-template-columns: 9em 1fr; gap: 6px 18px; margin: 0;
+    padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .meta dt { color: var(--muted); margin: 0; }
+  .meta dd { margin: 0; color: var(--ink-2); }
+  @media (max-width: 520px) { .meta { grid-template-columns: 1fr; gap: 2px; } .meta dt { margin-top: 8px; } }
 
-  /* ---------- bottom line ---------- */
-  .bluf{margin:34px 0 0;border:1px solid var(--rule);background:var(--raise);
-        border-left:3px solid var(--accent);padding:24px 26px}
-  .bluf h2{font-family:var(--sans);font-size:12px;letter-spacing:.13em;
-           text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-weight:600}
-  .bluf ol{margin:0;padding-left:0;list-style:none;display:grid;gap:14px}
-  .bluf li{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline}
-  .bluf .n{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
-  .bluf strong{font-family:var(--sans);font-weight:600}
+  section { margin-top: 44px; }
+  h2 {
+    display: flex; align-items: baseline; gap: 14px;
+    font-size: 20px; line-height: 1.3; font-weight: 600; margin: 0 0 16px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  h2 .n { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; }
+  h3 { font-size: 16px; font-weight: 600; margin: 26px 0 10px; color: var(--ink); }
+  ul, ol { margin: 0 0 14px; padding-left: 1.2em; }
+  li { margin: 0 0 8px; }
+  li::marker { color: var(--muted); }
 
-  /* ---------- sections ---------- */
-  section{margin-top:66px;scroll-margin-top:20px}
-  .shead{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start;
-         border-top:1px solid var(--ink);padding-top:16px}
-  .snum{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);
-        letter-spacing:.08em;padding-top:6px}
-  .shead h2{font-family:var(--sans);font-size:26px;font-weight:600;margin:0;
-            letter-spacing:-.015em;line-height:1.2}
-  .shead p{margin:6px 0 0;color:var(--muted);font-size:15px;max-width:62ch}
-  .body{margin-left:76px}
-  @media(max-width:720px){.body{margin-left:0}.shead{grid-template-columns:1fr;gap:4px}}
+  .flow {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    list-style: none; padding: 0; margin: 6px 0 20px;
+  }
+  .flow li {
+    position: relative; margin: 0; padding: 12px 12px 12px 14px;
+    border: 1px solid var(--rule); background: var(--ground); font-size: 13px; line-height: 1.45;
+  }
+  .flow li b { display: block; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .flow li + li::before {
+    content: ""; position: absolute; left: -10px; top: 50%; width: 10px; height: 1px; background: var(--muted);
+  }
+  @media (max-width: 720px) {
+    .flow { grid-template-columns: 1fr; }
+    .flow li + li::before { left: 50%; top: -10px; width: 1px; height: 10px; }
+  }
 
-  h3{font-family:var(--sans);font-size:15px;font-weight:600;margin:34px 0 10px;
-     letter-spacing:-.005em}
-  p{margin:0 0 14px;max-width:66ch}
-  .lede{font-size:17px;color:var(--ink-2)}
+  .table-wrap { overflow-x: auto; margin: 6px 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.4; }
+  caption { text-align: left; caption-side: top; font-size: 13px; color: var(--muted); padding: 0 0 8px; }
+  th, td { padding: 8px 12px 8px 0; vertical-align: top; text-align: left; border-bottom: 1px solid var(--rule-2); }
+  th {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td:last-child, th:last-child { padding-right: 0; }
+  tr:last-child td { border-bottom: 1px solid var(--rule); }
+  td .bad { color: var(--bad); font-weight: 600; }
+  .compact td, .compact th { padding-top: 6px; padding-bottom: 6px; }
 
-  /* ---------- flow diagram ---------- */
-  figure{margin:22px 0 6px}
-  figcaption{font-family:var(--mono);font-size:11.5px;color:var(--muted);
-             margin-top:10px;line-height:1.55}
-  .scroll{overflow-x:auto}
-  svg{display:block;max-width:100%;height:auto}
+  .note { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 13px; }
+  footer p { color: var(--muted); margin: 0 0 6px; }
 
-  /* ---------- tables ---------- */
-  table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13.5px;
-        margin:6px 0 4px}
-  th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
-     text-transform:uppercase;color:var(--muted);font-weight:600;
-     padding:0 14px 8px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
-  td{padding:9px 14px 9px 0;border-bottom:1px solid var(--rule-2);vertical-align:top}
-  tbody tr:last-child td{border-bottom:1px solid var(--rule)}
-  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-  code,.cfg{font-family:var(--mono);font-size:12.5px;background:var(--rule-2);
-            padding:1px 5px;border-radius:2px;color:var(--ink-2)}
-  .ci{color:var(--muted);font-size:11.5px}
-
-  .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;
-        letter-spacing:.05em;padding:2px 7px;border-radius:2px;text-transform:uppercase}
-  .p-good{background:var(--good-bg);color:var(--good)}
-  .p-warn{background:var(--warn-bg);color:var(--warn)}
-  .p-bad{background:var(--bad-bg);color:var(--bad)}
-
-  /* ---------- callout ---------- */
-  .call{border:1px solid var(--rule);background:var(--raise);padding:20px 22px;margin:24px 0}
-  .call.bad{border-left:3px solid var(--bad)}
-  .call.good{border-left:3px solid var(--good)}
-  .call.warn{border-left:3px solid var(--warn)}
-  .call h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:0 0 8px}
-  .call p{margin:0 0 8px;font-size:14.5px}
-  .call p:last-child{margin-bottom:0}
-
-  /* ---------- friction ---------- */
-  .fr{border-bottom:1px solid var(--rule-2);padding:16px 0;display:grid;
-      grid-template-columns:62px 1fr;gap:16px}
-  .fr:last-child{border-bottom:1px solid var(--rule)}
-  .fr .id{font-family:var(--mono);font-size:11.5px;color:var(--accent);font-weight:600;padding-top:2px}
-  .fr h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:0 0 5px;line-height:1.35}
-  .fr .tags{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
-  .fr p{font-size:14px;margin:0 0 8px;color:var(--ink-2)}
-  .fr .want{font-size:13.5px;color:var(--ink);border-left:2px solid var(--rule);
-            padding-left:12px;margin:0}
-  .fr .want b{font-family:var(--sans);font-weight:600;font-size:12.5px}
-  pre{font-family:var(--mono);font-size:11.5px;background:var(--rule-2);color:var(--ink-2);
-      padding:10px 12px;overflow-x:auto;margin:0 0 8px;line-height:1.5;border-radius:2px}
-
-  ul.tight{margin:0 0 14px;padding-left:20px}
-  ul.tight li{margin-bottom:7px;max-width:64ch}
-
-  footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--rule);
-         font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7}
-  a{color:var(--accent)}
+  @media print {
+    html, body { background: #fff; }
+    .paper { border: 0; margin: 0; padding: 0; max-width: none; }
+    a { border-bottom: 0; color: inherit; }
+    section { break-inside: avoid-page; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
+</head>
+<body>
 
-<div class="wrap">
+<div class="paper">
+  <header>
+    <p class="eyebrow">Partner Engineering Briefing</p>
+    <h1>Meridian Claims Group: payment-field extraction on the Gemini API</h1>
+    <dl class="meta">
+      <dt>Prepared by</dt><dd>Vaughn Nahapetian, 3 September 2026</dd>
+      <dt>Repository</dt><dd><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. After install, <code>meridian-evaluate</code> reproduces every figure here offline, with no API key.</dd>
+      <dt>Figures</dt><dd>From <code>results/results.json</code>: corpus v3, test split, 40 documents, 240 field-instances, one run at temperature 0. Brackets are Wilson 95% intervals.</dd>
+      <dt>Scope</dt><dd>Meridian is a composite partner profile built for this exercise. The corpus is synthetic: labels were written first and each page rendered from its label, so no label depends on a model. Its failure distribution is a guess about theirs.</dd>
+    </dl>
+  </header>
 
-<header class="mast">
-  <div class="eyebrow">Partner Engineering Briefing</div>
-  <h1>Document extraction at Meridian Claims Group</h1>
-  <p class="sub">Six payment-critical fields, 40,000 scanned documents a month, and a
-     hard requirement that the system knows when it is unsure.</p>
-  <div class="meta">
-    <span><b>Engagement</b> &nbsp;week 2</span>
-    <span><b>Workload</b> &nbsp;claim forms · medical invoices · adjuster narratives · repair estimates</span>
-    <span><b>Readers</b> &nbsp;gemini-3.5-flash-lite · gemini-3.1-flash-lite</span>
-    <span><b>Evidence</b> &nbsp;240 cached calls scored offline · 200-call throughput sweep</span>
-  </div>
-</header>
-
-<div class="bluf">
-  <h2>Bottom line</h2>
-  <ol>
-    <li><span class="n">01</span><span><strong>The accuracy and cost bars are met, but the margin is thin.</strong>
-      99.17% field-level accuracy <span class="ci">[97.0–99.8]</span> — the lower bound sits exactly on
-      Meridian's 97% line. Cost is $0.0013 per document, one fifteenth of budget, and was never the
-      constraint.</span></li>
-    <li><span class="n">02</span><span><strong>Extraction is solved; adjudication is where the risk is.</strong>
-      Reading the fields is near-perfect. Whether the line items actually sum to the stated total is
-      the question Meridian pays people for, and on that the primary reader caught all 12
-      inconsistent claims <span class="ci">[75.8–100]</span> — a wide interval, and the verifier
-      let one through. Its arithmetic is perfect on every reader; every failure is a misread digit.</span></li>
-    <li><span class="n">03</span><span><strong>The “knows when it is unsure” requirement is not met.</strong>
-      Self-reported confidence is a constant. Logprobs are disabled on these models and
-      self-consistency produced no disagreement. Three candidate uncertainty signals, three dead ends.</span></li>
-    <li><span class="n">04</span><span><strong>Double-keying earns its cost on the pages that matter.</strong>
-      The verifier alone invented five field values on documents that were not claims at all. The two
-      readers disagreed on every one, so <code>double_key</code> caught all five and reached 100%
-      <span class="ci">[98.4–100]</span> on what it auto-processed, flagging 3.3%.</span></li>
-    <li><span class="n">05</span><span><strong>Throughput is quota-bound, not concurrency-bound.</strong>
-      Flat at ~8 docs/min from 1 to 8 workers and negative at 16. Forty thousand documents a month is
-      ~83 hours of continuous running with no headroom. Lifting the quota, not tuning the client, is
-      what buys margin.</span></li>
-  </ol>
-</div>
-
-<!-- ============ 01 ARCHITECTURE ============ -->
-<section>
-  <div class="shead">
-    <div class="snum">01</div>
-    <div>
-      <h2>Architecture and system flow</h2>
-      <p>What we built, how a document moves through it, and the decisions that
-         were live rather than obvious.</p>
+  <section id="bottom-line">
+    <h2>Bottom line</h2>
+    <div class="measure">
+      <p>Meridian receives about 40,000 scanned claims documents a month. It needs six payment-critical fields read at 97% field accuracy, under $0.02 a document, by a system that flags what it is unsure of. On a corpus built to their failure modes:</p>
+      <ul>
+        <li><strong>Accuracy is met with no margin.</strong> One lite-class reader, <code>gemini-3.5-flash-lite</code>, reads 99.2% [97.0–99.8] of fields correctly with no abstention at $0.00132 a document. The lower bound is the bar.</li>
+        <li><strong>Two readers double-keyed reach 100% [98.4–100] on the 96.7% of fields they agree on</strong>, at $0.00221. Disagreements go to review, the control Meridian's own processors already run. On the same documents the two systems differ on two field-instances (p&nbsp;=&nbsp;0.50); what this sample establishes is the 3.3 points of coverage the second reader costs.</li>
+        <li><strong>Cost is not the constraint.</strong> The dearest configuration is about a ninth of the budget. Quota is: on this tier, 40,000 documents is 83 hours of continuous running with no headroom.</li>
+        <li><strong>Knowing when it is unsure is the open requirement.</strong> Self-reported confidence is near-constant, 1.0 on all 240 instances for one reader, and cannot gate anything. Disagreement between readers is the one signal that carried information: of 8 flags, 2 were real errors. A precision of 25% [7.1–59.1] is not a number to build on yet.</li>
+      </ul>
+      <p><strong>Recommendation.</strong> Run this harness unchanged on 500 of Meridian's own documents, weighted toward the exceptions their contractors already flag, before choosing a configuration. The gates are in section 2.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="body">
-    <p class="lede">The design is modelled on the control Meridian already runs. Thirty
-      contractors key these documents today, and the established quality control in claims
-      processing is <strong>double-keying</strong>: two operators key the same document
-      independently, and disagreements escalate to a supervisor. The system automates that
-      control rather than replacing it with something the operations team has never seen.</p>
-
-    <figure>
-      <div class="scroll">
-      <svg viewBox="0 0 880 300" role="img" aria-label="System flow from scanned document through two independent readers to auto-process or exception queue">
-        <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
-          </marker>
-        </defs>
-        <!-- input -->
-        <rect x="8" y="118" width="128" height="64" rx="2" fill="var(--raise)" stroke="var(--rule)"/>
-        <text x="72" y="144" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" font-weight="600" fill="var(--ink)">Scanned page</text>
-        <text x="72" y="163" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="var(--muted)">JPEG · ~1,300 tok</text>
-
-        <line x1="140" y1="150" x2="186" y2="150" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#ah)"/>
-
-        <!-- readers -->
-        <rect x="190" y="60" width="180" height="72" rx="2" fill="var(--raise)" stroke="var(--accent)"/>
-        <text x="280" y="84" text-anchor="middle" font-family="IBM Plex Sans" font-size="12.5" font-weight="600" fill="var(--ink)">Reader A — primary</text>
-        <text x="280" y="101" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">gemini-3.5-flash-lite</text>
-        <text x="280" y="118" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--accent)">$0.00132 · 2.2s</text>
-
-        <rect x="190" y="168" width="180" height="72" rx="2" fill="var(--raise)" stroke="var(--accent)"/>
-        <text x="280" y="192" text-anchor="middle" font-family="IBM Plex Sans" font-size="12.5" font-weight="600" fill="var(--ink)">Reader B — verifier</text>
-        <text x="280" y="209" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">gemini-3.1-flash-lite</text>
-        <text x="280" y="226" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--accent)">$0.00089 · 3.2s</text>
-
-        <path d="M140,150 L165,150 L165,96 L186,96" fill="none" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#ah)"/>
-        <path d="M140,150 L165,150 L165,204 L186,204" fill="none" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#ah)"/>
-
-        <text x="280" y="30" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">structured output · response schema</text>
-        <text x="280" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">{value, confidence} per field · value nullable</text>
-
-        <!-- compare -->
-        <path d="M374,96 L400,96 L400,140 L418,140" fill="none" stroke="var(--muted)" stroke-width="1.2"/>
-        <path d="M374,204 L400,204 L400,160 L418,160" fill="none" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#ah)"/>
-        <rect x="422" y="118" width="140" height="64" rx="2" fill="var(--accent-soft)" stroke="var(--accent)"/>
-        <text x="492" y="141" text-anchor="middle" font-family="IBM Plex Sans" font-size="12.5" font-weight="600" fill="var(--ink)">Compare</text>
-        <text x="492" y="160" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">normalized, per field</text>
-        <text x="492" y="174" text-anchor="middle" font-family="IBM Plex Mono" font-size="9.5" fill="var(--muted)">$1,696.42 ≡ 1696.42</text>
-
-        <!-- outcomes -->
-        <path d="M566,150 L596,150 L596,84 L622,84" fill="none" stroke="var(--good)" stroke-width="1.4" marker-end="url(#ah)"/>
-        <path d="M566,150 L596,150 L596,216 L622,216" fill="none" stroke="var(--warn)" stroke-width="1.4" marker-end="url(#ah)"/>
-        <text x="608" y="120" font-family="IBM Plex Mono" font-size="10" fill="var(--good)">agree</text>
-        <text x="602" y="186" font-family="IBM Plex Mono" font-size="10" fill="var(--warn)">differ</text>
-
-        <rect x="626" y="52" width="240" height="64" rx="2" fill="var(--good-bg)" stroke="var(--good)"/>
-        <text x="746" y="76" text-anchor="middle" font-family="IBM Plex Sans" font-size="12.5" font-weight="600" fill="var(--ink)">Auto-process to payments</text>
-        <text x="746" y="95" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">96.7% of fields · 100% accurate</text>
-
-        <rect x="626" y="184" width="240" height="64" rx="2" fill="var(--warn-bg)" stroke="var(--warn)"/>
-        <text x="746" y="208" text-anchor="middle" font-family="IBM Plex Sans" font-size="12.5" font-weight="600" fill="var(--ink)">Exception queue</text>
-        <text x="746" y="227" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">3.3% of fields · existing staff</text>
-      </svg>
-      </div>
-      <figcaption>Both readers run on every document. Escalation is not conditional, because the
-        signal that would gate it does not work — see section 02.</figcaption>
-    </figure>
-
-    <h3>Configurations measured</h3>
-    <table>
-      <thead><tr><th>Configuration</th><th>Calls</th><th>Uncertainty signal</th><th>What it tests</th></tr></thead>
-      <tbody>
-        <tr><td><span class="cfg">primary_solo</span></td><td class="num">1</td><td>self-reported confidence</td><td>the floor — cheapest thing that could work</td></tr>
-        <tr><td><span class="cfg">verifier_solo</span></td><td class="num">1</td><td>self-reported confidence</td><td>does the second reader stand alone</td></tr>
-        <tr><td><span class="cfg">cascade</span></td><td class="num">1–2</td><td>self-reported confidence</td><td>the classic cost saver</td></tr>
-        <tr><td><span class="cfg">double_key</span></td><td class="num">2</td><td>cross-reader disagreement</td><td>uncertainty without self-introspection</td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:12px"><span class="cfg">cascade</span> and <span class="cfg">double_key</span>
-      are deliberately opposed. The cascade bets that self-reported confidence carries information;
-      double-keying assumes it does not. Both were measured rather than assumed.</p>
-
-    <h3>Decisions that were live</h3>
-    <table>
-      <thead><tr><th>Decision</th><th>Chosen</th><th>Rejected</th><th>Why</th></tr></thead>
-      <tbody>
-        <tr><td>Label provenance</td><td>Labels authored first; documents rendered from them</td><td>Labels derived from model output</td><td>A harness whose labels descend from a model measures agreement, not accuracy</td></tr>
-        <tr><td>Output format</td><td>Response schema, <span class="cfg">{value, confidence}</span>, value nullable</td><td>Prompt-and-parse</td><td>Makes “this field is absent” a first-class answer instead of a parse failure</td></tr>
-        <tr><td>Second reader</td><td>Independent peer, lite-class</td><td>Stronger Flash tier</td><td>Free-tier quota kills every Flash model after ~20 requests (F-010). For a disagreement signal, independence matters and capability does not</td></tr>
-        <tr><td>Scoring</td><td>Score cached responses; never call the API</td><td>Score live</td><td>Threshold sweeps become free, tuning is reproducible, and the demo runs offline with identical numbers</td></tr>
-        <tr><td>Escalation</td><td>Kept, expected to fail</td><td>Dropped, or tuned until it helped</td><td>The negative result is the finding. Tuning it into a win would have meant tuning on test</td></tr>
-        <tr><td>Corpus difficulty</td><td>Ceiling set by human legibility</td><td>Whatever made the score interesting</td><td>An illegible page has no derivable ground truth — it is invalid, not hard</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Throughput at 40,000 documents a month</h3>
-    <p>Accuracy decides whether the pipeline is correct. Throughput decides whether it is
-      deployable. One full pass over the test split per concurrency level:</p>
-    <table>
-      <thead><tr><th>Workers</th><th>docs/min</th><th>docs/hour</th><th>Hours for 40k</th><th>Throttle events</th><th>Failures</th></tr></thead>
-      <tbody>
-        <tr><td class="num">1</td><td class="num">8.0</td><td class="num">479</td><td class="num">83.4</td><td class="num">8</td><td class="num">1</td></tr>
-        <tr><td class="num">2</td><td class="num">8.3</td><td class="num">499</td><td class="num">80.1</td><td class="num">9</td><td class="num">1</td></tr>
-        <tr><td class="num">4</td><td class="num">8.2</td><td class="num">490</td><td class="num">81.7</td><td class="num">9</td><td class="num">0</td></tr>
-        <tr><td class="num">8</td><td class="num">8.0</td><td class="num">479</td><td class="num">83.5</td><td class="num">9</td><td class="num">0</td></tr>
-        <tr><td class="num">16</td><td class="num" style="color:var(--bad)"><strong>7.0</strong></td><td class="num">423</td><td class="num">94.7</td><td class="num">10</td><td class="num">0</td></tr>
-      </tbody>
-    </table>
-
-    <div class="call bad">
-      <h4>Throughput is quota-bound, not concurrency-bound — and 16 workers is slower than 1</h4>
-      <p>Flat from 1 to 8 workers, then <strong>negative</strong>: sixteen workers returns 12% less
-        throughput than one. The ceiling is account-level requests-per-minute. Client-side
-        parallelism converts into back-off, and past the knee the extra offered load costs
-        throughput outright.</p>
-      <p><strong>Do not size a queue on worker count.</strong> The pool size that matters on this
-        tier is about four. And 40,000 documents/month is <strong>~83 hours of continuous
-        running</strong> — it fits inside a month with no headroom for a backlog or a reprocess.
-        Lifting the quota, not optimizing the client, is what buys margin.</p>
+  <section id="architecture">
+    <h2><span class="n">1</span>Architecture: design, flow and trade-offs</h2>
+    <ol class="flow">
+      <li><b>Labels</b>Authored first from a fixed seed: six fields, line items, stated total.</li>
+      <li><b>Documents</b>Rendered from the labels. Five strata; scanner noise and JPEG loss on every page.</li>
+      <li><b>Extractor</b>Gemini structured output against a response schema: a nullable value and a confidence per field.</li>
+      <li><b>Response cache</b>Every raw response, keyed on model, prompt version, schema and image bytes. Committed.</li>
+      <li><b>Harness</b>Scores the cache offline. Four configurations from the same calls. Never calls the API.</li>
+    </ol>
+    <div class="measure">
+      <p>Extraction and scoring are separate programs. Thresholds are chosen from cached responses, so sweeps cost nothing, tuning is reproducible, and the demo replays offline with identical numbers. The cache key is recomputed on every read, so a regenerated page cannot be scored against an old response: that failure does not crash and produces plausible wrong numbers.</p>
     </div>
 
-    <p>The limiter is a single shared gate rather than per-worker back-off. N workers each backing
-      off independently still present N times the offered load to one quota, so they converge and
-      thrash; one gate means a 429 on any worker slows the whole pool.</p>
-
-    <h3>Two things we measured and did not ship</h3>
-    <table>
-      <thead><tr><th>Lever</th><th>Status</th><th>Evidence</th></tr></thead>
-      <tbody>
-        <tr><td>Context caching</td><td><span class="pill p-warn">not applicable</span></td><td><span class="cfg">cached_tokens</span> was <strong>0 across all 200 calls</strong>. At ~1,300 tokens per document the payload is below the 4,096-token minimum for explicit caching on this model family. The instruction block is too small relative to the image to cache profitably</td></tr>
-        <tr><td>Batch API — 50% of interactive rate</td><td><span class="pill p-bad">unverified</span></td><td>Implemented against the SDK contract; <strong>never successfully submitted</strong>. Every <span class="cfg">batches.create</span> returns 400 FAILED_PRECONDITION while <span class="cfg">batches.list</span> succeeds — see F-011. No cost or throughput figure is claimed for it</td></tr>
-      </tbody>
-    </table>
-
-    <p style="margin-top:16px">Deliberately <strong>not built</strong>: auth, containers, CI, web
-      framework, database, job queue, UI, retry libraries. Meridian is evaluating architectural
-      clarity and evaluation rigor. Extra surface area scores nothing and costs defensibility.</p>
-  </div>
-</section>
-
-<!-- ============ 02 EVALUATION ============ -->
-<section>
-  <div class="shead">
-    <div class="snum">02</div>
-    <div>
-      <h2>Systematic evaluation</h2>
-      <p>How quality is defined, measured, and monitored for this workload — and
-         where the measurement itself runs out.</p>
-    </div>
-  </div>
-
-  <div class="body">
-    <h3>Ground truth, and why it is not circular</h3>
-    <p>Every record is authored as JSON from a fixed seed, and each document image is then
-      rendered from its record. Labels are written to disk before any document exists, so no
-      label is ever downstream of a model. 80 documents, split 40 tune / 40 test, frozen before
-      the first API call. <strong>Test was scored once.</strong></p>
-    <table>
-      <thead><tr><th>Stratum</th><th>n</th><th>What it isolates</th></tr></thead>
-      <tbody>
-        <tr><td>clean</td><td class="num">24</td><td>baseline on legible intake</td></tr>
-        <tr><td>ambiguous</td><td class="num">16</td><td>two plausible totals — differently labelled, one transposed digit, or a printed total struck through and corrected by hand</td></tr>
-        <tr><td>degraded</td><td class="num">16</td><td>skew, faded toner, speckle, form rules crossing values, intake stamp over the total</td></tr>
-        <tr><td>incomplete</td><td class="num">16</td><td>a field genuinely absent — row dropped, or label printed above an empty rule</td></tr>
-        <tr><td>out-of-distribution</td><td class="num">8</td><td>wrong document type, carrying decoy fields and no marker saying so</td></tr>
-      </tbody>
-    </table>
-
-    <div class="call warn">
-      <h4>The first corpus measured nothing, and we said so</h4>
-      <p>Version one was too easy: the primary reader scored <strong>240/240 field-instances,
-        zero errors</strong>. With no errors the calibration curve collapses to one bucket and
-        abstention precision is 0/0. Four of the five headline metrics were vacuous.</p>
-      <p>The benchmark, not the system, was what needed fixing. The corpus was hardened against
-        what bad intake actually looks like — never against a target score — and the v1 result is
-        preserved in the repository rather than quietly replaced.</p>
+    <div class="measure">
+      <p>Four configurations are resolved from the same cached calls: the primary reader alone; the verifier alone; a cascade that sends a page to the verifier when the primary's own confidence is low, the standard cost saver; and double-keying, both readers on every page with disagreement routed to review, which needs no self-assessment from either model.</p>
     </div>
 
-    <h3>Metric definitions</h3>
-    <p>A <strong>field-instance</strong> is one (document, field) pair. All rates are over
-      field-instances, not documents, because Meridian pays on fields.</p>
-    <table>
-      <thead><tr><th>Metric</th><th>Definition</th><th>Why this one</th></tr></thead>
-      <tbody>
-        <tr><td>Exact / normalized match</td><td>Byte-identical, and equal after type-aware canonicalization</td><td>Reported separately, never merged — the gap between them is a finding in its own right</td></tr>
-        <tr><td>Error taxonomy</td><td><span class="cfg">wrong_value</span> · <span class="cfg">missed_field</span> · <span class="cfg">hallucinated_field</span></td><td>Never pooled. A wrong value is a wrong payout; a missed field is a rekey. Different costs, different numbers</td></tr>
-        <tr><td>Coverage</td><td>Share not routed to the exception queue</td><td>Accuracy is never shown without it — a system that abstains on everything otherwise reports 100%</td></tr>
-        <tr><td>Abstention precision</td><td>Of what was flagged, the share that would genuinely have been wrong</td><td>Turns “flag everything is useless” into a number. Reported <span class="cfg">n/a</span> when nothing was flagged — 0/0 is undefined, not perfect</td></tr>
-        <tr><td>Abstention recall</td><td>Of everything that would have been wrong, the share caught</td><td>Only the pair makes the trade visible</td></tr>
-        <tr><td>ECE</td><td>Count-weighted gap between stated confidence and observed accuracy, 10 buckets</td><td>The metric that speaks directly to “knows when it is unsure”</td></tr>
-        <tr><td>Wilson 95% intervals</td><td>On every accuracy figure</td><td>These proportions sit near 1.0 at n=40–240, where the normal approximation produces intervals above 1.0</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Cost / accuracy frontier</h3>
-    <figure>
-      <div class="scroll">
-      <svg viewBox="0 0 760 400" role="img" aria-label="Cost versus accuracy frontier with Wilson 95% confidence intervals; Meridian's 97% bar shown as a horizontal line">
-        <!-- gridlines -->
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="var(--muted)">
-          <line x1="90" y1="320" x2="700" y2="320" stroke="var(--rule)" stroke-width="1"/>
-          <text x="80" y="324" text-anchor="end">95%</text>
-          <line x1="90" y1="269.1" x2="700" y2="269.1" stroke="var(--rule-2)" stroke-width="1"/>
-          <text x="80" y="273" text-anchor="end">96%</text>
-          <line x1="90" y1="167.3" x2="700" y2="167.3" stroke="var(--rule-2)" stroke-width="1"/>
-          <text x="80" y="171" text-anchor="end">98%</text>
-          <line x1="90" y1="116.4" x2="700" y2="116.4" stroke="var(--rule-2)" stroke-width="1"/>
-          <text x="80" y="120" text-anchor="end">99%</text>
-          <line x1="90" y1="65.5" x2="700" y2="65.5" stroke="var(--rule-2)" stroke-width="1"/>
-          <text x="80" y="69" text-anchor="end">100%</text>
-        </g>
-
-        <!-- Meridian bar -->
-        <line x1="90" y1="218.2" x2="700" y2="218.2" stroke="var(--bad)" stroke-width="1.5" stroke-dasharray="6 4"/>
-        <text x="700" y="212" text-anchor="end" font-family="IBM Plex Mono" font-size="11" font-weight="600" fill="var(--bad)">Meridian bar — 97%</text>
-
-        <!-- axes -->
-        <line x1="90" y1="40" x2="90" y2="320" stroke="var(--rule)" stroke-width="1"/>
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="var(--muted)" text-anchor="middle">
-          <text x="90" y="342">$0</text>
-          <text x="253.9" y="342">$0.0005</text>
-          <text x="417.8" y="342">$0.0010</text>
-          <text x="581.7" y="342">$0.0015</text>
-        </g>
-        <text x="395" y="366" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)">cost per document</text>
-        <text x="24" y="180" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" transform="rotate(-90 24 180)">accuracy on covered</text>
-
-        <!-- verifier_solo: x=296.5 y=150.5 ci 279.3..96.0 -->
-        <line x1="296.5" y1="279.3" x2="296.5" y2="96.0" stroke="var(--muted)" stroke-width="1.2"/>
-        <line x1="290.5" y1="279.3" x2="302.5" y2="279.3" stroke="var(--muted)" stroke-width="1.2"/>
-        <line x1="290.5" y1="96.0" x2="302.5" y2="96.0" stroke="var(--muted)" stroke-width="1.2"/>
-        <circle cx="296.5" cy="150.5" r="5.5" fill="var(--ground)" stroke="var(--muted)" stroke-width="2"/>
-        <text x="296.5" y="80" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--ink-2)">verifier_solo</text>
-        <text x="296.5" y="297" text-anchor="middle" font-family="IBM Plex Mono" font-size="9.5" fill="var(--bad)">CI crosses the bar</text>
-
-        <!-- primary_solo + cascade: x=385 y=86.8 ci 182.5..70.5 -->
-        <line x1="385" y1="182.5" x2="385" y2="70.5" stroke="var(--accent)" stroke-width="1.2"/>
-        <line x1="379" y1="182.5" x2="391" y2="182.5" stroke="var(--accent)" stroke-width="1.2"/>
-        <line x1="379" y1="70.5" x2="391" y2="70.5" stroke="var(--accent)" stroke-width="1.2"/>
-        <circle cx="385" cy="86.8" r="8.5" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 2.5"/>
-        <circle cx="385" cy="86.8" r="5.5" fill="var(--accent)"/>
-        <text x="399" y="84" font-family="IBM Plex Mono" font-size="11" font-weight="600" fill="var(--accent)">primary_solo = cascade</text>
-        <text x="399" y="99" font-family="IBM Plex Mono" font-size="9.5" fill="var(--muted)">identical on every metric</text>
-        <text x="399" y="112" font-family="IBM Plex Mono" font-size="9.5" fill="var(--muted)">0.0% of documents escalated</text>
-
-        <!-- double_key: x=591.5 y=65.5 ci 146.9..65.5 -->
-        <line x1="591.5" y1="146.9" x2="591.5" y2="65.5" stroke="var(--good)" stroke-width="1.2"/>
-        <line x1="585.5" y1="146.9" x2="597.5" y2="146.9" stroke="var(--good)" stroke-width="1.2"/>
-        <line x1="585.5" y1="65.5" x2="597.5" y2="65.5" stroke="var(--good)" stroke-width="1.2"/>
-        <circle cx="591.5" cy="65.5" r="5.5" fill="var(--good)"/>
-        <text x="591.5" y="50" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="600" fill="var(--good)">double_key</text>
-        <text x="591.5" y="166" text-anchor="middle" font-family="IBM Plex Mono" font-size="9.5" fill="var(--muted)">97.9% coverage</text>
-
-        <!-- budget note -->
-        <text x="700" y="386" text-anchor="end" font-family="IBM Plex Mono" font-size="10.5" fill="var(--muted)">Meridian's $0.02/doc budget is 13× off the right edge of this chart</text>
-      </svg>
-      </div>
-      <figcaption>Bars are Wilson 95% intervals. Test split, corpus v3, n=40 documents / 240
-        field-instances, one run. <span class="cfg">verifier_solo</span>'s interval crosses the bar, so it
-        cannot be claimed to clear it.</figcaption>
-    </figure>
-
-    <table>
-      <thead><tr><th>Configuration</th><th>Accuracy on covered</th><th>Coverage</th><th>Abst. precision</th><th>$/doc</th><th>$/mo @ 40k</th><th>ECE</th><th>p50</th></tr></thead>
-      <tbody>
-        <tr><td><span class="cfg">primary_solo</span></td><td class="num">99.17% <span class="ci">[97.0–99.8]</span></td><td class="num">100%</td><td class="num ci">n/a</td><td class="num">$0.00132</td><td class="num">$52.8</td><td class="num">0.0064</td><td class="num">2.17s</td></tr>
-        <tr><td><span class="cfg">cascade</span></td><td class="num">99.17% <span class="ci">[97.0–99.8]</span></td><td class="num">100%</td><td class="num ci">n/a</td><td class="num">$0.00132</td><td class="num">$52.8</td><td class="num">0.0064</td><td class="num">2.17s</td></tr>
-        <tr><td><span class="cfg">double_key</span></td><td class="num"><strong>100.00%</strong> <span class="ci">[98.4–100.0]</span></td><td class="num">96.7%</td><td class="num">25.0% <span class="ci">[7.1–59.1]</span></td><td class="num">$0.00221</td><td class="num">$88.4</td><td class="num">0.0064</td><td class="num">5.58s</td></tr>
-        <tr><td><span class="cfg">verifier_solo</span></td><td class="num">97.08% <span class="ci">[94.1–98.6]</span></td><td class="num">100%</td><td class="num ci">n/a</td><td class="num">$0.00089</td><td class="num">$35.6</td><td class="num">0.0292</td><td class="num">3.24s</td></tr>
-      </tbody>
-    </table>
-
-    <div class="call bad">
-      <h4>The cascade escalated nothing — 0.0% of documents</h4>
-      <p><span class="cfg">cascade</span> is identical to <span class="cfg">primary_solo</span> on
-        every metric: same accuracy, same cost, same latency. It escalates when self-reported
-        confidence is low, and self-reported confidence is effectively a constant — 239 of 240
-        predictions fall in the 0.9–1.0 bucket. The trigger never fires.</p>
-      <p><strong>The standard cost-saving cascade cannot work on this model, because the signal it
-        depends on carries no information.</strong> This was predicted before the run and is
-        reported as measured rather than tuned away.</p>
-    </div>
-
-    <h3>Errors, unpooled</h3>
-    <table>
-      <thead><tr><th>Kind</th><th>primary</th><th>verifier</th><th>double_key</th><th>Business cost</th></tr></thead>
-      <tbody>
-        <tr><td><span class="cfg">wrong_value</span></td><td class="num">2</td><td class="num">2</td><td class="num">0</td><td>a wrong payout — the expensive one</td></tr>
-        <tr><td><span class="cfg">missed_field</span></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td>a rekey</td></tr>
-        <tr><td><span class="cfg">hallucinated_field</span></td><td class="num">0</td><td class="num" style="color:var(--bad)"><strong>5</strong></td><td class="num" style="color:var(--good)"><strong>0</strong></td><td>dangerous; only measurable because the OOD and incomplete strata exist</td></tr>
-      </tbody>
-    </table>
-
-    <div class="call bad">
-      <h4>The verifier invented five values on pages that were not claims</h4>
-      <p>It read a utility bill's “Amount Due” as a claim total and an account number as a claim
-        ID — exactly the bait those documents were built to offer. The primary reader did not fall
-        for it. <strong>The two readers disagreed on every one of the five, so <span class="cfg">double_key</span>
-        caught them all.</strong></p>
-      <p>This is the clearest single demonstration in the data of why the second reader earns its
-        cost: not accuracy on the easy pages, but catching one reader's confident invention on a page
-        it should have rejected outright.</p>
-    </div>
-
-    <h3>Reconciliation — does the total match the itemisation?</h3>
-    <p>Reading fields is a transcription task these models have largely solved. Whether the line
-      items actually sum to the stated total is the adjudication task underneath it, and it is
-      what Meridian loses money on. 34 test documents carry an itemisation; 12 are deliberately
-      inconsistent — an omitted line, a double-counted line, a transposed digit, an unitemised
-      surcharge.</p>
-    <table>
-      <thead><tr><th></th><th>primary</th><th>verifier</th><th>double_key</th></tr></thead>
-      <tbody>
-        <tr><td>verdict accuracy</td><td class="num">100% <span class="ci">[89.8–100]</span></td><td class="num">97.1% <span class="ci">[85.1–99.5]</span></td><td class="num">100% <span class="ci">[89.8–100]</span></td></tr>
-        <tr><td><strong>bad-claim recall</strong></td><td class="num"><strong>100%</strong> <span class="ci">[75.8–100]</span></td><td class="num">91.7% <span class="ci">[64.6–98.5]</span></td><td class="num"><strong>100%</strong> <span class="ci">[75.8–100]</span></td></tr>
-        <tr><td>false pass (wrong payout)</td><td class="num">0</td><td class="num" style="color:var(--bad)"><strong>1</strong></td><td class="num">0</td></tr>
-        <tr><td>false flag (review cost)</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-        <tr><td>model arithmetic correct</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
-        <tr><td>line items read correctly</td><td class="num">91.2% <span class="ci">[77.0–97.0]</span></td><td class="num">91.2%</td><td class="num">91.2%</td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:12px"><strong>Read the interval, not the point.</strong> With 12 bad claims
-      the recall interval runs from 76% to 100%. The primary reader caught all 12 on test and 12 of
-      14 on tune; the honest statement is that the miss rate is somewhere under one in four and
-      cannot be pinned tighter with this many bad claims. The verifier's single false pass is a
-      claim that would have been paid.</p>
-
-    <div class="call good">
-      <h4>The arithmetic finding went against the hypothesis it was built to test</h4>
-      <p>The model is asked to sum its own line items and return a verdict. Python separately sums
-        the same line items the model extracted and returns its own verdict. Identical inputs, two
-        adders — any gap between them is arithmetic. <strong>There was no gap. Model arithmetic is
-        100% on every reader.</strong></p>
-      <p>Both verdict paths fail on exactly the same documents, and every one is a misread digit on
-        a degraded scan — line items are read correctly 91% of the time. “Never let a model do
-        arithmetic” is the wrong lesson for this task. The arithmetic is free and correct; the money
-        is in reading four digits off a stamped, faded page, which is an image-quality problem with
-        an image-quality fix.</p>
-    </div>
-
-    <div class="call good">
-      <h4>Normalization is worth 25 points, and scoring without it would have been a costly mistake</h4>
-      <table style="margin-top:10px">
-        <thead><tr><th>Field</th><th>Exact match</th><th>Normalized match</th></tr></thead>
+    <div class="table-wrap">
+      <table>
+        <caption>Decisions made during implementation</caption>
+        <thead><tr><th>Decision</th><th>Chosen</th><th>Rejected</th><th>Why</th></tr></thead>
         <tbody>
-          <tr><td><span class="cfg">total_amount</span></td><td class="num" style="color:var(--bad)">15.00% <span class="ci">[7.1–29.1]</span></td><td class="num" style="color:var(--good)">97.50%</td></tr>
-          <tr><td><span class="cfg">date_of_service</span></td><td class="num" style="color:var(--bad)">32.50% <span class="ci">[20.1–48.0]</span></td><td class="num" style="color:var(--good)">100.00%</td></tr>
-          <tr><td>overall</td><td class="num">74.17%</td><td class="num">99.17%</td></tr>
+          <tr><td>Ground truth</td><td>Labels first; pages rendered from them</td><td>Labels from model output, or hand-labelling generated pages</td><td>Labels from a model measure agreement, not accuracy</td></tr>
+          <tr><td>Output contract</td><td>Response schema: nullable value and confidence per field</td><td>Prompt and parse</td><td>"Absent" is an answer, not a parse failure, so hallucinated fields can be counted</td></tr>
+          <tr><td>Uncertainty signal</td><td>Disagreement between two readers</td><td>Self-reported confidence; log probabilities; self-consistency</td><td>Confidence is near-constant; log probabilities are unavailable (F-006); five samples at temperature 1 agreed 5 of 5 (F-007)</td></tr>
+          <tr><td>Second reader</td><td>An independent lite-class model, <code>gemini-3.1-flash-lite</code></td><td>A Flash-tier model</td><td>Free-tier quota stopped each Flash model run toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability. The cost: the cascade has nothing stronger to escalate to</td></tr>
+          <tr><td>Scoring</td><td>From the committed cache</td><td>Live calls</td><td>Free sweeps, reproducible tuning, a demo that cannot drift</td></tr>
         </tbody>
       </table>
-      <p style="margin-top:12px">The entire apparent 25-point error rate is formatting —
-        <span class="cfg">$7,374.71</span> against <span class="cfg">7374.71</span>,
-        <span class="cfg">1 Jun 2026</span> against <span class="cfg">2026-06-01</span>. None of it
-        is misreading. A team scoring this pipeline on exact match alone would conclude it misses
-        Meridian's bar by 23 points and rebuild something that already works.</p>
+    </div>
+    <p class="note">Not built, because the brief is architecture and evaluation rather than production hardening: authentication, containers, CI, a database, a job queue, a UI, retry libraries.</p>
+  </section>
+
+  <section id="evaluation">
+    <h2><span class="n">2</span>Evaluation: define, measure, monitor</h2>
+
+    <h3>Define</h3>
+    <div class="measure">
+      <ul>
+        <li>The unit is the field-instance, one field on one document, because Meridian pays per field. Exact and normalized match are both reported and never merged.</li>
+        <li>Three error kinds, never pooled, because their costs differ: a wrong value is a wrong payout, a missed field is a rekey, a hallucinated field is a payment on a page that is not a claim.</li>
+        <li>Accuracy is never shown without coverage. Abstention precision uses the recorded counterfactual for every flag: what would have gone out without it.</li>
+        <li>Calibration in ten confidence bins with expected calibration error, flagged degenerate when one bin holds the predictions. Wilson 95% intervals on every proportion.</li>
+        <li>Configurations are compared paired, on the same documents: McNemar's exact test on discordant instances, and a bootstrap that resamples documents, since six fields on one page share one scan.</li>
+        <li>Reconciliation, whether the line items sum to the stated total: the adjudication under the transcription, where a processor loses money.</li>
+      </ul>
+      <p>Protocol: 80 documents in five strata (clean 24, ambiguous 16, degraded 16, incomplete 16, out-of-distribution 8), split 40 tune and 40 test before the first API call. Thresholds were swept on tune only. Test was scored once.</p>
     </div>
 
-    <h3>Monitoring in production</h3>
-    <ul class="tight">
-      <li><strong>Disagreement rate is the daily health metric.</strong> It needs no labels, so it
-        runs on live traffic from day one. A rise means the input distribution moved — new provider
-        template, new scanner, a fax line degrading.</li>
-      <li><strong>Exception-queue outcomes close the loop.</strong> Every flagged document gets a
-        human answer, which is a free label. Feed those back and abstention precision becomes
-        measurable on real traffic rather than on our synthetic corpus.</li>
-      <li><strong>Re-run the frozen harness on every model version change.</strong> The cache makes
-        the comparison exact rather than approximate.</li>
-      <li><strong>Temperature 0 is not determinism.</strong> Across 3 runs, accuracy moved 0.42
-        points and ECE more than tripled. Treat any single-run figure as ±0.4.</li>
-    </ul>
-
-    <h3>Where this falls short</h3>
-    <table>
-      <thead><tr><th>Gap</th><th>Evidence</th><th>What would close it</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Calibration is unmeasurable, not good</strong></td><td>Nearly every prediction sits in one confidence bucket. A low ECE here is what a constant produces, not evidence that confidence tracks correctness</td><td>A calibrated confidence primitive from the model — see F-006 / F-007</td></tr>
-        <tr><td>Bad-claim recall is wide</td><td>100% on 12 inconsistent claims is [75.8–100]. Tune showed 12 of 14. The miss rate is under one in four and not pinned tighter</td><td>More inconsistent claims to observe — Meridian's own rejected documents are a free source</td></tr>
-        <tr><td>Abstention precision is uninformative</td><td>25.0% on 8 flags, CI [7.1–59.1] — spans “mostly noise” to “mostly real”</td><td>Same: more errors to observe</td></tr>
-        <tr><td>The margin on the bar is zero</td><td><span class="cfg">primary_solo</span>'s lower bound is 97.0% against a 97% bar, and v2 showed 0.4 points of run-to-run noise</td><td>n≈500 tightens the interval ~3.5×; about $2 of inference</td></tr>
-        <tr><td>One run on v3</td><td>Variance was measured 3× on corpus v2; v3 test has one complete run</td><td>Two more runs — a quota reset and about $0.20</td></tr>
-        <tr><td>Capability tier never tested</td><td>Free-tier quota blocked it — recorded as unknown, not as negative</td><td>A billed key</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ============ 03 FRICTION ============ -->
-<section>
-  <div class="shead">
-    <div class="snum">03</div>
-    <div>
-      <h2>Friction log and engineering signal</h2>
-      <p>Recorded live, with exact error text. Nothing reconstructed from memory —
-         entries we could not verify were dropped rather than written up.</p>
+    <h3>Measure</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>Test split, 240 field-instances, normalized match</caption>
+        <thead><tr><th>Configuration</th><th class="num">Accuracy on covered</th><th class="num">Coverage</th><th class="num">Wrong / missed / hallucinated</th><th class="num">$ per document</th><th class="num">p50 latency</th></tr></thead>
+        <tbody>
+          <tr><td><code>primary_solo</code></td><td class="num">99.2% [97.0–99.8]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / 0</td><td class="num">$0.00132</td><td class="num">2.2 s</td></tr>
+          <tr><td><code>verifier_solo</code></td><td class="num">97.1% [94.1–98.6]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / <span class="bad">5</span></td><td class="num">$0.00089</td><td class="num">3.2 s</td></tr>
+          <tr><td><code>cascade</code></td><td class="num">99.2% [97.0–99.8]</td><td class="num">100%</td><td class="num"><span class="bad">2</span> / 0 / 0</td><td class="num">$0.00132</td><td class="num">2.2 s</td></tr>
+          <tr><td><code>double_key</code></td><td class="num">100% [98.4–100]</td><td class="num">96.7%</td><td class="num">0 / 0 / 0</td><td class="num">$0.00221</td><td class="num">5.6 s</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-
-  <div class="body">
-    <p class="lede">Ten entries were logged. The four below are the ones we would act on, ordered
-      by what they cost this engagement. The full log with reproduction detail is in
-      <span class="cfg">FRICTION.md</span>.</p>
-
-    <div class="fr">
-      <div class="id">F-007</div>
-      <div>
-        <h4>Self-reported confidence is degenerate, and it is the whole requirement</h4>
-        <div class="tags"><span class="pill p-bad">core modeling</span><span class="pill p-bad">high</span></div>
-        <pre>conf=1.00 : 239  (99.6%)
-conf=0.95 :   1  ( 0.4%)</pre>
-        <p>The schema explicitly instructed the model to use the full 0.0–1.0 range and not to
-          default high. It defaulted high anyway. Self-consistency was tried as a substitute —
-          5 samples at temperature 1.0 on the three hardest documents returned 5/5 identical
-          values, so there was no disagreement to convert into a confidence either.</p>
-        <p class="want"><b>What we'd want instead — </b>a documented, calibrated confidence
-          primitive. Asking a model to introspect a probability yields a number that looks like a
-          probability and behaves like a constant. For any customer whose requirement is “know when
-          you are unsure”, this is the single most important missing piece.</p>
-      </div>
+    <div class="measure">
+      <p><strong>The cascade had nothing to escalate to.</strong> Tuning set its escalation threshold to zero, so on test it is the primary alone. On tune no threshold raised accuracy, and escalating every page lowered it from 98.75% to 97.92% at 1.7 times the cost: the second reader is not stronger. The primary's confidence is 1.0 on 214 of 240 instances, yet its two test errors were its two lowest confidences, 0.90 and 0.95, on one degraded page. Five errors decide nothing about the signal. A cascade needs a stronger second reader before the trigger matters.</p>
+      <p><strong>Double-keying earns its cost on hallucinations.</strong> Alone, the verifier invented five values on out-of-distribution pages, reading a utility bill's "Amount Due" as a claim total. Under double-keying none reached output. The primary was right on those pages, so here the flags were review cost; with the roles reversed they would have been saved payouts. On <code>total_amount</code>, the payment field: primary alone 97.5% [87.1–99.6], double-keying 100% [90.8–100].</p>
+      <p><strong>Reconciliation.</strong> 34 test documents carry an itemisation and a stated total; 12 are inconsistent by construction. The primary caught all 12 [75.8–100]; the verifier missed one, a claim that would have been paid. Model arithmetic was correct on every document; every verdict failure is a misread digit on a degraded scan (line items read correctly 91.2% [77.0–97.0]).</p>
+      <p><strong>Not established.</strong> 240 field-instances and 8 flags are small. This corpus has one complete run; three runs on the previous corpus moved accuracy 0.4 points, so treat any figure as ±0.4. Calibration cannot be shown with 239 of 240 predictions in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]) and where double-keying's coverage drops most (93.8%; 79.2% on out-of-distribution pages).</p>
     </div>
 
-    <div class="fr">
-      <div class="id">F-010</div>
-      <div>
-        <h4>Free-tier quota cannot fund an evaluation — the exact workload that precedes adoption</h4>
-        <div class="tags"><span class="pill p-bad">product</span><span class="pill p-bad">high</span></div>
-        <p>Every Flash-tier model exhausts after roughly 20 successful requests, then returns 429
-          in ~0.2s without attempting inference. Measured across four models in sequence; lite-tier
-          models were unaffected, completing 320 calls with zero errors.</p>
-        <p><strong>The quota is not the cost.</strong> Total spend for this entire evaluation at
-          list price is about one dollar. The free tier is generous enough to <em>try</em> a model
-          and too thin to <em>evaluate</em> one — and evaluation is exactly what a partner does
-          before committing. It cost us the capability-escalation architecture and four model
-          migrations.</p>
-        <p class="want"><b>What we'd want instead — </b>a quota shaped for evaluation: a one-off
-          allowance of a few thousand requests per project, or free-tier limits expressed
-          per-project-per-day rather than per-model, so a fixed budget can be spent where the
-          developer chooses.</p>
-      </div>
+    <h3>Monitor</h3>
+    <div class="measure">
+      <p>Per document, the pipeline already emits: reader disagreement by field and stratum; each flagged item's adjudication outcome, which makes abstention precision a running measurement; cost from usage metadata; p50 and p95 latency with the 429 and 503 rate; and the model version string. Proposed for Meridian to confirm:</p>
+      <ul>
+        <li><strong>Daily.</strong> Disagreement rate against its baseline of 3.3% of fields. Above twice baseline, someone is paged: the input mix moved or a model changed.</li>
+        <li><strong>Weekly.</strong> Re-score a 200-document sample with this harness unchanged, adjudicators' final values as labels. Human-check 2% of agreed items: agreement between two readers is the one error the system cannot see.</li>
+        <li><strong>Gate.</strong> Accuracy on covered, lower bound, at or above 97% on the weekly sample. Below it, automatic payment stops and the queue takes everything until the cause is found.</li>
+        <li><strong>Model change.</strong> The model name is an alias. Any change in the returned version re-runs the harness on the committed corpus before the next batch.</li>
+        <li><strong>Pilot gates</strong> for the 500-document run: lower bound at or above 97% on covered; coverage at or above 90%, set against the queue's capacity; at least one flag in three a real error. If double-keying misses the last gate, the primary alone with sampled audit is the honest alternative.</li>
+      </ul>
+      <p>Throughput is bound by quota, not client code: about 8 documents a minute from 1 to 8 workers and 12% slower at 16, behind one shared rate gate. The Batch API is the right mode for overnight bulk at half the price; <code>batches.create</code> failed a precondition on this tier (F-011), so no batch figure is claimed.</p>
     </div>
+  </section>
 
-    <div class="fr">
-      <div class="id">F-003 / F-008</div>
-      <div>
-        <h4>One 429 message covers two unrelated conditions</h4>
-        <div class="tags"><span class="pill p-warn">API surface</span><span class="pill p-warn">medium</span></div>
-        <pre>429 RESOURCE_EXHAUSTED — "You exceeded your current quota,
-please check your plan and billing details."</pre>
-        <p>Returned byte-for-byte both when the tier has <em>no entitlement to the model at all</em>
-          and when requests are simply <em>arriving too quickly</em>. One is permanent and needs a
-          billing change; the other clears in seconds. Nothing in the status, the message, or the
-          headers separates them. We lost time re-verifying that a working model had not become
-          entitlement-blocked mid-run.</p>
-        <p class="want"><b>What we'd want instead — </b>distinct <span class="cfg">reason</span>
-          values for quota-exhausted versus not-entitled, and a <span class="cfg">Retry-After</span>
-          header on the transient one. The cheapest fix on this list.</p>
-      </div>
+  <section id="friction">
+    <h2><span class="n">3</span>Friction log and engineering signal</h2>
+    <div class="measure">
+      <p>Eleven entries were logged as they happened, with the error text as it appeared; the full log is <code>FRICTION.md</code>. The six that matter to GDM, ordered by how much they would change what a partner can build:</p>
     </div>
-
-    <div class="fr">
-      <div class="id">F-002</div>
-      <div>
-        <h4><span class="cfg">models.list()</span> advertises models that <span class="cfg">generateContent</span> refuses</h4>
-        <div class="tags"><span class="pill p-warn">API surface</span><span class="pill p-bad">high</span></div>
-        <pre>404 NOT_FOUND — "This model models/gemini-2.5-flash-lite is no
-longer available to new users."</pre>
-        <p>Both models appeared in <span class="cfg">models.list()</span> on the same key, with
-          <span class="cfg">generateContent</span> in <span class="cfg">supported_actions</span>.
-          The discovery endpoint and the inference endpoint disagree about what the key can call.
-          This invalidated a model-tier decision already agreed with the customer.</p>
-        <p class="want"><b>What we'd want instead — </b><span class="cfg">models.list()</span>
-          should reflect per-key availability, or return an
-          <span class="cfg">available_to_caller</span> flag. A model I cannot call should not be in
-          my model list.</p>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <caption>Actionable feedback, with the team it is for</caption>
+        <thead><tr><th>Entry</th><th>What happened</th><th>Effect on this build</th><th>What would help</th><th>Team</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>F-007, F-006</td>
+            <td>Self-reported confidence is near-constant: 1.0 on 240 of 240 instances for one reader and 214 of 240 for the other, after a schema instruction to use the full range. Log probabilities are unavailable; five samples at temperature 1 agreed 5 of 5.</td>
+            <td>No usable uncertainty signal from one reader. Abstention needed a second model at 1.7 times the cost.</td>
+            <td>A calibrated confidence primitive for structured output: log probabilities on schema fields, or an uncertainty scalar the model need not introspect to produce. For any "know when unsure" requirement, this is the missing piece.</td>
+            <td>Core modeling</td>
+          </tr>
+          <tr>
+            <td>F-010</td>
+            <td>Free-tier quota stopped each Flash model run toward evaluation volume after about 20 successful requests, then 429 in 0.2 s. Lite-tier models were unaffected.</td>
+            <td>The capability-tier comparison never ran; about 90 minutes lost across four model migrations.</td>
+            <td>A per-project evaluation allowance of a few thousand requests, or per-project daily limits instead of per-model. The whole evaluation costs about a dollar at list price; the tier a partner uses to decide is the tier least able to answer.</td>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <td>F-008, F-009</td>
+            <td>One 429 message covers an exhausted entitlement and a rate limit. Per-model limits are no longer in the rate-limit documentation.</td>
+            <td>Pacing was found by backing off until calls succeeded. A client cannot tell whether to wait or stop.</td>
+            <td>Distinguish the two conditions in the error body; return the limit and reset time in headers.</td>
+            <td>API surface, documentation</td>
+          </tr>
+          <tr>
+            <td>F-011</td>
+            <td><code>batches.create</code> returns 400 FAILED_PRECONDITION with the precondition unnamed. <code>batches.list</code> succeeds.</td>
+            <td>Batch mode implemented against the SDK contract, never submitted. The 50% batch price is not claimed.</td>
+            <td>Name the precondition: billing tier, model, request size.</td>
+            <td>API surface</td>
+          </tr>
+          <tr>
+            <td>F-002</td>
+            <td><code>models.list()</code> advertises models that <code>generateContent</code> refuses as no longer available to new users.</td>
+            <td>Two model migrations before the first successful call.</td>
+            <td>Filter the list by entitlement, or return entitlement per model.</td>
+            <td>API surface</td>
+          </tr>
+          <tr>
+            <td>Context caching</td>
+            <td><code>cached_tokens</code> was 0 across 200 calls: the page image precedes the shared prompt, so no prefix is shared, and the prompt is about 350 tokens against a 4,096-token minimum, of about 1,400 input tokens a document.</td>
+            <td>No saving measured. Prompt-first ordering is the change to try; it alters every cache key, so it waited until after scoring.</td>
+            <td>Document part ordering for multimodal caching; a lower minimum for short structured-output prompts.</td>
+            <td>Documentation, product</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </section>
 
-    <div class="fr">
-      <div class="id">F-011</div>
-      <div>
-        <h4>Batch submission fails an unnamed precondition, while listing batches succeeds</h4>
-        <div class="tags"><span class="pill p-bad">API surface</span><span class="pill p-warn">documentation</span><span class="pill p-bad">high</span></div>
-        <pre>400 FAILED_PRECONDITION — "Precondition check failed."</pre>
-        <p>Returned identically for a one-part text request and a 40-document multimodal batch, on
-          two models, with and without <span class="cfg">response_schema</span> — so the payload is
-          not the cause. <span class="cfg">batches.list()</span> succeeds on the same client, so the
-          endpoint is reachable and authenticated. From inside the program the capability looks
-          present.</p>
-        <p>The Batch API page states no tier restriction, eligibility requirement, or precondition
-          of any kind, and does not document <span class="cfg">FAILED_PRECONDITION</span>. Batch
-          probably requires a billed project — but that is our inference, not something the API or
-          the documentation says.</p>
-        <p class="want"><b>What we'd want instead — </b>name the precondition. This is the least
-          actionable error text in the log: it does not say which precondition, which resource, or
-          what to change. “Batch API requires a project with billing enabled” would have cost zero
-          minutes instead of twenty-five, and belongs in the page's first paragraph.</p>
-      </div>
+  <section id="next">
+    <h2>Next</h2>
+    <div class="measure">
+      <ol>
+        <li>Ingest 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness unchanged. The instrumentation is built; it needs harder inputs.</li>
+        <li>Re-run the cascade with a Flash-tier second reader once quota allows. The negative result here is about the readers, not the pattern.</li>
+        <li>Re-run calibration the day a confidence primitive exists. Section 2 is ready for it.</li>
+      </ol>
     </div>
-
-    <div class="call warn" style="margin-top:30px">
-      <h4>Commercial signal, unprompted by the build</h4>
-      <p>Flash-tier list pricing is promotional through <strong>2026-12-31</strong> and doubles on
-        <strong>1 January 2027</strong> — $0.75→$1.50 input, $3.75→$7.50 output. Every cost figure
-        in this briefing is computed at the current rate. Meridian's unit economics change in four
-        months regardless of which configuration they choose, and they should plan against the
-        post-January number.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ NEXT ============ -->
-<section>
-  <div class="shead">
-    <div class="snum">→</div>
-    <div>
-      <h2>What we would do next</h2>
-      <p>In order. Everything here is instrumentation that already exists; it needs
-         harder inputs, not more code.</p>
-    </div>
-  </div>
-  <div class="body">
-    <ul class="tight">
-      <li><strong>Ingest 500 real Meridian documents</strong>, weighted toward the exceptions their
-        contractors already flag, and re-run this harness unchanged. That is the single highest-value
-        move and it needs no new engineering.</li>
-      <li><strong>Replace confidence-gated escalation with a triage router.</strong> The cascade
-        failed because it routed on a broken signal. A cheap first-pass classifier — is this page
-        legible, in-distribution, internally consistent? — routes each document to single-read,
-        double-read, or straight to a human. Since the useful metric is <em>cost per correctly
-        extracted field</em> with the human queue priced in, not cost per document, routing is where
-        the remaining economics live.</li>
-      <li><strong>Close the loop on the exception queue.</strong> Every flagged document already
-        gets a human answer. Those are free labels; feeding them back makes abstention precision
-        measurable on live traffic instead of on our synthetic corpus.</li>
-      <li><strong>Re-test the capability tier on a billed key</strong>, to settle whether a stronger
-        second reader changes the disagreement signal. Currently unknown.</li>
-    </ul>
-  </div>
-</section>
-
-<footer>
-  Test split, n=40 documents / 240 field-instances, 3 runs at temperature 0. Thresholds tuned on the
-  tune split only; test scored once. Every figure traces to <span class="cfg">results/results.json</span>.
-  Where something was not measured, this briefing says so rather than estimating.<br>
-  Evaluation replays from a committed response cache — no API key, no network, identical numbers.
-</footer>
-
+    <footer>
+      <p>Code written with Claude (Opus 5); this briefing drafted with Claude and Gemini. Every figure in it is in <code>results/results.json</code> and is reproduced by <code>meridian-evaluate</code> from the committed response cache.</p>
+    </footer>
+  </section>
 </div>
+
+</body>
+</html>

@@ -732,7 +732,8 @@
                 "gap": 0.9,
                 "mean_confidence": 0.9,
                 "n": 1,
-                "observed_accuracy": 0.0
+                "observed_accuracy": 0.0,
+                "sparse": true
               },
               {
                 "accuracy_ci": {
@@ -745,11 +746,14 @@
                 "gap": 0.002636,
                 "mean_confidence": 0.998452,
                 "n": 239,
-                "observed_accuracy": 0.995816
+                "observed_accuracy": 0.995816,
+                "sparse": false
               }
             ],
-            "degenerate": false,
+            "degenerate": true,
             "ece": 0.006375,
+            "informative_buckets": 1,
+            "min_bucket_n": 5,
             "occupied_buckets": 2
           },
           "config": "cascade",
@@ -1772,7 +1776,8 @@
                 "gap": 0.9,
                 "mean_confidence": 0.9,
                 "n": 1,
-                "observed_accuracy": 0.0
+                "observed_accuracy": 0.0,
+                "sparse": true
               },
               {
                 "accuracy_ci": {
@@ -1785,11 +1790,14 @@
                 "gap": 0.002636,
                 "mean_confidence": 0.998452,
                 "n": 239,
-                "observed_accuracy": 0.995816
+                "observed_accuracy": 0.995816,
+                "sparse": false
               }
             ],
-            "degenerate": false,
+            "degenerate": true,
             "ece": 0.006375,
+            "informative_buckets": 1,
+            "min_bucket_n": 5,
             "occupied_buckets": 2
           },
           "config": "double_key",
@@ -2782,7 +2790,8 @@
                 "gap": 0.9,
                 "mean_confidence": 0.9,
                 "n": 1,
-                "observed_accuracy": 0.0
+                "observed_accuracy": 0.0,
+                "sparse": true
               },
               {
                 "accuracy_ci": {
@@ -2795,11 +2804,14 @@
                 "gap": 0.002636,
                 "mean_confidence": 0.998452,
                 "n": 239,
-                "observed_accuracy": 0.995816
+                "observed_accuracy": 0.995816,
+                "sparse": false
               }
             ],
-            "degenerate": false,
+            "degenerate": true,
             "ece": 0.006375,
+            "informative_buckets": 1,
+            "min_bucket_n": 5,
             "occupied_buckets": 2
           },
           "config": "primary_solo",
@@ -3824,11 +3836,14 @@
                 "gap": 0.029167,
                 "mean_confidence": 1.0,
                 "n": 240,
-                "observed_accuracy": 0.970833
+                "observed_accuracy": 0.970833,
+                "sparse": false
               }
             ],
             "degenerate": true,
             "ece": 0.029167,
+            "informative_buckets": 1,
+            "min_bucket_n": 5,
             "occupied_buckets": 1
           },
           "config": "verifier_solo",

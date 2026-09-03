@@ -106,13 +106,22 @@ def test_calibration_single_bucket_is_flagged_degenerate():
 
 
 def test_calibration_ece_is_count_weighted_gap():
-    inst = [{"would_be_correct": v} for v in (True, False, True, False)]
-    c = m.calibration(inst, [1.0, 1.0, 0.5, 0.5])
-    # bucket 0.9-1.0: n=2, conf 1.0, acc 0.5, gap 0.5, weight 0.5 -> 0.25
-    # bucket 0.4-0.5: n=2, conf 0.5, acc 0.5, gap 0.0            -> 0.00
+    inst = [{"would_be_correct": v} for v in (True, False, True, False)] * 5
+    c = m.calibration(inst, [1.0, 1.0, 0.5, 0.5] * 5)
+    # bucket 0.9-1.0: n=10, conf 1.0, acc 0.5, gap 0.5, weight 0.5 -> 0.25
+    # bucket 0.4-0.5: n=10, conf 0.5, acc 0.5, gap 0.0            -> 0.00
     assert c["ece"] == pytest.approx(0.25)
-    assert c["occupied_buckets"] == 2
+    assert c["occupied_buckets"] == 2 and c["informative_buckets"] == 2
     assert c["degenerate"] is False
+
+
+def test_calibration_one_stray_prediction_does_not_make_a_curve():
+    inst = [{"would_be_correct": True}] * 239 + [{"would_be_correct": False}]
+    c = m.calibration(inst, [1.0] * 239 + [0.9])
+    assert c["occupied_buckets"] == 2
+    assert c["informative_buckets"] == 1
+    assert c["degenerate"] is True
+    assert [b["sparse"] for b in c["buckets"] if b["n"]] == [True, False]
 
 
 def test_calibration_requires_aligned_inputs():

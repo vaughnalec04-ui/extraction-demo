@@ -18,6 +18,7 @@ from decimal import Decimal, InvalidOperation
 from typing import Dict, List, Optional, Sequence
 
 from meridian.schema import normalize
+from meridian.settings import MIN_BUCKET_N
 
 # outcome labels for a scored field-instance
 CORRECT = "correct"                       # value emitted and matches
@@ -129,7 +130,7 @@ def summarize(instances: Sequence[dict]) -> Dict[str, object]:
 
 
 def calibration(instances: Sequence[dict], confidences: Sequence[float],
-                n_buckets: int = 10) -> Dict[str, object]:
+                n_buckets: int = 10, min_n: int = MIN_BUCKET_N) -> Dict[str, object]:
     """Bucket by stated confidence and compare against observed accuracy.
 
     Scored on `would_be_correct` over all instances including abstained ones.
@@ -139,6 +140,10 @@ def calibration(instances: Sequence[dict], confidences: Sequence[float],
     ECE is the count-weighted mean gap between stated confidence and observed
     accuracy. A model that says 1.0 while being right 90% of the time scores
     0.10.
+
+    A bucket with fewer than `min_n` predictions is reported but marked sparse
+    and does not count toward the curve. The curve is degenerate unless at
+    least two buckets are informative.
     """
     assert len(instances) == len(confidences)
     buckets: List[Dict[str, object]] = []
@@ -161,6 +166,7 @@ def calibration(instances: Sequence[dict], confidences: Sequence[float],
         ece += (len(idx) / total) * gap
         buckets.append({
             "bucket": "%.1f-%.1f" % (lo, hi), "n": len(idx),
+            "sparse": len(idx) < min_n,
             "mean_confidence": round(mean_conf, 6),
             "observed_accuracy": round(acc, 6),
             "accuracy_ci": wilson(correct, len(idx)),
@@ -168,13 +174,16 @@ def calibration(instances: Sequence[dict], confidences: Sequence[float],
         })
 
     occupied = sum(1 for b in buckets if b["n"])
+    informative = sum(1 for b in buckets if b["n"] >= min_n)
     return {
         "buckets": buckets,
         "ece": round(ece, 6),
         "occupied_buckets": occupied,
-        # One occupied bucket is not a curve. Flag it in the data so a chart
-        # does not imply resolution that is not there.
-        "degenerate": occupied <= 1,
+        "informative_buckets": informative,
+        "min_bucket_n": min_n,
+        # Fewer than two informative buckets is not a curve. Flag it in the
+        # data so a chart does not imply resolution that is not there.
+        "degenerate": informative <= 1,
     }
 
 

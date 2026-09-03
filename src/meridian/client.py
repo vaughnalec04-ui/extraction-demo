@@ -89,6 +89,20 @@ def record_is_fresh(rec: dict, model: str, doc_id: str, run: int,
     return rec.get("cache_key") == cache_key(model, doc_id, run, image_sha, schema)
 
 
+TRANSIENT_STATUS = (429, 503)
+
+
+def is_transient(exc: BaseException) -> bool:
+    """Rate limit or overload, worth a retry. Decided by the status code when
+    the exception carries one; by message text only when it does not."""
+    for attr in ("code", "status_code"):
+        code = getattr(exc, attr, None)
+        if isinstance(code, int) and not isinstance(code, bool):
+            return code in TRANSIENT_STATUS
+    msg = str(exc)
+    return any(str(s) in msg for s in TRANSIENT_STATUS)
+
+
 def cache_path(model: str, split: str, run: int, doc_id: str) -> str:
     return os.path.join(CACHE, model, "%s-run%d" % (split, run), doc_id + ".json")
 
@@ -217,8 +231,7 @@ class Client:
                 record["attempts"] = attempt + 1
                 break
             except Exception as exc:                      # noqa: BLE001
-                msg = str(exc)
-                if ("429" in msg or "503" in msg) and attempt < RATE_LIMIT_ATTEMPTS - 1:
+                if is_transient(exc) and attempt < RATE_LIMIT_ATTEMPTS - 1:
                     self._interval = min(self._interval * 1.6 + 1.0, MAX_INTERVAL_S)
                     time.sleep(self._interval)
                     continue

@@ -17,7 +17,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Optional, Sequence
 
-from meridian.client import Client, cost_usd, load_pricing
+from meridian.client import Client, cost_usd, is_transient, load_pricing
 from meridian.settings import (DATA, MONTHLY_VOLUME, PRIMARY, RESULTS)
 
 
@@ -86,7 +86,7 @@ def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
                     "total_s": time.monotonic() - started_total, **usage}
         except Exception as exc:                                   # noqa: BLE001
             msg = str(exc)
-            if "429" in msg or "503" in msg:
+            if is_transient(exc):
                 gate.penalise()
                 continue
             return {"doc_id": doc_id, "ok": False, "attempts": attempts,

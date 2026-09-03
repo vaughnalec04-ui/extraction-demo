@@ -32,6 +32,10 @@ CORPUS_VERSION = 3
 DOC_EXT = ".jpg"                                   # scans arrive as JPEG
 FONT_DIR = "/System/Library/Fonts/Supplemental"    # macOS; see README
 
+# A calibration bin needs this many predictions before it counts as a point on
+# the curve. One prediction in a second bin is not a curve.
+MIN_BUCKET_N = 5
+
 # Paired comparison between configurations scored on the same documents.
 BOOTSTRAP_RESAMPLES = 2000
 BOOTSTRAP_SEED = SEED

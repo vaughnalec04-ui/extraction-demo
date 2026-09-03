@@ -117,3 +117,19 @@ def test_record_is_fresh_rejects_a_different_image_schema_or_run():
     assert not record_is_fresh(rec, "m", "doc", 1, "img", "other-schema")
     assert not record_is_fresh(rec, "m", "doc", 2, "img", "sch")
     assert not record_is_fresh({}, "m", "doc", 1, "img", "sch")
+
+
+def test_transient_errors_are_recognised_by_status_code_then_by_message():
+    from meridian.client import is_transient
+
+    class ApiError(Exception):
+        def __init__(self, code, msg):
+            super().__init__(msg)
+            self.code = code
+
+    assert is_transient(ApiError(429, "RESOURCE_EXHAUSTED"))
+    assert is_transient(ApiError(503, "UNAVAILABLE"))
+    assert not is_transient(ApiError(400, "INVALID_ARGUMENT mentioning 429 in the text"))
+    assert not is_transient(ApiError(500, "internal"))
+    assert is_transient(Exception("503 UNAVAILABLE: high demand"))        # no code attribute
+    assert not is_transient(Exception("Connection reset"))

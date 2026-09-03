@@ -229,10 +229,11 @@ because Meridian pays per field.
 - **Calibration**: predictions bucketed into 10 bins by stated confidence;
   observed accuracy against mean stated confidence per bin. ECE is the
   count-weighted mean gap. A model that says 1.0 while being right 90% of the
-  time scores 0.10. The harness marks a curve `degenerate: true` when one or
-  zero buckets are occupied. Bins are right-closed, so a stated 0.9 sits in the
-  0.8–0.9 bin. ECE does not depend on that convention; the occupied-bin count
-  does, and on this data it decides whether the curve has two bins or one.
+  time scores 0.10. A bin counts toward the curve only when it holds at least
+  five predictions; the harness marks a curve `degenerate: true` when fewer
+  than two bins do, so a lone prediction in a second bin is not a curve. Bins
+  are right-closed, so a stated 0.9 sits in the 0.8–0.9 bin; ECE does not
+  depend on that convention.
 - **Wilson 95% intervals** on every accuracy figure. These proportions sit near
   1.0 at n = 40 to 240, where the normal approximation gives intervals above
   1.0.

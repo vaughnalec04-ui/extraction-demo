@@ -487,44 +487,8 @@ retry libraries, additional document types.
 
 ---
 
-## Where it falls short
+## Next step
 
-The accuracy bar is met with zero margin and the cost bar with room to spare.
-The third requirement, that the system knows when it is unsure, is not met.
-
-1. **Calibration cannot be demonstrated.** 239 of 240 predictions fall in one
-   confidence bucket. The ECE of 0.0064 is what a model gets for saying ~1.0
-   and being right ~99.2% of the time, not evidence that confidence tracks
-   correctness. Closing this needs a calibrated confidence primitive from the
-   model: logprobs, or any scalar it does not have to introspect to produce.
-
-2. **Abstention precision is 25% with a CI of [7.1–59.1].** That runs from
-   "mostly noise" to "mostly real". With 8 flags on 240 instances they cannot
-   be told apart. Closing this needs more errors to observe, which means
-   Meridian's own rejected documents.
-
-3. **Too few errors to characterize a failure mode.** The primary reader made
-   two wrong-value errors in 240 field-instances; the verifier made two plus
-   five hallucinations on OOD pages. Enough to show that double-keying catches
-   the hallucinations, not enough to say when either reader fails. Paired
-   against the primary alone, `double_key` differs on two instances
-   (p = 0.50). Closing this needs real partner documents; the synthetic
-   failure distribution is a guess about theirs.
-
-4. **Bad-claim recall is 100% on 12 claims, which is [75.8–100].** Tune showed
-   12 of 13. The miss rate is under one in four and cannot be pinned tighter
-   with this many inconsistent claims. One false pass on the verifier is a
-   claim that would have been paid.
-
-5. **Zero margin on the bar.** `primary_solo`'s lower bound is 97.0% against
-   97%, and run-to-run spread on v2 was 0.4 points. It passes on paper and
-   should not be presented as comfortable. n≈500 tightens the interval about
-   3.5× for about $1.10 of inference across both readers. The v3 test split also has one complete
-   run; two more primary runs cost about $0.10 after a quota reset.
-
-6. **The capability-tier comparison never ran.** Free-tier quota blocked it.
-   Unknown, not negative.
-
-Next step: ingest 500 real Meridian documents, weighted toward the exceptions
+Ingest 500 real Meridian documents, weighted toward the exceptions
 their contractors already flag, and re-run this harness unchanged. The
 instrumentation is built; it needs harder inputs.

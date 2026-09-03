@@ -58,7 +58,7 @@
 
 <div class="memo">
   <h1>Meridian demo: run of show</h1>
-  <p class="sub">What to have open, what to say, what to click. About 12 minutes; cut beats 8 and 9 to land near 9. Written for the ear: read it, don't recite it.</p>
+  <p class="sub">What to have open, what to say, what to click. About 13 minutes; cut beat 8 and the last paragraph of beat 9 to land near 10. Written for the ear: read it, don't recite it.</p>
 
   <h2>Before you record</h2>
   <h3>Terminal (its own window, large font)</h3>
@@ -85,17 +85,17 @@ clear</pre>
   <h2>Script</h2>
 
   <div class="beat">
-    <h3>1. Open <span class="t">0:00 to 0:50</span></h3>
+    <h3>1. Open <span class="t">0:00 to 1:00</span></h3>
     <div class="cue"><b>Do:</b> Tab 1, top of the briefing. Look at the camera for the first three sentences.</div>
     <div class="say">
-      <p>The accuracy bar is met. The cost bar is met. The third one, knowing when it&#x27;s wrong, isn&#x27;t. That&#x27;s the whole talk, and I&#x27;ll show you the numbers behind each of those.</p>
-      <p>Quick setup so you know what you&#x27;re looking at. The partner is Meridian Claims Group. It&#x27;s a composite I put together for this exercise, but the numbers are realistic for a mid-size claims processor. I wrote the code with Claude Opus 5 as a pair. The documents were drafted with Claude and Gemini. Every design decision in here is mine, and I&#x27;ll show you the ones that matter.</p>
-      <p>Two more things up front. Everything ran on the free Gemini tier, on purpose, and that changed the design. I&#x27;ll come back to it. And on time: the implementation took about three and a half hours, with agents running alongside me, spread over a couple of sittings. It would have been shorter in one. The rest of the calendar was waiting on quota, generating documents, and writing.</p>
+      <p>The accuracy bar is met. The cost bar is met. The third one, knowing when it&#x27;s wrong, isn&#x27;t. That&#x27;s what the next twelve minutes are about, and I&#x27;ll show you the numbers behind each of those.</p>
+      <p>What I built is a small pipeline that reads six fields off scanned claims documents with Gemini, plus the part I actually care about, which is a harness that tells you whether the pipeline knows when it&#x27;s wrong. The partner, Meridian Claims Group, is made up, but the situation isn&#x27;t: someone paying out claims from a scanner, who cares a lot more about a wrong payment than about a page going to a human. So the whole build is organized around that. Getting the fields out is the easy half.</p>
+      <p>Two more things before I start. Claude wrote most of the code, with me directing what got built and in what order, and the two documents were drafted with Claude and Gemini and then argued over. The decisions were mine, and I&#x27;ll show you the ones that matter. And on time: about three and a half hours of implementation, with agents running alongside me, spread over a couple of sittings. It would&#x27;ve been shorter in one. The rest of the calendar was waiting on quota, generating documents, and writing.</p>
     </div>
   </div>
 
   <div class="beat">
-    <h3>2. The problem <span class="t">0:50 to 1:40</span></h3>
+    <h3>2. The problem <span class="t">1:00 to 1:45</span></h3>
     <div class="cue"><b>Do:</b> Point at the BLUF box, then scroll to Context.</div>
     <div class="say">
       <p>So here&#x27;s the problem. Meridian gets about forty thousand scanned claims a month. They want six fields pulled off every page: claim id, policy number, claimant, provider, date of service, and the total. Ninety-seven percent field accuracy. Under two cents a document. And when the system isn&#x27;t sure, it has to say so instead of guessing, because a wrong payout costs a lot more than a human review.</p>
@@ -104,21 +104,22 @@ clear</pre>
   </div>
 
   <div class="beat">
-    <h3>3. Architecture <span class="t">1:40 to 3:40</span></h3>
+    <h3>3. Architecture <span class="t">1:45 to 4:15</span></h3>
     <div class="cue"><b>Do:</b> Scroll to 1.1 Flow. Run your finger along the arrow line as you talk.</div>
     <div class="say">
       <p>Here&#x27;s how it&#x27;s put together. I write the labels first, from a fixed seed. Then I render each page from its label. So no label ever depends on a model. The extractor sends each page to Gemini with a response schema and gets back one value and one confidence per field, and the value&#x27;s allowed to be empty. Every raw response goes into a cache that&#x27;s committed to the repo. The harness scores that cache. It never touches the API.</p>
-      <p>That split is the main decision. Extraction is one program. Scoring is another. Once the responses are cached, every threshold sweep is free, tuning is repeatable, and the demo you&#x27;re about to see runs offline and gives the same numbers every time. The cache key is the model, the prompt version, the schema, and the bytes of the image, and both programs recompute it when they read. Regenerate a page and try to score it against an old response, and it refuses. That failure wouldn&#x27;t crash. It&#x27;d hand you plausible wrong numbers. So it gets a check.</p>
-      <p>Four configurations come out of the same cached calls. One reader on its own. The second reader on its own. A cascade, where a page goes to the second reader when the first one&#x27;s confidence is low. And double-keying. Both readers read every page, and any field they disagree on goes to a human. That idea comes straight from how claims shops already work. Two people key the same document and a supervisor settles the differences. I automated the control they already trust.</p>
+      <p>That split is the main decision. Extraction is one program, scoring is another. Once the responses are cached, every threshold sweep is free, tuning is repeatable, and the demo you&#x27;re about to see runs offline and gives the same numbers every time. The cache key is the model, the prompt version, the schema, and the bytes of the image, and both programs recompute it when they read. Regenerate a page and try to score it against an old response, and it refuses, because that failure wouldn&#x27;t crash. It&#x27;d hand you plausible wrong numbers.</p>
+      <p>Four configurations come out of the same cached calls. One reader on its own. The second reader on its own. A cascade, where a page goes to the second reader when the first one&#x27;s confidence is low. And double-keying, where both readers read every page and any field they disagree on goes to a human. That idea comes straight from how claims shops already work. Two people key the same document and a supervisor settles the differences.</p>
     </div>
     <div class="cue"><b>Do:</b> Scroll to 1.3, the trade-offs table.</div>
     <div class="say">
-      <p>Now the free tier. My first design escalated to a Flash-class model. Every Flash model I pushed toward evaluation volume stopped after about twenty requests and started returning four-twenty-nines. So the second reader became an independent lite-class model instead. For a disagreement signal, independence matters more than raw capability, so the evaluation survived. The cost is that the cascade has nothing stronger to escalate to. You&#x27;ll see that in the results.</p>
+      <p>Now, the free tier, because this is where the plan changed. The very first thing that broke was dumb: the GitHub CLI wasn&#x27;t on my path and I spent five minutes thinking it wasn&#x27;t installed. The first real break was the model list. I&#x27;d planned the cascade as 2.5 Flash Lite escalating to 2.5 Pro. The API&#x27;s own model list said both were callable, and the first real call came back 404, no longer available to new users, go use 3.5. Then the Pro model it pointed me at returned a 429 on the very first request, with a message about exceeding my quota when I hadn&#x27;t made a single call. So I stopped trusting the list, probed every candidate with a one-token call, wrote down what answered, and re-planned around the Flash tier. That held for about twenty requests per model before the Flash quota ran out too. About ninety minutes and four model changes.</p>
+      <p>Honestly, swapping to a second lite model felt like a compromise at first. The design was a cheap model with a stronger one behind it, and the stronger one was the part I&#x27;d lost. I remember asking whether I should just start over. What changed my mind was noticing that the interesting signal was never whether the second model was smarter. It was whether two independent readers agreed. For that you want two models that fail differently, and a second lite model from a different generation gives you that. So I kept everything and swapped the second reader. The cost is that the cascade has nothing stronger to escalate to, and you&#x27;ll see that in the results.</p>
     </div>
   </div>
 
   <div class="beat">
-    <h3>4. Live run <span class="t">3:40 to 4:50</span></h3>
+    <h3>4. Live run <span class="t">4:15 to 5:25</span></h3>
     <div class="cue"><b>Do:</b> Switch to the terminal. Press return on meridian-evaluate. Scroll to the frontier table, then the paired table right under it.</div>
     <div class="say">
       <p>Let me run it. No API key in this shell, you saw the echo. Enter.</p>
@@ -128,19 +129,19 @@ clear</pre>
   </div>
 
   <div class="beat">
-    <h3>5. Two documents <span class="t">4:50 to 6:50</span></h3>
+    <h3>5. Two documents <span class="t">5:25 to 7:25</span></h3>
     <div class="cue"><b>Do:</b> Tab 3. Point at the total, then the policy number.</div>
     <div class="say">
-      <p>Two pages tell most of the story. This is a degraded repair estimate. The total is four thousand eight hundred and four dollars. The primary reader read forty-one thousand eight hundred and four. One extra digit on a faded scan. It got the policy number wrong too. Those are its only two mistakes on the whole test split, both on this page, and they came with its two lowest confidences, point nine and point nine five. The second reader got the total right and the policy number wrong in a different way. So under double-keying both fields went to review. On a real claim that&#x27;s a thirty-seven thousand dollar overpayment that didn&#x27;t go out.</p>
+      <p>Two pages surprised me, for opposite reasons. This is a degraded repair estimate. The total is four thousand eight hundred and four dollars. The primary reader read forty-one thousand eight hundred and four. One extra digit on a faded scan, and that&#x27;s exactly the mistake that pays out. What got me was that its confidence on that field was point nine, the lowest it gave anywhere, so the model half knew. It got the policy number wrong too, at point nine five, and those are its only two mistakes on the whole test split, both on this one page. The second reader had the total right and the policy number wrong in a different way. So under double-keying both fields went to review. On a real claim that&#x27;s a thirty-seven thousand dollar overpayment that didn&#x27;t go out.</p>
     </div>
     <div class="cue"><b>Do:</b> Tab 4. Point at Amount Due.</div>
     <div class="say">
-      <p>This one&#x27;s a utility bill. It&#x27;s in the corpus because it isn&#x27;t a claim, so the right answer for every field is "nothing here." The primary said nothing here on all six. The second reader, working alone, invented four values. The account number became a policy number. The billing period became a date of service. The utility became the provider. And this amount due, a hundred sixty-eight dollars forty-four, became a claim total. All at confidence one point oh. Under double-keying none of that got out, because the readers disagreed. That&#x27;s the job of the second reader. On this sample the primary happened to be right, so those flags cost a review each. Flip the roles and they&#x27;re saved payouts.</p>
+      <p>This one&#x27;s a utility bill. It&#x27;s in the corpus because it isn&#x27;t a claim, so the right answer for every field is "nothing here." The primary said nothing here on all six. The second reader, working alone, simply made things up. The account number became a policy number. The billing period became a date of service. The utility became the provider. And this amount due, a hundred sixty-eight dollars forty-four, became a claim total. All at confidence one point oh. Under double-keying none of that got out, because the readers disagreed. On this sample the primary happened to be right, so those flags cost a review each. Flip the roles and they&#x27;re saved payouts.</p>
     </div>
   </div>
 
   <div class="beat">
-    <h3>6. The rule in code <span class="t">6:50 to 7:40</span></h3>
+    <h3>6. The rule in code <span class="t">7:25 to 8:10</span></h3>
     <div class="cue"><b>Do:</b> Tab 5. The highlighted lines are the double-key branch.</div>
     <div class="say">
       <p>Here&#x27;s the whole idea in ten lines. For each field, take the primary&#x27;s value and the verifier&#x27;s value. Normalize both, so a dollar sign or a comma doesn&#x27;t count as a disagreement. Compare. If they agree, the primary&#x27;s value goes out. If they don&#x27;t, the field is marked abstained and goes to the queue. We keep the lower of the two confidences for the record, but nothing depends on it. That&#x27;s the point. This configuration never asks either model how sure it is.</p>
@@ -148,18 +149,18 @@ clear</pre>
   </div>
 
   <div class="beat">
-    <h3>7. What we found <span class="t">7:40 to 9:10</span></h3>
+    <h3>7. What we found <span class="t">8:10 to 9:50</span></h3>
     <div class="cue"><b>Do:</b> Terminal. Scroll to the primary block and the line that says DEGENERATE. Then Tab 1, the Cascade paragraph.</div>
     <div class="say">
-      <p>Okay, so what did we actually find? Three things, and I want to be straight about all of them.</p>
-      <p>First, self-reported confidence. The second reader said one point oh on all two hundred forty fields. The primary said one point oh on two hundred fourteen. The harness flags the calibration curve as degenerate, meaning there&#x27;s only one bin with enough points in it to count. You can&#x27;t build a gate on a constant.</p>
+      <p>Okay, so what did we actually find? Three things.</p>
+      <p>First, the confidence numbers. They&#x27;re not probabilities. The second reader said one point oh on every single field, two hundred forty out of two hundred forty, after I told it in the schema to use the whole range. The primary said one point oh on two hundred fourteen. The harness flags the calibration curve as degenerate, meaning there&#x27;s only one bin with enough points in it to count. You can&#x27;t gate on that. The frustrating part is there&#x27;s a hint of something real in there, because the two lowest numbers the primary gave were on its two mistakes. But that&#x27;s two data points, and I couldn&#x27;t get log probabilities to check. So until the API gives you something calibrated, treat the number as decoration.</p>
       <p>Second, the cascade. On the tuning split, no escalation threshold improved accuracy, and sending every page to the second reader made things worse. Ninety-eight point seven five down to ninety-seven point nine two, at one point seven times the cost. The second reader isn&#x27;t stronger. So tuning set the threshold to zero, and the cascade is just the primary. That&#x27;s a result about these two readers, and it traces straight back to the quota problem. Give me a Flash-class second reader and I&#x27;d rerun it.</p>
-      <p>Third, the abstention signal itself. Eight flags in two hundred forty fields. Two were real errors. That&#x27;s twenty-five percent precision, and the interval runs from seven to fifty-nine. So I can&#x27;t tell you yet whether double-keying pays for itself. I can tell you exactly what would settle it. About five hundred of Meridian&#x27;s real documents, weighted toward the exceptions their contractors already flag, through this harness unchanged. The pass-fail gates are written down in the briefing.</p>
+      <p>Third, the abstention signal itself. Eight flags in two hundred forty fields. Two were real errors. That&#x27;s twenty-five percent precision, and the interval runs from seven to fifty-nine. So I can&#x27;t tell you yet whether double-keying pays for itself. What would settle it is about five hundred of Meridian&#x27;s real documents, weighted toward the exceptions their contractors already flag, through this harness unchanged. The pass-fail gates are in the briefing.</p>
     </div>
   </div>
 
   <div class="beat">
-    <h3>8. From an eval to a benchmark <span class="t">9:10 to 10:20</span></h3>
+    <h3>8. From an eval to a benchmark <span class="t">9:50 to 10:50</span></h3>
     <div class="cue"><b>Do:</b> Tab 2. Scroll the README to the dataset table with the five strata.</div>
     <div class="say">
       <p>I built it this way because most of it turns into a benchmark for extraction with abstention. Here&#x27;s what carries over. A label-first generator with named strata, so the difficulty is designed instead of discovered. A committed response cache, so anyone can reproduce the scoring without spending a cent. A fixed set of metrics: accuracy always shown next to coverage, three kinds of error kept apart, abstention precision from the recorded counterfactual, and an interval on everything. Paired comparison between systems on the same documents, so nobody&#x27;s comparing overlapping error bars. And reconciliation, does the itemization add up to the total, because adjudication is the job underneath the transcription.</p>
@@ -168,21 +169,20 @@ clear</pre>
   </div>
 
   <div class="beat">
-    <h3>9. Friction, for the Gemini teams <span class="t">10:20 to 11:30</span></h3>
+    <h3>9. Friction, for the Gemini teams <span class="t">10:50 to 12:05</span></h3>
     <div class="cue"><b>Do:</b> Tab 6. It opens at F-007. Read the counts, then scroll down to F-010.</div>
     <div class="say">
-      <p>Two things surprised me enough to write up for the Gemini teams, and two smaller ones. The log has eleven entries, written as they happened, with the error text as it appeared.</p>
-      <p>F-007. Self-reported confidence is near-constant, and log probabilities aren&#x27;t available for structured output. For any partner whose requirement is "know when you&#x27;re unsure," a calibrated confidence output is the missing piece. Right now a second model fills that gap, at extra cost.</p>
-      <p>F-010. The free tier stopped every Flash model I pushed toward evaluation volume after about twenty requests. The whole evaluation costs about a dollar at list price. That&#x27;s the tier a partner uses to decide whether Gemini fits, and it can&#x27;t support an evaluation. A per-project evaluation allowance would fix it.</p>
-      <p>The two smaller ones. The same four-twenty-nine message covers a rate limit and an exhausted entitlement, so a client can&#x27;t tell whether to wait or stop. And batch create returns a failed precondition without saying which one, so I never got to measure the half-price batch mode.</p>
+      <p>If I could get Google to fix one thing, it&#x27;s this. Give structured output a real confidence signal. Log probabilities on schema fields, or any calibrated number the model doesn&#x27;t have to introspect to produce. Every customer whose requirement is "tell me when you&#x27;re not sure" hits this wall, and right now the answer is to pay for a second model. That&#x27;s F-007 in the log, with F-006 next to it for the missing log probabilities.</p>
+      <p>If I get a second one, it&#x27;s the free tier, F-010. It stopped every Flash model I pushed toward volume after about twenty requests. The whole evaluation costs about a dollar at list price. That&#x27;s the tier people use to decide whether Gemini fits, and it can&#x27;t support an evaluation. A per-project evaluation allowance would fix it.</p>
+      <p>The log has eleven entries, written as things happened, with the error text as it appeared. Two smaller ones are worth a sentence. The same four-twenty-nine message covers a rate limit and an exhausted entitlement, so a client can&#x27;t tell whether to wait or stop. And batch create returns a failed precondition without saying which one, so I never got to measure the half-price batch mode.</p>
     </div>
   </div>
 
   <div class="beat">
-    <h3>10. Close <span class="t">11:30 to 12:00</span></h3>
+    <h3>10. Close <span class="t">12:05 to 12:45</span></h3>
     <div class="cue"><b>Do:</b> Tab 1, section 4. Back to the camera for the last two sentences.</div>
     <div class="say">
-      <p>So here&#x27;s where it lands. The accuracy bar&#x27;s met, with no margin. The cost bar&#x27;s met with room to spare. The bar that protects payouts, knowing when it&#x27;s wrong, isn&#x27;t met yet, and the harness is what tells you that instead of hiding it. It reproduces from a clean clone in one command. Feed it five hundred real documents and it&#x27;ll tell you whether the second reader earns its keep. That&#x27;s the next step, and everything you saw is in the repo. Thanks.</p>
+      <p>So if Meridian asked me whether they should buy this, I&#x27;d say not yet, and not because of accuracy or cost, since both clear the bar. Run five hundred of your real documents through it first, especially the ones your contractors already flag, and then we&#x27;ll know whether the second reader is worth the three points of coverage it costs. The harness is built for exactly that. It reproduces from a clean clone in one command, and everything you saw is in the repo. Thanks.</p>
     </div>
   </div>
 
@@ -197,8 +197,9 @@ clear</pre>
       <tr><td>Why did the cascade collapse to zero?</td><td>The objective maximises coverage subject to the 97 percent bar, tie-break on cost. Escalation doesn't change coverage and adds cost, and on tune it never raised accuracy because the second reader isn't stronger. So zero was the right threshold for these two readers.</td></tr>
       <tr><td>What's in the cache key, and why not the prompt text?</td><td>Model, prompt version, schema hash, image hash, run index, temperature tag. The prompt text isn't hashed in because changing it would orphan the committed cache, so a test pins the prompt's hash to its version and fails if the text changes without a bump.</td></tr>
       <tr><td>What would you watch in production?</td><td>Disagreement rate against its 3.3 percent baseline, daily. Adjudicator rulings on flagged items, which make abstention precision a live number. A weekly re-score of two hundred documents through the same harness, with a stop on auto-pay if the lower bound drops under 97. And the model version string, because the name is an alias.</td></tr>
+      <tr><td>What was the first thing that broke?</td><td>The model list. I'd planned 2.5 Flash Lite escalating to 2.5 Pro, the API's own list said both were callable, and the first real call came back 404. The Pro model it pointed me at returned a 429 on the very first request. So I stopped trusting the list, probed every candidate with a one-token call, and re-planned around Flash, which then ran out of quota after about twenty requests per model. About ninety minutes and four model changes.</td></tr>
       <tr><td>Why not just pay for the API?</td><td>I could have, for a few dollars. I kept the free tier because it's what a partner's evaluation actually runs on first, and hitting the quota wall produced the most useful friction item in the log. I'd re-run the cascade on a paid tier with a Flash second reader; that's next step two.</td></tr>
-      <tr><td>How much of this did the AI do?</td><td>Claude wrote most of the code with me directing; Claude and Gemini drafted the documents. The design decisions, the metric choices, the double-keying idea, and the decision to report the negative results are mine, and I can walk any line of the harness.</td></tr>
+      <tr><td>How much of this did the AI do?</td><td>Claude wrote most of the code, with me directing what got built and in what order, and the two documents were drafted with Claude and Gemini and then argued over. The decisions were mine: writing the labels before any document existed, structured output with a nullable value, disagreement between two readers as the uncertainty signal instead of the model's own confidence, keeping the negative results in rather than tuning until the cascade won, and staying on the free tier. I can walk any file in the repo.</td></tr>
     </tbody>
   </table>
 

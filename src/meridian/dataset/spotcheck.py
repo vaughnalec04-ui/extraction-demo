@@ -62,7 +62,7 @@ def write_spot_check(records: List[dict]) -> List[str]:
         "careful human keyer would record. These were chosen for difficulty, not",
         "at random; they are where label authoring could have gone wrong.",
         "",
-        "Labels were authored first, in `meridian/dataset/labels.py:author_labels()`,",
+        "Labels were authored first, in `src/meridian/dataset/labels.py`,",
         "and each image was rendered from its record. No label is downstream of a",
         "model.",
         "",

@@ -108,11 +108,18 @@ gives three things: threshold sweeps cost no API calls, tuning is reproducible
 against a fixed set of responses, and the demo runs offline with identical
 numbers each time.
 
-Cache entries are keyed on a hash of model, prompt version, schema,
-temperature, run index and the image bytes. A read recomputes the key and
-refuses a mismatch. Without that, regenerating the corpus would score new
-documents against old responses, which does not crash and produces plausible
-wrong numbers.
+Cache entries are keyed on a hash of model, prompt version, schema, a fixed
+temperature tag, run index and the image bytes. Both the extractor and the
+harness recompute the key on read; the extractor treats a mismatch as a miss
+and the harness refuses to score it. Without that, regenerating the corpus
+would score new documents against old responses, which does not crash and
+produces plausible wrong numbers.
+
+Two limits of the key. It carries the prompt version rather than the prompt
+text, so a test pins the prompt's hash and fails when the text changes without
+a version bump. Generation settings other than temperature are left at service
+defaults and are not in the key, and the model name is an alias, so a
+service-side model update between two runs would not be detected.
 
 ### The four configurations
 
@@ -125,7 +132,9 @@ wrong numbers.
 
 `cascade` bets that self-reported confidence carries information. `double_key`
 assumes it does not and uses disagreement between two readers instead. Both
-are measured.
+are measured. `cascade` escalates per document, on the lowest field confidence,
+and takes all six of the verifier's values when it does; the API cannot re-read
+one field for less than the page.
 
 ---
 
@@ -220,10 +229,20 @@ because Meridian pays per field.
   observed accuracy against mean stated confidence per bin. ECE is the
   count-weighted mean gap. A model that says 1.0 while being right 90% of the
   time scores 0.10. The harness marks a curve `degenerate: true` when one or
-  zero buckets are occupied.
+  zero buckets are occupied. Bins are right-closed, so a stated 0.9 sits in the
+  0.8–0.9 bin. ECE does not depend on that convention; the occupied-bin count
+  does, and on this data it decides whether the curve has two bins or one.
 - **Wilson 95% intervals** on every accuracy figure. These proportions sit near
   1.0 at n = 40 to 240, where the normal approximation gives intervals above
   1.0.
+- **Paired comparison**: every configuration is scored on the same documents,
+  so a difference between two configurations is a paired quantity and its
+  interval is tighter than two overlapping one-sample intervals suggest. Each
+  configuration is compared with `primary_solo` on two quantities that stay
+  defined when coverage differs: wrong emissions (a `wrong_value` or
+  `hallucinated_field` that left the system) and coverage. Discordant instances
+  get McNemar's exact test. The bootstrap resamples documents, not
+  field-instances, because six fields on one page share one scan.
 - **Run-to-run variance**: the full evaluation run repeatedly at temperature 0,
   spread reported.
 - **Cost**: from `usage_metadata` token counts against the pricing in
@@ -249,6 +268,11 @@ Wilson 95%.
 | `cascade` | 99.17% [97.0–99.8] | 100% | 100% [75.8–100] | n/a | $0.00132 | $52.8 | 2.17s |
 | `double_key` | 100.00% [98.4–100.0] | 96.7% | 100% [75.8–100] | 25.0% [7.1–59.1] | $0.00221 | $88.4 | 5.58s |
 | `verifier_solo` | 97.08% [94.1–98.6] | 100% | 91.7% [64.6–98.5] | n/a | $0.00089 | $35.6 | 3.24s |
+
+Tuning chose an abstention threshold of 0.0 for every configuration that uses
+self-reported confidence, so none of them abstains: full coverage already
+cleared the bar on tune, and the objective maximises coverage. Only
+`double_key` abstains, on disagreement.
 
 Against the bar: `primary_solo` clears 97% with its lower bound at 97.0%, which
 is no margin. `double_key` clears it with a 98.4% lower bound at about a ninth
@@ -307,10 +331,13 @@ which is an image-quality problem.
 The verifier hallucinated five fields on out-of-distribution documents. It read
 a utility bill's "Amount Due" as a claim total and an account number as a claim
 ID, which those pages were built to invite. The primary reader did not.
-The two readers disagreed on every one of the five, so `double_key` caught them
-all. That is the clearest case in the data for the second reader: not accuracy
-on easy pages, but catching one reader's confident invention on a page it
-should have rejected.
+Alone, the verifier would have emitted five invented values. Under `double_key`
+none reached output: the primary said absent, the readers disagreed, and the
+five instances went to review. That is the mechanism the second reader is for,
+catching one reader's confident invention on a page it should have rejected.
+On this sample the invention was the verifier's, so the five flags were review
+cost rather than saved payouts. Had the roles been reversed, they would have
+been saved payouts.
 
 `total_amount` was 97.5% [87.1–99.6] on either reader alone and 100% [90.8–100]
 under `double_key`.
@@ -330,11 +357,30 @@ alone would put this pipeline 23 points under the bar.
 ### What double-keying costs
 
 `double_key` flags 3.3% of field-instances and reaches 100% on the rest. Of 8
-flags, 2 would have been wrong (precision 25.0% [7.1–59.1]). It caught both
-real errors and all five hallucinations (recall 100% [34.2–100]). At Meridian's
-volume that is roughly 1,300 field-instances a month to the exception queue,
-against zero wrong payouts in this sample. With 8 flags, neither number is
-tight.
+flags, 2 would have been wrong (precision 25.0% [7.1–59.1]): both of the
+primary's errors, so recall is 100% [34.2–100] on a denominator of two. The
+other six flags are the verifier's five hallucinations and one disagreement on
+a degraded policy number, all places where the primary was already right. At
+Meridian's volume that is roughly 1,300 field-instances a month to the
+exception queue, against zero wrong payouts in this sample. With 8 flags,
+neither number is tight.
+
+### Paired against the primary alone
+
+The frontier table's separate intervals overstate how different these systems
+are. Scored on the same 240 field-instances:
+
+| against `primary_solo` | wrong emissions | discordant (config / primary) | exact p | coverage change |
+|---|---|---|---|---|
+| `double_key` | 0 vs 2 | 0 / 2 | 0.50 | −3.3 pts [−7.5, −0.4] |
+| `cascade` | 2 vs 2 | 0 / 0 | 1.00 | 0 |
+| `verifier_solo` | 7 vs 2 | 6 / 1 | 0.125 | 0 |
+
+`double_key` removed both wrong emissions and added none, but two discordant
+instances cannot separate two systems (p = 0.50). The one difference this
+sample establishes is the cost: 3.3 points of coverage, interval clear of zero.
+`verifier_solo` added six wrong emissions and removed one, short of
+significance at this size. `cascade` is `primary_solo`.
 
 ### Variance
 
@@ -372,7 +418,7 @@ on one quota.
   1,300 tokens per document the payload is under the 4,096-token minimum for
   explicit caching on this model family.
 - Batch API: the right mode for the overnight bulk at 50% of interactive cost.
-  Implemented against the SDK contract in `meridian/batch.py` and never
+  Implemented against the SDK contract in `src/meridian/batch.py` and never
   successfully submitted. Every `batches.create` returns `400
   FAILED_PRECONDITION` while `batches.list` succeeds (F-011). No cost figure is
   claimed for it.
@@ -426,9 +472,10 @@ The third requirement, that the system knows when it is unsure, is not met.
 3. **Too few errors to characterize a failure mode.** The primary reader made
    two wrong-value errors in 240 field-instances; the verifier made two plus
    five hallucinations on OOD pages. Enough to show that double-keying catches
-   the hallucinations, not enough to say when either reader fails. Closing
-   this needs real partner documents; the synthetic failure distribution is a
-   guess about theirs.
+   the hallucinations, not enough to say when either reader fails. Paired
+   against the primary alone, `double_key` differs on two instances
+   (p = 0.50). Closing this needs real partner documents; the synthetic
+   failure distribution is a guess about theirs.
 
 4. **Bad-claim recall is 100% on 12 claims, which is [75.8–100].** Tune showed
    12 of 14. The miss rate is under one in four and cannot be pinned tighter

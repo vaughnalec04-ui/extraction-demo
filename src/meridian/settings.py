@@ -31,6 +31,10 @@ CORPUS_VERSION = 3
 DOC_EXT = ".jpg"                                   # scans arrive as JPEG
 FONT_DIR = "/System/Library/Fonts/Supplemental"    # macOS; see README
 
+# Paired comparison between configurations scored on the same documents.
+BOOTSTRAP_RESAMPLES = 2000
+BOOTSTRAP_SEED = SEED
+
 # Bump when the prompt text changes so old cache entries miss instead of
 # scoring a new prompt against old responses.
 PROMPT_VERSION = "v2-reconciliation"

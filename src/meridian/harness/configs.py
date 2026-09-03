@@ -35,8 +35,10 @@ CONFIGS = ("primary_solo", "verifier_solo", "cascade", "double_key")
 
 
 def _cells(rec: Optional[dict]) -> Dict[str, dict]:
-    """Field cells from a cache record. A failed call gives empty cells, which
-    score as missed fields."""
+    """Field cells from a cache record. A failed or missing call gives empty
+    cells, which score as missed fields. The default path never gets here:
+    scorable_docs() drops a document with a failed call from every
+    configuration first, so the comparison stays paired."""
     resp = (rec or {}).get("response") or {}
     return {f: (resp.get(f) or {"value": None, "confidence": 0.0}) for f in FIELD_ORDER}
 

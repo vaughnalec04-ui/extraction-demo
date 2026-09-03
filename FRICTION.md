@@ -268,7 +268,7 @@ separate.
 - **Time lost:** about 25 minutes, mostly isolating a request-shape bug that
   did not exist.
 - **Workaround:** none on this key. The batch path is implemented against the
-  SDK contract in `meridian/batch.py` and is **unverified**. No throughput or
+  SDK contract in `src/meridian/batch.py` and is **unverified**. No throughput or
   cost figure is claimed for it.
 - **What would help:** name the precondition. "Precondition check failed." says
   nothing about which precondition, which resource, or what to change. "Batch

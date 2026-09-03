@@ -56,3 +56,20 @@ def test_schema_requires_fields_and_reconciliation():
     for k in ("line_items", "line_items_sum", "reconciles", "reconciliation_confidence"):
         assert k in s["required"]
     assert s["properties"]["reconciles"]["nullable"] is True
+
+
+def test_money_honours_accounting_negatives_and_codes():
+    assert normalize("total_amount", "(12.50)") == "-12.50"
+    assert normalize("total_amount", "$1,412.50 CR") == "-1412.50"
+    assert normalize("total_amount", "-12.5") == "-12.50"
+    assert normalize("total_amount", "USD 1412") == "1412.00"
+    assert normalize("total_amount", "1,696.42") == normalize("total_amount", "$1696.42")
+
+
+def test_dates_reject_impossible_readings_instead_of_inventing_one():
+    import re
+    assert normalize("date_of_service", "2026/03/14") == "2026-03-14"
+    assert normalize("date_of_service", "6/1/26") == "2026-06-01"
+    assert normalize("date_of_service", "01/02/2026") == "2026-01-02"     # month first
+    for bad in ("14/03/2026", "2026-14-03", "00/10/2026", "3/32/2026"):
+        assert not re.fullmatch(r"\d{4}-\d{2}-\d{2}", normalize("date_of_service", bad)), bad

@@ -1,11 +1,13 @@
 """Model client: structured extraction, response caching, cost and latency.
 
 Every call is cached under a key built from the model, prompt version, schema,
-temperature, run index and the image bytes, so a hit is the response to that
-exact request. Replay mode never falls back to the network.
+a fixed temperature tag, run index and the image bytes, so a hit is the response
+to that exact request. Both the extractor and the harness recompute the key on
+read. Replay mode never falls back to the network.
 """
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
 import os
@@ -59,6 +61,30 @@ def cache_key(model: str, doc_id: str, run: int, image_sha: str, schema_sha: str
     return hashlib.sha256(raw.encode()).hexdigest()[:20]
 
 
+def schema_sha() -> str:
+    """Hash of the response schema as sent; part of every cache key."""
+    return _sha(json.dumps(response_schema(), sort_keys=True).encode())
+
+
+@functools.lru_cache(maxsize=None)
+def file_sha(path: str) -> str:
+    with open(path, "rb") as fh:
+        return _sha(fh.read())
+
+
+def record_is_fresh(rec: dict, model: str, doc_id: str, run: int,
+                    image_sha: str, schema: str) -> bool:
+    """Was this cached record produced for exactly this request?
+
+    The key is recomputed from the current image bytes, schema and prompt
+    version. Without the check, regenerating the corpus would score new
+    documents against old responses, which does not crash and gives plausible
+    wrong numbers. The extractor treats a mismatch as a miss; the harness
+    refuses to score it.
+    """
+    return rec.get("cache_key") == cache_key(model, doc_id, run, image_sha, schema)
+
+
 def cache_path(model: str, split: str, run: int, doc_id: str) -> str:
     return os.path.join(CACHE, model, "%s-run%d" % (split, run), doc_id + ".json")
 
@@ -70,7 +96,7 @@ class Client:
         self._last_call = 0.0
         self.pricing = load_pricing()
         self._schema = response_schema()
-        self._schema_sha = _sha(json.dumps(self._schema, sort_keys=True).encode())
+        self._schema_sha = schema_sha()
         self._genai = None
         self._images: Dict[str, Tuple[bytes, str]] = {}
 
@@ -90,7 +116,7 @@ class Client:
             if not key:
                 raise RuntimeError(
                     "GEMINI_API_KEY is not set. Copy .env.example to .env and fill "
-                    "it in, or run with --replay to score the committed cache.")
+                    "it in. Scoring the committed cache with meridian-evaluate needs no key.")
             from google import genai
             self._genai = genai.Client(api_key=key)
         return self._genai
@@ -99,7 +125,7 @@ class Client:
         """One structured-output request. Returns (response, usage, latency_s).
 
         The only place the request is built. extract() adds caching and pacing
-        on top; pipeline.py adds a shared rate gate. Latency is the service time
+        on top; throughput.py adds a shared rate gate. Latency is the service time
         of this attempt with no sleeps included.
         """
         from google.genai import types
@@ -180,7 +206,10 @@ class Client:
                 usage.pop("cached_tokens", None)      # keep the record shape stable
                 record["usage"] = usage
                 record["response"] = self._parse(resp.text)
-                record["error"] = None
+                # An unparseable body is a failed call, not a claim that every
+                # field is absent. Scored as such: excluded by name.
+                record["error"] = (None if record["response"] is not None
+                                   else "unparseable response: %r" % (resp.text or "")[:200])
                 record["attempts"] = attempt + 1
                 break
             except Exception as exc:                      # noqa: BLE001
@@ -189,8 +218,8 @@ class Client:
                     self._interval = min(self._interval * 1.6 + 1.0, MAX_INTERVAL_S)
                     time.sleep(self._interval)
                     continue
-                # A failed call is recorded rather than raised. The harness
-                # scores it as a miss on every field.
+                # A failed call is recorded rather than raised. scorable_docs()
+                # then excludes the document by name before anything is scored.
                 record["latency_s"] = round(time.time() - started, 3)
                 record["usage"] = {"input_tokens": 0, "output_tokens": 0, "thinking_tokens": 0}
                 record["response"] = None

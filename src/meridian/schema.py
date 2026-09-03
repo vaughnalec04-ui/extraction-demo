@@ -151,26 +151,42 @@ def _norm_name(v: str) -> str:
 
 
 def _norm_money(v: str) -> str:
-    """Canonical decimal string with 2dp: $1,412.50 == 1412.5 == USD 1412.50."""
-    cleaned = re.sub(r"[^\d.\-]", "", v.replace(",", ""))
-    if cleaned in ("", "-", ".", "-."):
+    """Canonical decimal string with 2dp: $1,412.50 == 1412.5 == USD 1412.50.
+
+    Accounting negatives are honoured: (12.50), 12.50 CR and -12.50 all give
+    -12.50. US formats only; a European decimal comma is not handled, and the
+    corpus does not render one.
+    """
+    s = v.strip()
+    negative = ((s.startswith("(") and s.endswith(")"))
+                or re.match(r"^[^\d]*-", s) is not None
+                or re.search(r"\bCR\b", s, re.IGNORECASE) is not None)
+    cleaned = re.sub(r"[^\d.]", "", s.replace(",", ""))
+    if cleaned in ("", "."):
         return _norm_name(v)
     try:
-        return str(Decimal(cleaned).quantize(Decimal("0.01")))
+        amount = Decimal(cleaned).quantize(Decimal("0.01"))
     except (InvalidOperation, ValueError):
         return _norm_name(v)
+    return str(-amount if negative else amount)
 
 
 def _norm_date(v: str) -> str:
-    """Best-effort ISO YYYY-MM-DD across the formats the corpus renders."""
+    """Best-effort ISO YYYY-MM-DD across the formats the corpus renders.
+
+    Numeric dates are read month-first (US convention; the corpus is US), so
+    01/02/2026 is 2 January. A reading with an impossible month or day is
+    returned unnormalized rather than turned into a date that could match a
+    label by accident.
+    """
     s = v.strip()
-    m = re.search(r"(\d{4})-(\d{1,2})-(\d{1,2})", s)
+    m = re.search(r"(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})", s)
     if m:
         y, mo, d = m.groups()
     else:
         m = re.search(r"(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})", s)
         if m:
-            mo, d, y = m.groups()           # US convention; the corpus is US.
+            mo, d, y = m.groups()
             if len(y) == 2:
                 y = "20" + y
         else:
@@ -185,9 +201,12 @@ def _norm_date(v: str) -> str:
                 return _norm_name(v)
             mo, d, y = str(_MONTHS[key]), day.group(1), yr.group(1)
     try:
-        return "%04d-%02d-%02d" % (int(y), int(mo), int(d))
+        y, mo, d = int(y), int(mo), int(d)
     except ValueError:
         return _norm_name(v)
+    if not (1 <= mo <= 12 and 1 <= d <= 31):
+        return _norm_name(v)
+    return "%04d-%02d-%02d" % (y, mo, d)
 
 
 _NORMALIZERS = {

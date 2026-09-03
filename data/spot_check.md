@@ -5,7 +5,7 @@ image next to its expected values below and confirm the label is what a
 careful human keyer would record. These were chosen for difficulty, not
 at random; they are where label authoring could have gone wrong.
 
-Labels were authored first, in `meridian/dataset/labels.py:author_labels()`,
+Labels were authored first, in `src/meridian/dataset/labels.py`,
 and each image was rendered from its record. No label is downstream of a
 model.
 

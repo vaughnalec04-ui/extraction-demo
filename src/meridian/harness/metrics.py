@@ -13,6 +13,7 @@ Three definitions matter most:
 from __future__ import annotations
 
 import math
+import random
 from decimal import Decimal, InvalidOperation
 from typing import Dict, List, Optional, Sequence
 
@@ -308,3 +309,85 @@ def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
         "line_item_sum_accuracy": wilson(
             sum(1 for r in live if r["items_sum_matches_truth"]), n),
     }
+
+
+# --- paired comparison ------------------------------------------------------
+
+WRONG_EMISSION = (WRONG_VALUE, HALLUCINATED)   # a value went out and it was wrong
+
+
+def paired_difference(candidate: Sequence[dict], baseline: Sequence[dict],
+                      resamples: int, seed: int) -> Dict[str, object]:
+    """Compare two configurations scored on the same field-instances.
+
+    Every configuration is scored on identical documents, so the difference
+    between two of them is a paired quantity, and its interval is tighter than
+    two overlapping one-sample intervals suggest. Two differences stay well
+    defined when coverage differs: the wrong-emission rate (a wrong value left
+    the system: wrong_value or hallucinated_field, the wrong-payout outcomes)
+    and coverage itself.
+
+    The bootstrap resamples documents, because the six field-instances on a
+    page share one scan and are not independent. The exact test is the
+    two-sided binomial on discordant instances (McNemar's exact test).
+    """
+    if len(candidate) != len(baseline):
+        raise ValueError("paired comparison needs equal-length instance lists")
+    for a, b in zip(candidate, baseline):
+        if (a.get("doc_id"), a["field"]) != (b.get("doc_id"), b["field"]):
+            raise ValueError("instances are not aligned on (doc_id, field)")
+    n = len(candidate)
+    wrong_c = [a["outcome"] in WRONG_EMISSION for a in candidate]
+    wrong_b = [b["outcome"] in WRONG_EMISSION for b in baseline]
+    cov_c = [not a["abstained"] for a in candidate]
+    cov_b = [not b["abstained"] for b in baseline]
+    only_c = sum(1 for x, y in zip(wrong_c, wrong_b) if x and not y)
+    only_b = sum(1 for x, y in zip(wrong_c, wrong_b) if y and not x)
+
+    by_doc: Dict[str, List[int]] = {}
+    for i, a in enumerate(candidate):
+        by_doc.setdefault(a.get("doc_id"), []).append(i)
+    docs = list(by_doc)
+    rng = random.Random(seed)
+    d_wrong, d_cov = [], []
+    for _ in range(resamples):
+        idx = [i for d in (rng.choice(docs) for _ in docs) for i in by_doc[d]]
+        m = len(idx)
+        d_wrong.append((sum(wrong_c[i] for i in idx) - sum(wrong_b[i] for i in idx)) / m)
+        d_cov.append((sum(cov_c[i] for i in idx) - sum(cov_b[i] for i in idx)) / m)
+
+    return {
+        "n_instances": n,
+        "n_documents": len(docs),
+        "wrong_emissions": {
+            "candidate": sum(wrong_c), "baseline": sum(wrong_b),
+            "candidate_only": only_c, "baseline_only": only_b,
+            "difference_point": round((sum(wrong_c) - sum(wrong_b)) / n, 6),
+            "difference_ci": _percentile_ci(d_wrong),
+            "exact_p": round(_binomial_two_sided(min(only_c, only_b), only_c + only_b), 6),
+        },
+        "coverage": {
+            "candidate": round(sum(cov_c) / n, 6), "baseline": round(sum(cov_b) / n, 6),
+            "difference_point": round((sum(cov_c) - sum(cov_b)) / n, 6),
+            "difference_ci": _percentile_ci(d_cov),
+        },
+        "resamples": resamples, "seed": seed,
+        "unit": "field-instance; bootstrap resamples documents",
+    }
+
+
+def _percentile_ci(samples: List[float]) -> Dict[str, float]:
+    s = sorted(samples)
+    lo = s[int(0.025 * (len(s) - 1))]
+    hi = s[int(math.ceil(0.975 * (len(s) - 1)))]
+    return {"low": round(lo, 6), "high": round(hi, 6)}
+
+
+def _binomial_two_sided(k: int, n: int) -> float:
+    """Two-sided exact binomial p-value at p = 0.5 for k of n discordant
+    instances. 1.0 when nothing is discordant."""
+    if n == 0:
+        return 1.0
+    k = min(k, n - k)
+    tail = sum(math.comb(n, i) for i in range(0, k + 1)) / 2 ** n
+    return min(1.0, 2 * tail)

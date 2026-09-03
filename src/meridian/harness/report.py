@@ -1,8 +1,8 @@
 """Terminal rendering of a results block.
 
 Everything printed here also exists in results.json; the JSON is the
-artifact. Nothing is computed in this module. Every number on screen came
-from metrics.py and has a field in the JSON.
+artifact. Nothing is computed in this module. Every number on screen has a
+field in the JSON; the scoring lives in metrics.py and run.py.
 """
 from __future__ import annotations
 
@@ -26,6 +26,7 @@ def render(results: dict) -> None:
     meta = results["meta"]
     _header(meta)
     _frontier(results["frontier"], meta)
+    _paired(results["configs"])
     for config, block in sorted(results["configs"].items()):
         _config(config, block)
 
@@ -94,9 +95,12 @@ def _config_banner(config: str, block: dict, first: dict) -> None:
     print("thresholds (from tune): abstain<%s  escalate<%s   bar met on tune: %s"
           % (t["tau_abstain"], t["tau_escalate"], t["bar_met_on_tune"]))
     if first.get("escalation_rate") is not None:
-        print("escalation rate       : %.1f%% of documents" % (first["escalation_rate"] * 100))
+        esc = first.get("escalation") or {}
+        band = " [%.1f–%.1f]" % (esc["low"] * 100, esc["high"] * 100) if esc else ""
+        print("escalation rate       : %.1f%% of documents%s" % (first["escalation_rate"] * 100, band))
     if first.get("api_call_errors"):
-        print("API call errors       : %d (scored as missed fields)" % first["api_call_errors"])
+        print("API call errors       : %d in scored documents (empty cells, scored as missed fields)"
+              % first["api_call_errors"])
 
 
 def _overall(first: dict) -> None:
@@ -195,3 +199,25 @@ def _variance(runs: list, var: dict) -> None:
         flag = "" if v["spread"] == 0 else "   <- non-zero at temp 0"
         print("      %-28s min=%-10s max=%-10s spread=%s%s"
               % (name, v["min"], v["max"], v["spread"], flag))
+
+
+def _paired(per_config: dict) -> None:
+    rows = [(c, b["paired_vs_primary_solo"]) for c, b in per_config.items()
+            if b.get("paired_vs_primary_solo")]
+    if not rows:
+        return
+    print("\nPaired against primary_solo, run 1. Same documents; bootstrap resamples documents.")
+    print("  %-14s %-30s %-12s %-8s %s" % (
+        "config", "wrong emissions (cand vs base)", "discordant", "exact p", "coverage change"))
+    for c, p in rows:
+        w, cv = p["wrong_emissions"], p["coverage"]
+        print("  %-14s %-30s %-12s %-8s %s" % (
+            c,
+            "%d vs %d   [%+.1f, %+.1f] pts" % (w["candidate"], w["baseline"],
+                                                100 * w["difference_ci"]["low"],
+                                                100 * w["difference_ci"]["high"]),
+            "%d / %d" % (w["candidate_only"], w["baseline_only"]),
+            "%.2f" % w["exact_p"],
+            "%+.1f pts [%+.1f, %+.1f]" % (100 * cv["difference_point"],
+                                          100 * cv["difference_ci"]["low"],
+                                          100 * cv["difference_ci"]["high"])))

@@ -193,3 +193,69 @@ def test_summarize_reconciliation_counts_and_recall():
 
 def test_summarize_reconciliation_empty_is_not_applicable():
     assert m.summarize_reconciliation([{"applicable": False}]) == {"n": 0, "applicable": False}
+
+
+# --- paired comparison ------------------------------------------------------
+
+def _pinst(doc, field, outcome, abstained=False):
+    return {"doc_id": doc, "field": field, "outcome": outcome, "abstained": abstained}
+
+
+def test_paired_difference_of_a_list_with_itself_is_zero():
+    from meridian.harness import metrics as m
+    a = [_pinst("d1", "f1", "correct"), _pinst("d1", "f2", "wrong_value"), _pinst("d2", "f1", "correct")]
+    p = m.paired_difference(a, list(a), resamples=200, seed=1)
+    w = p["wrong_emissions"]
+    assert (w["candidate_only"], w["baseline_only"], w["exact_p"]) == (0, 0, 1.0)
+    assert w["difference_point"] == 0 and p["coverage"]["difference_point"] == 0
+    assert w["difference_ci"] == {"low": 0.0, "high": 0.0}
+
+
+def test_paired_difference_counts_discordant_instances_and_exact_p():
+    from meridian.harness import metrics as m
+    base = [_pinst("d%d" % i, "f", "wrong_value") for i in range(3)] + [_pinst("d9", "f", "correct")]
+    cand = [_pinst("d%d" % i, "f", "correct") for i in range(3)] + [_pinst("d9", "f", "correct")]
+    w = m.paired_difference(cand, base, resamples=200, seed=1)["wrong_emissions"]
+    assert (w["candidate_only"], w["baseline_only"]) == (0, 3)
+    assert w["exact_p"] == 0.25          # two-sided, 2 * 0.5 ** 3
+    assert w["difference_point"] == -0.75
+
+
+def test_paired_difference_hallucination_is_a_wrong_emission_and_abstention_is_not():
+    from meridian.harness import metrics as m
+    base = [_pinst("d1", "f", "hallucinated_field"), _pinst("d2", "f", "missed_field")]
+    cand = [_pinst("d1", "f", "abstained", abstained=True), _pinst("d2", "f", "missed_field")]
+    p = m.paired_difference(cand, base, resamples=50, seed=1)
+    assert (p["wrong_emissions"]["candidate_only"], p["wrong_emissions"]["baseline_only"]) == (0, 1)
+    assert p["coverage"]["difference_point"] == -0.5
+
+
+def test_paired_difference_is_deterministic_for_a_seed():
+    from meridian.harness import metrics as m
+    base = [_pinst("d%d" % (i // 2), "f%d" % (i % 2), "wrong_value" if i % 5 == 0 else "correct") for i in range(20)]
+    cand = [_pinst("d%d" % (i // 2), "f%d" % (i % 2), "correct") for i in range(20)]
+    assert m.paired_difference(cand, base, 300, 7) == m.paired_difference(cand, base, 300, 7)
+    assert m.paired_difference(cand, base, 300, 7) != m.paired_difference(cand, base, 300, 8)
+
+
+def test_paired_difference_rejects_misaligned_instances():
+    import pytest
+    from meridian.harness import metrics as m
+    with pytest.raises(ValueError):
+        m.paired_difference([_pinst("d1", "f1", "correct")], [_pinst("d1", "f2", "correct")], 10, 1)
+    with pytest.raises(ValueError):
+        m.paired_difference([_pinst("d1", "f1", "correct")], [], 10, 1)
+
+
+def test_binomial_two_sided_matches_hand_values():
+    from meridian.harness import metrics as m
+    assert m._binomial_two_sided(0, 0) == 1.0
+    assert m._binomial_two_sided(0, 1) == 1.0
+    assert abs(m._binomial_two_sided(0, 2) - 0.5) < 1e-12
+    assert abs(m._binomial_two_sided(1, 10) - 2 * 11 / 1024) < 1e-12
+
+
+def test_calibration_with_no_instances_is_degenerate_not_an_error():
+    from meridian.harness import metrics as m
+    cal = m.calibration([], [])
+    assert cal["degenerate"] is True

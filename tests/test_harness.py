@@ -66,3 +66,53 @@ def test_thresholds_tuned_on_tune_split():
         t = json.load(fh)
     assert "tune" in t["tuned_on"] and "never test" in t["tuned_on"]
     assert set(t["chosen"]) == set(run.CONFIGS)
+
+
+def test_harness_refuses_a_cached_response_for_a_changed_image(tmp_path, monkeypatch):
+    """The scoring path checks freshness too. A regenerated corpus must not be
+    scored against the old responses."""
+    import shutil
+    doc = json.load(open(os.path.join(settings.DATA, "splits.json")))["test"][0]
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    dst = docs / (doc + settings.DOC_EXT)
+    shutil.copy(os.path.join(settings.DOCS, doc + settings.DOC_EXT), dst)
+    with open(dst, "ab") as fh:
+        fh.write(b"\x00")                      # one byte: a different image
+    monkeypatch.setattr(run, "DOCS", str(docs))
+    with pytest.raises(SystemExit, match="Stale cached response"):
+        run.load_cache(settings.PRIMARY, "test", 1, [doc])
+    monkeypatch.setattr(run, "DOCS", settings.DOCS)
+    assert doc in run.load_cache(settings.PRIMARY, "test", 1, [doc])
+
+
+def test_failed_and_unparseable_calls_are_excluded_by_name(tmp_path, monkeypatch):
+    ids = json.load(open(os.path.join(settings.DATA, "splits.json")))["test"]
+    good, failed, garbled = ids[0], ids[1], ids[2]
+    for model in (settings.PRIMARY, settings.VERIFIER):
+        d = tmp_path / model / "test-run1"
+        d.mkdir(parents=True)
+        (d / (good + ".json")).write_text(json.dumps({"error": None, "response": {"x": 1}}))
+        (d / (failed + ".json")).write_text(json.dumps({"error": "ClientError: 503", "response": None}))
+        (d / (garbled + ".json")).write_text(json.dumps({"error": None, "response": None}))
+    monkeypatch.setattr(run, "CACHE", str(tmp_path))
+    cov = run.scorable_docs("test", 1)
+    assert cov["scored"] == [good]
+    assert failed in cov["excluded"] and garbled in cov["excluded"]
+    assert cov["n_scored"] == 1 and cov["n_total"] == len(ids)
+
+
+def test_tune_only_ever_scores_the_tune_split(monkeypatch):
+    seen = []
+
+    def fake_score(config, split, run_idx, tau_a, tau_e, labels, doc_ids=None):
+        seen.append(split)
+        return {"overall": {"coverage": {"point": 1.0},
+                            "normalized_match_on_covered": {"point": 1.0},
+                            "abstention_precision": {"point": None}},
+                "cost": {"mean_usd_per_doc": 0.001}, "escalation_rate": 0.0}
+
+    monkeypatch.setattr(run, "score", fake_score)
+    out = run.tune(run.load_labels())
+    assert seen and set(seen) == {"tune"}
+    assert out["tuned_on"].startswith("tune split")

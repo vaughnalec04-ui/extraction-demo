@@ -1,6 +1,34 @@
 {
   "configs": {
     "cascade": {
+      "paired_vs_primary_solo": {
+        "coverage": {
+          "baseline": 1.0,
+          "candidate": 1.0,
+          "difference_ci": {
+            "high": 0.0,
+            "low": 0.0
+          },
+          "difference_point": 0.0
+        },
+        "n_documents": 40,
+        "n_instances": 240,
+        "resamples": 2000,
+        "seed": 20260902,
+        "unit": "field-instance; bootstrap resamples documents",
+        "wrong_emissions": {
+          "baseline": 2,
+          "baseline_only": 0,
+          "candidate": 2,
+          "candidate_only": 0,
+          "difference_ci": {
+            "high": 0.0,
+            "low": 0.0
+          },
+          "difference_point": 0.0,
+          "exact_p": 1.0
+        }
+      },
       "runs": [
         {
           "api_call_errors": 0,
@@ -730,6 +758,12 @@
             "monthly_usd_at_40k_docs": 52.77,
             "total_usd": 0.052775
           },
+          "escalation": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0
+          },
           "escalation_rate": 0.0,
           "latency": {
             "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
@@ -1006,6 +1040,34 @@
       }
     },
     "double_key": {
+      "paired_vs_primary_solo": {
+        "coverage": {
+          "baseline": 1.0,
+          "candidate": 0.966667,
+          "difference_ci": {
+            "high": -0.004167,
+            "low": -0.075
+          },
+          "difference_point": -0.033333
+        },
+        "n_documents": 40,
+        "n_instances": 240,
+        "resamples": 2000,
+        "seed": 20260902,
+        "unit": "field-instance; bootstrap resamples documents",
+        "wrong_emissions": {
+          "baseline": 2,
+          "baseline_only": 2,
+          "candidate": 0,
+          "candidate_only": 0,
+          "difference_ci": {
+            "high": 0.0,
+            "low": -0.025
+          },
+          "difference_point": -0.008333,
+          "exact_p": 0.5
+        }
+      },
       "runs": [
         {
           "api_call_errors": 0,
@@ -1735,6 +1797,7 @@
             "monthly_usd_at_40k_docs": 88.34,
             "total_usd": 0.088342
           },
+          "escalation": null,
           "escalation_rate": null,
           "latency": {
             "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
@@ -2013,6 +2076,7 @@
       }
     },
     "primary_solo": {
+      "paired_vs_primary_solo": null,
       "runs": [
         {
           "api_call_errors": 0,
@@ -2742,6 +2806,7 @@
             "monthly_usd_at_40k_docs": 52.77,
             "total_usd": 0.052775
           },
+          "escalation": null,
           "escalation_rate": null,
           "latency": {
             "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
@@ -3018,6 +3083,34 @@
       }
     },
     "verifier_solo": {
+      "paired_vs_primary_solo": {
+        "coverage": {
+          "baseline": 1.0,
+          "candidate": 1.0,
+          "difference_ci": {
+            "high": 0.0,
+            "low": 0.0
+          },
+          "difference_point": 0.0
+        },
+        "n_documents": 40,
+        "n_instances": 240,
+        "resamples": 2000,
+        "seed": 20260902,
+        "unit": "field-instance; bootstrap resamples documents",
+        "wrong_emissions": {
+          "baseline": 2,
+          "baseline_only": 1,
+          "candidate": 7,
+          "candidate_only": 6,
+          "difference_ci": {
+            "high": 0.0625,
+            "low": -0.004167
+          },
+          "difference_point": 0.020833,
+          "exact_p": 0.125
+        }
+      },
       "runs": [
         {
           "api_call_errors": 0,
@@ -3741,6 +3834,7 @@
             "monthly_usd_at_40k_docs": 35.57,
             "total_usd": 0.035568
           },
+          "escalation": null,
           "escalation_rate": null,
           "latency": {
             "_note": "serial wall-clock as measured; double_key's two calls are independent and could run concurrently (not measured)",
@@ -4075,7 +4169,7 @@
       },
       "accuracy_on_covered": 0.991667,
       "config": "cascade",
-      "cost_per_doc": 0.001319,
+      "cost_per_doc": 0.00131936,
       "coverage": 1.0,
       "ece": 0.006375,
       "monthly_usd_at_40k_docs": 52.77,
@@ -4085,7 +4179,8 @@
       "recon_code_verdict_accuracy": 1.0,
       "recon_false_pass_code": 0,
       "recon_false_pass_model": 0,
-      "recon_model_verdict_accuracy": 1.0
+      "recon_model_verdict_accuracy": 1.0,
+      "run": 1
     },
     {
       "abstention_precision": 0.25,
@@ -4097,7 +4192,7 @@
       },
       "accuracy_on_covered": 1.0,
       "config": "double_key",
-      "cost_per_doc": 0.002209,
+      "cost_per_doc": 0.00220855,
       "coverage": 0.966667,
       "ece": 0.006375,
       "monthly_usd_at_40k_docs": 88.34,
@@ -4107,7 +4202,8 @@
       "recon_code_verdict_accuracy": 1.0,
       "recon_false_pass_code": 0,
       "recon_false_pass_model": 0,
-      "recon_model_verdict_accuracy": 1.0
+      "recon_model_verdict_accuracy": 1.0,
+      "run": 1
     },
     {
       "abstention_precision": null,
@@ -4119,7 +4215,7 @@
       },
       "accuracy_on_covered": 0.991667,
       "config": "primary_solo",
-      "cost_per_doc": 0.001319,
+      "cost_per_doc": 0.00131936,
       "coverage": 1.0,
       "ece": 0.006375,
       "monthly_usd_at_40k_docs": 52.77,
@@ -4129,7 +4225,8 @@
       "recon_code_verdict_accuracy": 1.0,
       "recon_false_pass_code": 0,
       "recon_false_pass_model": 0,
-      "recon_model_verdict_accuracy": 1.0
+      "recon_model_verdict_accuracy": 1.0,
+      "run": 1
     },
     {
       "abstention_precision": null,
@@ -4141,7 +4238,7 @@
       },
       "accuracy_on_covered": 0.970833,
       "config": "verifier_solo",
-      "cost_per_doc": 0.000889,
+      "cost_per_doc": 0.00088919,
       "coverage": 1.0,
       "ece": 0.029167,
       "monthly_usd_at_40k_docs": 35.57,
@@ -4151,7 +4248,8 @@
       "recon_code_verdict_accuracy": 0.970588,
       "recon_false_pass_code": 1,
       "recon_false_pass_model": 1,
-      "recon_model_verdict_accuracy": 0.970588
+      "recon_model_verdict_accuracy": 0.970588,
+      "run": 1
     }
   ],
   "meta": {

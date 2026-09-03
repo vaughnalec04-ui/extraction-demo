@@ -21,7 +21,19 @@ from typing import Dict, List, Optional, Sequence
 from meridian.harness import metrics
 from meridian.harness.configs import CONFIGS, resolve
 from meridian.schema import FIELD_ORDER, PAYMENT_CRITICAL
-from meridian.settings import CACHE, CONFIG, DATA, MERIDIAN_BAR, PRIMARY, RESULTS, VERIFIER
+from meridian.client import file_sha, record_is_fresh, schema_sha
+from meridian.settings import (
+    BOOTSTRAP_RESAMPLES,
+    BOOTSTRAP_SEED,
+    CACHE,
+    CONFIG,
+    DATA,
+    DOC_EXT,
+    DOCS,
+    MERIDIAN_BAR,
+    PRIMARY,
+    RESULTS,
+    VERIFIER)
 
 
 def load_labels() -> Dict[str, dict]:
@@ -35,7 +47,11 @@ def load_split(split: str) -> List[str]:
 
 
 def load_cache(model: str, split: str, run: int, doc_ids: Sequence[str]) -> Dict[str, dict]:
+    """Cached records for these documents, each checked against the current
+    image bytes, schema and prompt version. A stale record is refused, not
+    scored: the harness never calls the API, so it cannot repair one."""
     out = {}
+    schema = schema_sha()
     for d in doc_ids:
         p = os.path.join(CACHE, model, "%s-run%d" % (split, run), d + ".json")
         if not os.path.exists(p):
@@ -43,7 +59,15 @@ def load_cache(model: str, split: str, run: int, doc_ids: Sequence[str]) -> Dict
                 "Missing cached response: %s\nRun extraction for this split/run "
                 "first, or check out a commit whose cache matches this corpus." % p)
         with open(p) as fh:
-            out[d] = json.load(fh)
+            rec = json.load(fh)
+        image = file_sha(os.path.join(DOCS, d + DOC_EXT))
+        if not record_is_fresh(rec, model, d, run, image, schema):
+            raise SystemExit(
+                "Stale cached response: %s\nIt was produced for a different image, "
+                "schema or prompt version than the one on disk. Regenerated corpus? "
+                "Re-run extraction, or check out the commit whose corpus matches "
+                "this cache. Refusing to score it." % p)
+        out[d] = rec
     return out
 
 
@@ -75,8 +99,10 @@ def scorable_docs(split: str, runs: int) -> Dict[str, object]:
             usable = set()
             for doc in present:
                 with open(os.path.join(d, doc + ".json")) as fh:
-                    if not json.load(fh).get("error"):
-                        usable.add(doc)
+                    rec = json.load(fh)
+                # A failed call or an unparseable body is not a set of answers.
+                if not rec.get("error") and rec.get("response") is not None:
+                    usable.add(doc)
             covered &= usable
     excluded = [d for d in all_ids if d not in covered]
     return {"scored": [d for d in all_ids if d in covered],
@@ -154,7 +180,10 @@ def score(config: str, split: str, run: int, tau_abstain: float,
                      "are independent and could run concurrently (not measured)",
         },
         "escalation_rate": round(escalations / len(doc_ids), 6) if config == "cascade" else None,
+        "escalation": metrics.wilson(escalations, len(doc_ids)) if config == "cascade" else None,
         "api_call_errors": call_errors,
+        # Consumed by evaluate() for the paired comparison; not written out.
+        "_instances": instances,
     }
 
 
@@ -247,17 +276,28 @@ def tune(labels: Dict[str, dict]) -> dict:
 def evaluate(labels: Dict[str, dict], split: str, runs: int, thresholds: dict,
              doc_ids: Optional[Sequence[str]] = None) -> dict:
     """Score every configuration across `runs` repeats and report the spread."""
-    per_config = {}
+    per_config, first_run = {}, {}
     for config in CONFIGS:
         t = thresholds["chosen"][config]
         run_results = [score(config, split, r, t["tau_abstain"], t["tau_escalate"],
                              labels, doc_ids)
                        for r in range(1, runs + 1)]
+        first_run[config] = run_results[0].pop("_instances")
+        for r in run_results[1:]:
+            r.pop("_instances", None)
         per_config[config] = {
             "runs": run_results,
             "variance": _variance(run_results),
             "thresholds_from_tune": t,
         }
+    # Every configuration was scored on the same documents, so the difference
+    # from the primary reader alone is a paired quantity. Run 1 only.
+    base = first_run["primary_solo"]
+    for config in CONFIGS:
+        per_config[config]["paired_vs_primary_solo"] = (
+            None if config == "primary_solo"
+            else metrics.paired_difference(first_run[config], base,
+                                           BOOTSTRAP_RESAMPLES, BOOTSTRAP_SEED))
     return per_config
 
 
@@ -377,22 +417,26 @@ def main() -> None:
 
 
 def _frontier(per_config: dict) -> List[dict]:
-    """One point per configuration, ready to plot from the JSON."""
+    """One point per configuration, ready to plot from the JSON.
+
+    Run 1 throughout, so every point and its interval describe the same run.
+    Run-to-run spread is under each configuration's variance block.
+    """
     pts = []
     for config, block in sorted(per_config.items()):
-        med = block["variance"]
         first = block["runs"][0]
         pts.append({
             "config": config,
-            "cost_per_doc": med["cost_per_doc"]["median"],
+            "run": first["run"],
+            "cost_per_doc": first["cost"]["mean_usd_per_doc"],
             "monthly_usd_at_40k_docs": first["cost"]["monthly_usd_at_40k_docs"],
-            "accuracy_on_covered": med["normalized_match_on_covered"]["median"],
+            "accuracy_on_covered": first["overall"]["normalized_match_on_covered"]["point"],
             "accuracy_ci": first["overall"]["normalized_match_on_covered"],
-            "coverage": med["coverage"]["median"],
-            "abstention_precision": med["abstention_precision"]["median"],
-            "payment_critical_accuracy": med["payment_critical_accuracy"]["median"],
-            "ece": med["ece"]["median"],
-            "p50_latency_s": med["p50_latency_s"]["median"],
+            "coverage": first["overall"]["coverage"]["point"],
+            "abstention_precision": first["overall"]["abstention_precision"]["point"],
+            "payment_critical_accuracy": first["payment_critical"]["normalized_match_on_covered"]["point"],
+            "ece": first["calibration"]["ece"],
+            "p50_latency_s": first["latency"]["p50_s"],
             "recon_bad_claim_recall": first["reconciliation"].get("bad_claim_recall_model", {}).get("point"),
             "recon_model_verdict_accuracy": first["reconciliation"].get("model_verdict", {}).get("accuracy", {}).get("point"),
             "recon_code_verdict_accuracy": first["reconciliation"].get("code_verdict", {}).get("accuracy", {}).get("point"),

@@ -97,3 +97,23 @@ def test_parse_tolerates_malformed_model_output():
     assert out["reconciliation"]["confidence"] == 0.0
     out = parse(json.dumps({"claim_id": {"value": "x", "confidence": 7}}))
     assert out["claim_id"]["confidence"] == 1.0              # clamped
+
+
+def test_prompt_text_is_pinned_to_its_version():
+    """The cache key carries PROMPT_VERSION, not the prompt text, so an edit
+    to PROMPT without a version bump would serve stale responses. This pins
+    the text. When PROMPT changes, bump PROMPT_VERSION and update the hash."""
+    from meridian.client import PROMPT, _sha
+    from meridian.settings import PROMPT_VERSION
+    assert PROMPT_VERSION == "v2-reconciliation"
+    assert _sha(PROMPT.encode())[:16] == "bb1b5dd56c14a3e2"
+
+
+def test_record_is_fresh_rejects_a_different_image_schema_or_run():
+    from meridian.client import cache_key, record_is_fresh
+    rec = {"cache_key": cache_key("m", "doc", 1, "img", "sch")}
+    assert record_is_fresh(rec, "m", "doc", 1, "img", "sch")
+    assert not record_is_fresh(rec, "m", "doc", 1, "other-img", "sch")
+    assert not record_is_fresh(rec, "m", "doc", 1, "img", "other-schema")
+    assert not record_is_fresh(rec, "m", "doc", 2, "img", "sch")
+    assert not record_is_fresh({}, "m", "doc", 1, "img", "sch")

@@ -27,6 +27,7 @@ Notifications off. Close every other window. Put this script on a second screen 
 ## TAB 1: Briefing
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
+
 Do: Start at the top of the page. Look at the camera for the first three sentences.
 
 The accuracy bar is met. The cost bar is met. The third one, knowing when it's wrong, isn't. That's what I'm going to show you, with the numbers behind each of those.
@@ -68,6 +69,7 @@ Double-keying gets a hundred percent on the fields the two readers agree on, whi
 ## TAB 3: Degraded page
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/degr-012.jpg
+
 Do: Point at the total, then at the policy number.
 
 Two pages surprised me, for opposite reasons. This is a degraded repair estimate. The total is four thousand eight hundred and four dollars. The primary reader read forty-one thousand eight hundred and four. One extra digit on a faded scan, and that's exactly the mistake that pays out. What got me was that its confidence on that field was point nine, the lowest it gave anywhere, so the model half knew. It got the policy number wrong too, at point nine five, and those are its only two mistakes on the whole test split, both on this one page. The second reader had the total right and the policy number wrong in a different way. So under double-keying both fields went to review. On a real claim that's a thirty-seven thousand dollar overpayment that didn't go out.
@@ -77,6 +79,7 @@ On the total field specifically, the payment field, the primary alone gets ninet
 ## TAB 4: Utility bill
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/ood-006.jpg
+
 Do: Point at the Amount Due line.
 
 This one's a utility bill. It's in the corpus because it isn't a claim, so the right answer for every field is "nothing here." The primary said nothing here on all six. The second reader, working alone, simply made things up. The account number became a policy number. The billing period became a date of service. The utility became the provider. And this amount due, a hundred sixty-eight dollars forty-four, became a claim total. All at confidence one point oh. Under double-keying none of that got out, because the readers disagreed. On this sample the primary happened to be right, so those flags cost a review each. Flip the roles and they're saved payouts.
@@ -84,6 +87,7 @@ This one's a utility bill. It's in the corpus because it isn't a claim, so the r
 ## TAB 5: The double-key rule, configs.py lines 86 to 96
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo/blob/main/src/meridian/harness/configs.py#L86-L96
+
 Do: The highlighted lines are the double-key branch.
 
 Here's the whole idea in ten lines. For each field, take the primary's value and the verifier's value. Normalize both, so a dollar sign or a comma doesn't count as a disagreement. Compare. If they agree, the primary's value goes out. If they don't, the field is marked abstained and goes to the queue. We keep the lower of the two confidences for the record, but nothing depends on it. That's the point. This configuration never asks either model how sure it is.
@@ -91,6 +95,7 @@ Here's the whole idea in ten lines. For each field, take the primary's value and
 ## TERMINAL, then TAB 1: What we found
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
+
 Do: In the terminal, scroll to the primary_solo block and the line that says DEGENERATE. Then switch to Tab 1 and scroll to the Cascade paragraph in section 2.3.
 
 Okay, so what did we actually find? Three things.
@@ -108,6 +113,7 @@ And a fourth thing, which is the finding I'd most want a claims person to hear. 
 ## TAB 2: GitHub repo
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo
+
 Do: Scroll the README to the dataset table with the five strata and stop there.
 
 I built it this way because most of it turns into a benchmark for extraction with abstention. Here's what carries over. A label-first generator with named strata, so the difficulty is designed instead of discovered. A committed response cache, so anyone can reproduce the scoring without spending a cent. A fixed set of metrics: accuracy always shown next to coverage, three kinds of error kept apart, abstention precision from the recorded counterfactual, and an interval on everything. Paired comparison between systems on the same documents, so nobody's comparing overlapping error bars. And reconciliation, does the itemization add up to the total, because adjudication is the job underneath the transcription.
@@ -117,6 +123,7 @@ The findings tell you what a benchmark like that has to contain. Out-of-distribu
 ## TAB 6: Friction log
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo/blob/main/FRICTION.md#f-007-self-reported-confidence-is-a-constant-self-consistency-too
+
 Do: It opens at F-007. Read the confidence counts, then scroll down two entries to F-010.
 
 If I could get Google to fix one thing, it's this. Give structured output a real confidence signal. Log probabilities on schema fields, or any calibrated number the model doesn't have to introspect to produce. Every customer whose requirement is "tell me when you're not sure" hits this wall, and right now the answer is to pay for a second model. That's F-007 in the log, with F-006 next to it for the missing log probabilities.
@@ -140,6 +147,7 @@ For the five-hundred-document pilot, the gates are written down. I'd go ahead wi
 ## TAB 1: Briefing, section 4
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
+
 Do: Scroll to section 4, Next steps. Back to the camera for the last two sentences.
 
 So if Meridian asked me whether they should buy this, I'd say not yet, and not because of accuracy or cost, since both clear the bar. Run five hundred of your real documents through it first, especially the ones your contractors already flag, and then we'll know whether the second reader is worth the three points of coverage it costs. The harness is built for exactly that. It reproduces from a clean clone in one command, and everything you saw is in the repo. Thanks.

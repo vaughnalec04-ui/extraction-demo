@@ -170,8 +170,8 @@ def _slices(first: dict) -> None:
 
 def _calibration(cal: dict) -> None:
     print()
-    print("  calibration   ECE=%.4f   occupied buckets=%d%s"
-          % (cal["ece"], cal["occupied_buckets"],
+    print("  calibration   ECE=%.4f   informative buckets=%d of %d occupied%s"
+          % (cal["ece"], cal["informative_buckets"], cal["occupied_buckets"],
              "   *** DEGENERATE: not a curve ***" if cal["degenerate"] else ""))
     print("      %-12s %6s %12s %12s %8s" % ("bucket", "n", "mean conf", "observed", "gap"))
     for b in cal["buckets"]:

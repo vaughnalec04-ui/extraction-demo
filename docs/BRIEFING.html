@@ -11,7 +11,6 @@
     --ink-2: #444C56;
     --muted: #6B7480;
     --rule: #C9CED6;
-    --rule-2: #E3E7EC;
     --head-bg: #F3F5F7;
     --link: #1F4E8C;
     --code-bg: #F0F2F4;
@@ -21,12 +20,12 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9;
-      --rule: #3A424C; --rule-2: #2A3139; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
+      --rule: #3A424C; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
     }
   }
   :root[data-theme="dark"] {
     --bg: #15191E; --ink: #E4E8ED; --ink-2: #C3CAD3; --muted: #939DA9;
-    --rule: #3A424C; --rule-2: #2A3139; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
+    --rule: #3A424C; --head-bg: #1E242B; --link: #8DB4E6; --code-bg: #252C34;
   }
   html { background: var(--bg); }
   body {
@@ -43,7 +42,7 @@
   .hdr b { font-weight: 600; color: var(--ink-2); }
   h2 { font-size: 17px; font-weight: 700; margin: 30px 0 10px; }
   h3 { font-size: 15.5px; font-weight: 700; margin: 18px 0 6px; }
-  p { margin: 0 0 12px; color: var(--ink); }
+  p { margin: 0 0 12px; }
   ul, ol { margin: 0 0 12px; padding-left: 1.4em; }
   li { margin: 0 0 6px; }
   a { color: var(--link); }
@@ -69,29 +68,28 @@
     <div><b>To</b><span>GDM partner engineering; core modeling and product for section 3</span></div>
     <div><b>From</b><span>Vaughn Nahapetian</span></div>
     <div><b>Date</b><span>3 September 2026</span></div>
-    <div><b>Repo</b><span><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. <code>pip install -e .</code> then <code>meridian-evaluate</code> reproduces every number below from the committed response cache. No API key needed.</span></div>
+    <div><b>Repo</b><span><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. <code>meridian-evaluate</code> reproduces every number below from the committed response cache, no API key needed.</span></div>
     <div><b>Numbers</b><span><code>results/results.json</code>: corpus v3, test split, 40 documents / 240 field-instances, one run at temperature 0. Brackets are 95% Wilson intervals.</span></div>
   </div>
 
   <div class="bluf">
-    <p><b>BLUF.</b> The accuracy and cost bars are met; the "know when you're unsure" bar is not, and that is the one that protects payouts. One lite reader (<code>gemini-3.5-flash-lite</code>) reads 99.2% [97.0–99.8] of fields correctly at $0.0013 a document with nothing routed to review; the lower bound of that interval is exactly the 97% target, so there is no margin. Two lite readers double-keyed (values compared, disagreements to review) get 100% [98.4–100] on the 96.7% of fields they agree on, at $0.0022 a document. On the same documents that is a difference of two field-instances (p = 0.50), so what the data establishes is the 3.3 points of coverage the second reader costs, not an accuracy gain. Self-reported confidence is near-constant (1.0 on 240 of 240 instances for one reader) and can't gate anything. Disagreement between readers is the only signal that carried information, and with 8 flags in 240 instances its precision is 25% [7.1–59.1]. Recommendation: don't commit to a configuration yet. Run this harness unchanged on about 500 real Meridian documents weighted toward the exceptions their contractors already flag; gates are in 2.5. Ask of GDM: a calibrated confidence primitive for structured output (section 3, F-007).</p>
+    <p><b>BLUF.</b> The accuracy and cost bars are met; the "know when you're unsure" bar is not. One lite reader (<code>gemini-3.5-flash-lite</code>) reads 99.2% [97.0–99.8] of fields correctly at $0.0013 a document; the interval's lower bound sits exactly on the 97% target. Two lite readers double-keyed reach 100% [98.4–100] on the 96.7% of fields they agree on at $0.0022 a document; on the same documents that is two field-instances of difference (p = 0.50), so the established effect is a 3.3-point coverage cost. Self-reported confidence is near-constant and can't gate anything; reader disagreement is the only usable signal, with 25% [7.1–59.1] precision on 8 flags. Recommendation: run this harness unchanged on about 500 real Meridian documents before choosing a configuration (gates in 2.5). Ask of GDM: a calibrated confidence output for structured extraction (F-007).</p>
   </div>
 
   <h2>Context</h2>
-  <p>Meridian is a composite partner profile I put together for this exercise. They receive about 40,000 scanned claims documents a month and need six payment-critical fields extracted: claim id, policy number, claimant, provider, date of service and total amount. Their stated requirements: 97% field accuracy, under $0.02 a document, and the system has to flag what it isn't sure of rather than guess, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness against a synthetic corpus of 80 documents. Labels were written first and each page rendered from its label, so no label depends on a model; the failure distribution is my guess at theirs, not theirs. Everything ran on the free tier, which forced one design change (1.3) and produced most of section 3.</p>
+  <p>Meridian is a composite partner profile built for this exercise: about 40,000 scanned claims documents a month; six payment-critical fields (claim id, policy number, claimant, provider, date of service, total amount); 97% field accuracy; under $0.02 a document; and flags instead of guesses, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness on a synthetic corpus of 80 documents, labels written first and pages rendered from them, so the failure distribution is my guess at theirs. Everything ran on the free tier, which forced one design change (1.3) and produced most of section 3.</p>
 
   <h2>1. Architecture</h2>
   <h3>1.1 Flow</h3>
-  <p>Labels (authored first, seeded) → rendered pages (five strata, scanner noise and JPEG loss on every page) → extractor (Gemini structured output against a response schema, one nullable value and one confidence per field) → response cache (every raw response, keyed on model, prompt version, schema and image bytes, committed to the repo) → harness (scores the cache offline, never calls the API).</p>
-  <p>Extraction and scoring are separate programs on purpose. Thresholds are chosen from cached responses, so sweeps cost no calls, tuning is reproducible against a fixed set of responses, and the demo replays offline with identical numbers. Both programs recompute the cache key on read, so a regenerated page can't be scored against an old response. That failure mode doesn't crash; it produces plausible wrong numbers, which is why it gets a check.</p>
+  <p>Labels (authored first, seeded) → rendered pages (five strata, scanner noise and JPEG loss on every page) → extractor (Gemini structured output against a response schema, one nullable value and one confidence per field) → response cache (every raw response, keyed on model, prompt version, schema and image bytes, committed) → harness (scores the cache offline, never calls the API).</p>
+  <p>Extraction and scoring are separate programs. Thresholds are chosen from cached responses, so sweeps cost no calls, tuning is reproducible, and the demo replays offline with identical numbers. Both programs recompute the cache key on read: a regenerated page scored against an old response would give plausible wrong numbers, so it is refused.</p>
 
   <h3>1.2 Configurations</h3>
-  <p>Four, all resolved from the same cached calls.</p>
   <ul>
-    <li><code>primary_solo</code>: one reader, <code>gemini-3.5-flash-lite</code>. Abstain on low self-reported confidence.</li>
-    <li><code>verifier_solo</code>: the second reader, <code>gemini-3.1-flash-lite</code>, on its own. Same rule.</li>
-    <li><code>cascade</code>: the primary reads; the page goes to the verifier when the primary's confidence is low. The standard cost saver.</li>
-    <li><code>double_key</code>: both readers on every page; a field goes to review when their normalized values disagree. This is the automated version of the double-keying control Meridian's processors already run with people.</li>
+    <li><code>primary_solo</code>: one reader, <code>gemini-3.5-flash-lite</code>; abstain on low self-reported confidence.</li>
+    <li><code>verifier_solo</code>: the second reader, <code>gemini-3.1-flash-lite</code>, on its own; same rule.</li>
+    <li><code>cascade</code>: the primary reads; the page goes to the verifier when the primary's confidence is low.</li>
+    <li><code>double_key</code>: both readers on every page; a field goes to review when their normalized values disagree. This automates the double-keying control Meridian's processors already run with people.</li>
   </ul>
 
   <h3>1.3 Trade-offs</h3>
@@ -99,26 +97,24 @@
     <table>
       <thead><tr><th>Decision</th><th>What I did</th><th>What I didn't</th><th>Why</th></tr></thead>
       <tbody>
-        <tr><td>Ground truth</td><td>Wrote labels first and rendered pages from them</td><td>Label model output, or hand-label generated pages</td><td>Labels that come from a model measure agreement with the model, not accuracy</td></tr>
-        <tr><td>Output contract</td><td>Response schema with a nullable value and a confidence per field</td><td>Prompt and parse</td><td>"Absent" is a real answer rather than a parse failure, so hallucinated fields can be counted</td></tr>
-        <tr><td>Uncertainty signal</td><td>Disagreement between two readers</td><td>Self-reported confidence; log probabilities; self-consistency</td><td>Confidence is near-constant. Log probabilities aren't available on this API (F-006). Five samples at temperature 1 came back identical, 5 of 5 (F-007)</td></tr>
-        <tr><td>Second reader</td><td>An independent lite-class model</td><td>A Flash-tier model</td><td>Free-tier quota stopped each Flash model I ran toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability. The cost of this choice is that the cascade has nothing stronger to escalate to</td></tr>
+        <tr><td>Ground truth</td><td>Wrote labels first, rendered pages from them</td><td>Label model output, or hand-label generated pages</td><td>Labels taken from a model would only show whether two model outputs agree</td></tr>
+        <tr><td>Output contract</td><td>Response schema: nullable value and confidence per field</td><td>Prompt and parse</td><td>An absent field is recorded as an answer, so hallucinated fields can be counted</td></tr>
+        <tr><td>Uncertainty signal</td><td>Disagreement between two readers</td><td>Self-reported confidence; log probabilities; self-consistency</td><td>Confidence is near-constant (2.3). Log probabilities aren't available (F-006). Five samples at temperature 1 came back identical (F-007)</td></tr>
+        <tr><td>Second reader</td><td>An independent lite-class model</td><td>A Flash-tier model</td><td>Free-tier quota stopped each Flash model I ran toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability. The cost: the cascade has nothing stronger to escalate to</td></tr>
         <tr><td>Scoring</td><td>From the committed cache</td><td>Live calls</td><td>Free sweeps, reproducible tuning, an offline demo</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="small">Not built, on purpose: auth, containers, CI, a database, a job queue, a UI, retry libraries. The brief was architecture and evaluation, not production hardening.</p>
+  <p class="small">Not built, on purpose: auth, containers, CI, a database, a job queue, a UI, retry libraries.</p>
 
   <h2>2. Evaluation</h2>
   <h3>2.1 Definitions</h3>
   <ul>
-    <li>Unit: the field-instance, one field on one document. Meridian pays per field.</li>
-    <li>Exact and normalized match are both reported and never merged. Normalization takes money to cents, dates to ISO, names to case- and punctuation-folded form with token order kept.</li>
-    <li>Three error kinds, never pooled, because they cost different things: wrong value (a wrong payout), missed field (a rekey), hallucinated field (a payment on a page that isn't a claim).</li>
-    <li>Accuracy is never reported without coverage; a system that abstains on everything scores 100%. Abstention precision uses the recorded counterfactual for each flag, meaning what would have gone out without it.</li>
-    <li>Calibration: ten confidence bins and expected calibration error, flagged degenerate when one bin holds everything. 95% Wilson intervals on every proportion, because n is small and the rates sit near 1.0, where the normal approximation breaks.</li>
-    <li>Configurations are compared paired, on the same documents: McNemar's exact test on discordant instances, plus a bootstrap that resamples documents, since six fields on one page share one scan.</li>
-    <li>Reconciliation: does the itemisation sum to the stated total. Field reading is transcription; this is the adjudication step under it, and it's where a processor actually loses money.</li>
+    <li>Unit: the field-instance, one field on one document, because Meridian pays per field. Exact and normalized match are both reported and never merged.</li>
+    <li>Three error kinds, never pooled: wrong value (a wrong payout), missed field (a rekey), hallucinated field (a payment on a page that isn't a claim). Accuracy is never reported without coverage; abstention precision uses the recorded counterfactual for each flag.</li>
+    <li>Calibration in ten confidence bins with expected calibration error, flagged degenerate when fewer than two bins hold enough predictions to estimate from. Wilson 95% intervals on every proportion.</li>
+    <li>Configurations are compared paired on the same documents: McNemar's exact test on discordant instances, plus a bootstrap that resamples documents.</li>
+    <li>Reconciliation: does the itemisation sum to the stated total. This is the adjudication step under the transcription, where a processor loses money.</li>
   </ul>
 
   <h3>2.2 Protocol</h3>
@@ -131,61 +127,60 @@
       <tbody>
         <tr><td><code>primary_solo</code></td><td class="n">99.2% [97.0–99.8]</td><td class="n">100%</td><td class="n">2 / 0 / 0</td><td class="n">$0.00132</td><td class="n">2.2 s</td></tr>
         <tr><td><code>verifier_solo</code></td><td class="n">97.1% [94.1–98.6]</td><td class="n">100%</td><td class="n">2 / 0 / 5</td><td class="n">$0.00089</td><td class="n">3.2 s</td></tr>
-        <tr><td><code>cascade</code></td><td class="n">99.2% [97.0–99.8]</td><td class="n">100%</td><td class="n">2 / 0 / 0</td><td class="n">$0.00132</td><td class="n">2.2 s</td></tr>
         <tr><td><code>double_key</code></td><td class="n">100% [98.4–100]</td><td class="n">96.7%</td><td class="n">0 / 0 / 0</td><td class="n">$0.00221</td><td class="n">5.6 s</td></tr>
       </tbody>
     </table>
   </div>
-  <p>Cascade. Tuning set the escalation threshold to zero, so on test the cascade is just the primary. On tune, no threshold raised accuracy, and escalating every page lowered it from 98.75% to 97.92% at 1.7 times the cost, because the second reader isn't stronger than the first. The primary's confidence is 1.0 on 214 of 240 instances. Its two test errors were its two lowest confidences (0.90 and 0.95, both on one degraded page), but with five errors across both splits I can't say whether that is signal. What I can say is that a cascade needs a stronger second reader before the trigger matters.</p>
-  <p>Double-keying. On its own, the verifier invented five values on out-of-distribution pages, for example a utility bill's "Amount Due" read as a claim total. Under double-keying none of them reached output. The primary happened to be right on those pages, so here the flags were review cost; if the roles had been reversed they would have been saved payouts. On <code>total_amount</code> specifically: primary alone 97.5% [87.1–99.6], double-keyed 100% [90.8–100].</p>
+  <p>Cascade. Not shown separately: tuning set its escalation threshold to zero, so on test it is the primary alone. On tune, no threshold raised accuracy, and escalating every page lowered it from 98.75% to 97.92% at 1.7 times the cost, because the second reader isn't stronger than the first. The primary's confidence is 1.0 on 214 of 240 instances; its two test errors were its two lowest confidences (0.90 and 0.95, both on one degraded page), but with five errors across both splits I can't say whether that is signal. A cascade needs a stronger second reader before the trigger matters.</p>
+  <p>Double-keying. On its own, the verifier invented five values on out-of-distribution pages, for example a utility bill's "Amount Due" read as a claim total. Under double-keying none of them reached output. The primary happened to be right on those pages, so here the flags were review cost; with the roles reversed they would have been saved payouts. On <code>total_amount</code>: primary alone 97.5% [87.1–99.6], double-keyed 100% [90.8–100].</p>
   <p>Reconciliation. 34 test documents have an itemisation and a stated total; 12 are inconsistent by construction. The primary caught all 12 [75.8–100]. The verifier missed one, a claim that would have been paid. The models' arithmetic was right on every document; every verdict failure traces to a misread digit on a degraded scan (line items read correctly 91.2% [77.0–97.0]).</p>
-  <p>Caveats. 240 field-instances and 8 flags are small numbers. This corpus has one complete run; three runs on the previous corpus moved accuracy 0.4 points, so read any single figure as ±0.4. Calibration can't be assessed with 239 of 240 predictions in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]) and the one where double-keying's coverage drops most (93.8%, and 79.2% on out-of-distribution pages).</p>
+  <p>Caveats. 240 field-instances and 8 flags are small numbers. This corpus has one complete run; three runs on the previous corpus moved accuracy 0.4 points, so read any single figure as ±0.4. Calibration can't be assessed with 239 of 240 predictions in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]) and where double-keying's coverage drops most (93.8%; 79.2% on out-of-distribution pages).</p>
 
   <h3>2.4 Monitoring in production</h3>
-  <p>The pipeline already emits, per document: reader disagreement by field and stratum; the adjudicator's ruling on each flagged item, which turns abstention precision into a running number; cost from usage metadata; p50 and p95 latency with the 429 and 503 rate; and the model version string on each response. What I would set up with Meridian, subject to their confirmation:</p>
+  <p>Per document, the pipeline already emits reader disagreement by field and stratum, the adjudicator's ruling on each flagged item (abstention precision as a running number), cost from usage metadata, latency and error rates, and the model version string. What I would set up with Meridian, subject to their confirmation:</p>
   <ul>
-    <li>Daily: disagreement rate against its baseline of 3.3% of fields. Above twice baseline, page someone; either the input mix moved or a model changed.</li>
-    <li>Weekly: re-score a 200-document sample with this harness unchanged, using adjudicators' final values as labels. Human-check 2% of agreed items, because two readers agreeing on a wrong value is the failure the system can't see on its own.</li>
-    <li>Kill switch: if accuracy on covered (lower bound) drops below 97% on the weekly sample, auto-pay stops and everything goes to the queue until the cause is found.</li>
-    <li>Model version: the model name is an alias. Any change in the returned version re-runs the harness on the committed corpus before the next batch.</li>
+    <li>Daily: disagreement rate against its 3.3% baseline. Above twice baseline, page someone; the input mix moved or a model changed.</li>
+    <li>Weekly: re-score a 200-document sample with this harness unchanged, adjudicators' final values as labels. Human-check 2% of agreed items, since two readers agreeing on a wrong value is the failure the system can't see.</li>
+    <li>Kill switch: accuracy on covered (lower bound) below 97% on the weekly sample stops auto-pay until the cause is found.</li>
+    <li>Model version: the model name is an alias. A change in the returned version re-runs the harness on the committed corpus before the next batch.</li>
   </ul>
-  <p>Throughput is bound by quota, not by the client: about 8 documents a minute from 1 to 8 workers and 12% slower at 16, behind one shared rate gate. 40,000 documents is about 83 hours of continuous running with no headroom. The Batch API is the right mode for overnight bulk at half the price, but <code>batches.create</code> failed a precondition on this tier (F-011), so I am not claiming a batch cost.</p>
+  <p>The throughput limit is account quota: about 8 documents a minute from 1 to 8 workers and 12% slower at 16, so 40,000 documents is about 83 hours of continuous running. The Batch API is the right mode for overnight bulk at half the price, but <code>batches.create</code> failed a precondition on this tier (F-011), so I am not claiming a batch cost.</p>
 
   <h3>2.5 Pilot gates</h3>
-  <p>For the 500-document run, proceed with double-keying if: accuracy on covered, lower bound, is at or above 97%; coverage is at or above 90% (to be set against the exception queue's capacity); and at least one flag in three is a real error. If the last gate fails, the second reader is buying insurance the numbers don't show, and the primary alone with a sampled audit is the honest alternative.</p>
+  <p>For the 500-document run, proceed with double-keying if accuracy on covered (lower bound) is at or above 97%, coverage is at or above 90% (to be set against the exception queue's capacity), and at least one flag in three is a real error. If the last gate fails, the primary alone with a sampled audit is the honest alternative.</p>
 
   <h2>3. Friction log and feedback for GDM</h2>
-  <p>I logged 11 items as they happened, with the error text as it appeared; the full log is <code>FRICTION.md</code> in the repo. The six that matter to GDM, in order of how much they would change what a partner can build:</p>
+  <p>Eleven items logged as they happened, with the error text as it appeared (<code>FRICTION.md</code>): ten concern the API, SDK or documentation, one is local environment. The six that matter to GDM, in order of how much they would change what a partner can build:</p>
   <div class="tw">
     <table>
       <thead><tr><th>Item</th><th>What happened</th><th>Impact on this build</th><th>Ask</th><th>Owner</th></tr></thead>
       <tbody>
         <tr>
           <td>F-007, F-006</td>
-          <td>Self-reported confidence is near-constant: 1.0 on 240 of 240 instances for one reader and 214 of 240 for the other, after a schema instruction to use the full range. Log probabilities aren't available. Five samples at temperature 1 came back identical.</td>
-          <td>No usable uncertainty signal from one reader. Abstention needed a second model at 1.7 times the cost.</td>
-          <td>A calibrated confidence primitive for structured output: log probabilities on schema fields, or an uncertainty scalar the model doesn't have to introspect to produce. Any partner with a "know when you're unsure" requirement is blocked on this.</td>
+          <td>Self-reported confidence is near-constant: 1.0 on 240 of 240 instances for one reader and 214 of 240 for the other, after a schema instruction to use the full range. Log probabilities aren't available; five samples at temperature 1 came back identical.</td>
+          <td>No usable uncertainty signal from one reader; abstention needed a second model at 1.7 times the cost.</td>
+          <td>A calibrated confidence output for structured extraction: log probabilities on schema fields, or an uncertainty scalar the model doesn't produce by introspection. Today a second model fills this gap at extra cost.</td>
           <td>Core modeling</td>
         </tr>
         <tr>
           <td>F-010</td>
           <td>Free-tier quota stopped each Flash model I ran toward evaluation volume after about 20 successful requests, then returned 429 in 0.2 s. Lite-tier models were unaffected.</td>
-          <td>The capability-tier comparison never ran. About 90 minutes lost across four model migrations.</td>
-          <td>A per-project evaluation allowance of a few thousand requests, or per-project daily limits instead of per-model. The whole evaluation costs about a dollar at list price. This is the tier partners use to decide whether Gemini fits, and it can't support an evaluation.</td>
+          <td>The capability-tier comparison never ran; about 90 minutes lost across four model migrations.</td>
+          <td>A per-project evaluation allowance of a few thousand requests, or per-project daily limits instead of per-model. The whole evaluation costs about a dollar at list price.</td>
           <td>Product</td>
         </tr>
         <tr>
           <td>F-008, F-009</td>
-          <td>One 429 message covers two conditions, an exhausted entitlement and a rate limit. Per-model limits are no longer in the rate-limit documentation.</td>
-          <td>Pacing had to be found by backing off until calls succeeded. A client can't tell whether to wait or stop.</td>
-          <td>Distinguish the two conditions in the error body. Return the limit and reset time in headers.</td>
+          <td>One 429 message covers an exhausted entitlement and a rate limit. Per-model limits are no longer in the rate-limit documentation.</td>
+          <td>Pacing had to be found by backing off until calls succeeded.</td>
+          <td>Distinguish the two conditions in the error body; return the limit and reset time in headers.</td>
           <td>API surface, docs</td>
         </tr>
         <tr>
           <td>F-011</td>
           <td><code>batches.create</code> returns 400 FAILED_PRECONDITION without naming the precondition. <code>batches.list</code> works.</td>
-          <td>Batch mode is implemented against the SDK contract and was never submitted. I'm not claiming the 50% batch price.</td>
-          <td>Name the precondition in the error: billing tier, model, request size.</td>
+          <td>Batch mode implemented against the SDK contract, never submitted.</td>
+          <td>Name the precondition in the error.</td>
           <td>API surface</td>
         </tr>
         <tr>
@@ -197,9 +192,9 @@
         </tr>
         <tr>
           <td>Context caching</td>
-          <td><code>cached_tokens</code> was 0 across 200 calls. The page image comes before the shared prompt in the request, so no two requests share a prefix, and the prompt is about 350 tokens against a 4,096-token minimum, out of about 1,400 input tokens a document.</td>
-          <td>No caching saving measured. Prompt-first ordering is the thing to try; it changes every cache key, so I left it until after scoring.</td>
-          <td>Document part ordering for multimodal caching. A lower minimum for short structured-output prompts.</td>
+          <td><code>cached_tokens</code> was 0 across 200 calls: the page image precedes the shared prompt, so no two requests share a prefix, and the prompt is about 350 tokens against a 4,096-token minimum.</td>
+          <td>No saving measured. Prompt-first ordering is the thing to try; it changes every cache key, so I left it until after scoring.</td>
+          <td>Document part ordering for multimodal caching; a lower minimum for short prompts.</td>
           <td>Docs, product</td>
         </tr>
       </tbody>
@@ -208,12 +203,12 @@
 
   <h2>4. Next steps</h2>
   <ol>
-    <li>Ingest about 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness unchanged. The instrumentation exists; it needs harder inputs.</li>
-    <li>Re-run the cascade with a Flash-tier second reader once quota allows. The negative result is about these two readers, not the pattern.</li>
-    <li>Re-run calibration the day a confidence primitive exists. Section 2 is ready for it.</li>
+    <li>Ingest about 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness unchanged.</li>
+    <li>Re-run the cascade with a Flash-tier second reader once quota allows; the negative result applies to these two readers.</li>
+    <li>Re-run calibration when a confidence output exists.</li>
   </ol>
 
-  <p class="foot">Code written with Claude (Opus 5); this briefing drafted with Claude and Gemini. Every figure in it is in <code>results/results.json</code> and is reproduced by <code>meridian-evaluate</code> from the committed response cache.</p>
+  <p class="foot">Code written with Claude (Opus 5); this briefing drafted with Claude and Gemini.</p>
 </div>
 
 </body>

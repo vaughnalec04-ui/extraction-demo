@@ -6,7 +6,7 @@ The accuracy bar is met. The cost bar is met. The third one, knowing when it's w
 
 Quick setup so you know what you're looking at. The partner is Meridian Claims Group. It's a composite I put together for this exercise, but the numbers are realistic for a mid-size claims processor. I wrote the code with Claude Opus 5 as a pair. The documents were drafted with Claude and Gemini. Every design decision in here is mine, and I'll show you the ones that matter.
 
-Two more things up front. Everything ran on the free Gemini tier, on purpose, and that changed the design. I'll come back to it. And on time: the implementation took about [your hours] hours. The rest of the calendar was waiting on quota, generating documents, and writing.
+Two more things up front. Everything ran on the free Gemini tier, on purpose, and that changed the design. I'll come back to it. And on time: the implementation took about three and a half hours, with agents running alongside me, spread over a couple of sittings. It would have been shorter in one. The rest of the calendar was waiting on quota, generating documents, and writing.
 
 ## 2. The problem (0:50 to 1:40)
 

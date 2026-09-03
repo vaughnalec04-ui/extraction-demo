@@ -56,7 +56,18 @@
   td.n, th.n { text-align: right; white-space: nowrap; }
   .small { font-size: 13.5px; color: var(--muted); }
   .foot { margin-top: 32px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 13.5px; color: var(--muted); }
-  @media print { .memo { max-width: none; padding: 0; } a { color: inherit; text-decoration: none; } }
+  @media print {
+    @page { size: A4; margin: 16mm 18mm; }
+    html, body { background: #fff; }
+    body { font-size: 12.5px; line-height: 1.42; }
+    .memo { max-width: none; padding: 0; }
+    h1 { font-size: 18px; } h2 { font-size: 14.5px; margin-top: 18px; } h3 { font-size: 13px; margin-top: 12px; }
+    .hdr, .bluf { font-size: 12px; }
+    table { font-size: 11px; } th, td { padding: 4px 6px; }
+    table, .bluf, .hdr { break-inside: avoid; page-break-inside: avoid; }
+    h2, h3 { break-after: avoid; page-break-after: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
 </style>
 </head>
 <body>

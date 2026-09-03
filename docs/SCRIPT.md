@@ -1,6 +1,6 @@
 # Meridian demo script, by tab
 
-Talk from it; the numbers are exact, the rest is yours. About 15 minutes 10 at a natural pace. seconds
+Talk from it; the numbers are exact, the rest is yours.
 
 ## Before you record
 
@@ -24,12 +24,12 @@ Browser tabs, open in this order:
 
 Notifications off. Close every other window. Put this script on a second screen or phone.
 
-## TAB 1: Briefing (0:00 to 5:41)
+## TAB 1: Briefing
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
 Do: Start at the top of the page. Look at the camera for the first three sentences.
 
-The accuracy bar is met. The cost bar is met. The third one, knowing when it's wrong, isn't. That's what the next fifteen minutes are about, and I'll show you the numbers behind each of those.
+The accuracy bar is met. The cost bar is met. The third one, knowing when it's wrong, isn't. That's what I'm going to show you, with the numbers behind each of those.
 
 What I built is a small pipeline that reads six fields off scanned claims documents with Gemini, plus the part I actually care about, which is a harness that tells you whether the pipeline knows when it's wrong. The partner, Meridian Claims Group, is made up, but the situation isn't: someone paying out claims from a scanner, who cares a lot more about a wrong payment than about a page going to a human. So the whole build is organized around that. Getting the fields out is the easy half.
 
@@ -55,7 +55,7 @@ Now, the free tier, because this is where the plan changed. The very first thing
 
 Honestly, swapping to a second lite model felt like a compromise at first. The design was a cheap model with a stronger one behind it, and the stronger one was the part I'd lost. I remember asking whether I should just start over. What changed my mind was noticing that the interesting signal was never whether the second model was smarter. It was whether two independent readers agreed. For that you want two models that fail differently, and a second lite model from a different generation gives you that. So I kept everything and swapped the second reader. The cost is that the cascade has nothing stronger to escalate to, and you'll see that in the results.
 
-## TERMINAL: Live run (5:41 to 6:58)
+## TERMINAL: Live run
 
 Do: Have ready before recording: meridian-evaluate typed and not run, and the no-key echo already shown. Now press return. Scroll to the frontier table, then to the paired table right under it.
 
@@ -65,28 +65,30 @@ That's the whole evaluation. About a quarter of a second, straight from the cach
 
 Double-keying gets a hundred percent on the fields the two readers agree on, which is ninety-six point seven percent of them, at two tenths of a cent. Looks better. Now look at the paired table underneath. Same forty documents, and the two systems differ on two fields out of two hundred forty. P is point five. What this data actually shows is the cost: three point three points of coverage go to review. The accuracy gain is inside the noise. I'd rather tell you that than sell you the bigger number.
 
-## TAB 3: Degraded page (6:58 to 8:01)
+## TAB 3: Degraded page
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/degr-012.jpg
 Do: Point at the total, then at the policy number.
 
 Two pages surprised me, for opposite reasons. This is a degraded repair estimate. The total is four thousand eight hundred and four dollars. The primary reader read forty-one thousand eight hundred and four. One extra digit on a faded scan, and that's exactly the mistake that pays out. What got me was that its confidence on that field was point nine, the lowest it gave anywhere, so the model half knew. It got the policy number wrong too, at point nine five, and those are its only two mistakes on the whole test split, both on this one page. The second reader had the total right and the policy number wrong in a different way. So under double-keying both fields went to review. On a real claim that's a thirty-seven thousand dollar overpayment that didn't go out.
 
-## TAB 4: Utility bill (8:01 to 8:54)
+On the total field specifically, the payment field, the primary alone gets ninety-seven and a half percent. Double-keyed, it's a hundred. Small sample, wide intervals, but that's the field where the money is.
+
+## TAB 4: Utility bill
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/data/docs/ood-006.jpg
 Do: Point at the Amount Due line.
 
 This one's a utility bill. It's in the corpus because it isn't a claim, so the right answer for every field is "nothing here." The primary said nothing here on all six. The second reader, working alone, simply made things up. The account number became a policy number. The billing period became a date of service. The utility became the provider. And this amount due, a hundred sixty-eight dollars forty-four, became a claim total. All at confidence one point oh. Under double-keying none of that got out, because the readers disagreed. On this sample the primary happened to be right, so those flags cost a review each. Flip the roles and they're saved payouts.
 
-## TAB 5: The double-key rule, configs.py lines 86 to 96 (8:54 to 9:36)
+## TAB 5: The double-key rule, configs.py lines 86 to 96
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo/blob/main/src/meridian/harness/configs.py#L86-L96
 Do: The highlighted lines are the double-key branch.
 
 Here's the whole idea in ten lines. For each field, take the primary's value and the verifier's value. Normalize both, so a dollar sign or a comma doesn't count as a disagreement. Compare. If they agree, the primary's value goes out. If they don't, the field is marked abstained and goes to the queue. We keep the lower of the two confidences for the record, but nothing depends on it. That's the point. This configuration never asks either model how sure it is.
 
-## TERMINAL, then TAB 1: What we found (9:36 to 11:39)
+## TERMINAL, then TAB 1: What we found
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
 Do: In the terminal, scroll to the primary_solo block and the line that says DEGENERATE. Then switch to Tab 1 and scroll to the Cascade paragraph in section 2.3.
@@ -99,7 +101,11 @@ Second, the cascade. On the tuning split, no escalation threshold improved accur
 
 Third, the abstention signal itself. Eight flags in two hundred forty fields. Two were real errors. That's twenty-five percent precision, and the interval runs from seven to fifty-nine. So I can't tell you yet whether double-keying pays for itself. What would settle it is about five hundred of Meridian's real documents, weighted toward the exceptions their contractors already flag, through this harness unchanged. The pass-fail gates are in the briefing.
 
-## TAB 2: GitHub repo (11:39 to 13:01)
+Do: Still on Tab 1, scroll down one paragraph to Reconciliation.
+
+And a fourth thing, which is the finding I'd most want a claims person to hear. Reading the fields is transcription. The job underneath it is adjudication: do the line items actually add up to the total the provider wrote down? Thirty-four of the forty test documents have an itemization and a stated total, and twelve of them don't add up, by construction. The primary caught all twelve. The verifier missed one, and that one is a claim that would have been paid. The part that went against my own hypothesis is the arithmetic. I'd assumed the model would get the sums wrong and I'd have Python check them. The model's arithmetic was right on every single document. Every verdict failure traces back to a misread digit on a degraded scan; line items were read correctly about ninety-one percent of the time. So the rule of thumb that you never let a model do arithmetic didn't apply here. The adding was free and correct. The reading is the problem, and the reading is an image-quality problem.
+
+## TAB 2: GitHub repo
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo
 Do: Scroll the README to the dataset table with the five strata and stop there.
@@ -108,7 +114,7 @@ I built it this way because most of it turns into a benchmark for extraction wit
 
 The findings tell you what a benchmark like that has to contain. Out-of-distribution pages that bait a hallucination, because that's where the two readers split. Degraded scans, because that's the only stratum with errors in it. And the thing you report should be the whole cost-accuracy frontier rather than one number, because Meridian's decision is a trade between coverage and review load. What's missing is real documents. The synthetic failure distribution is my guess at theirs.
 
-## TAB 6: Friction log (13:01 to 14:28)
+## TAB 6: Friction log
 
 Link: https://github.com/vaughnalec04-ui/extraction-demo/blob/main/FRICTION.md#f-007-self-reported-confidence-is-a-constant-self-consistency-too
 Do: It opens at F-007. Read the confidence counts, then scroll down two entries to F-010.
@@ -119,7 +125,19 @@ If I get a second one, it's the free tier, F-010. It stopped every Flash model I
 
 The log has eleven entries, written as things happened, with the error text as it appeared. Two smaller ones are worth a sentence. The same four-twenty-nine message covers a rate limit and an exhausted entitlement, so a client can't tell whether to wait or stop. And batch create returns a failed precondition without saying which one, so I never got to measure the half-price batch mode.
 
-## TAB 1: Briefing, section 4 (14:28 to 15:10)
+## TAB 1: Briefing, sections 2.4 and 2.5
+
+Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
+
+Do: Scroll to 2.4 Monitoring in production, then 2.5 Pilot gates.
+
+One more thing before I wrap up, because a partner would ask it: what would I watch if this went live tomorrow? The pipeline already gives you the signals. Every document produces a disagreement rate between the two readers, by field and by stratum. Every flagged item comes back from the adjudicator as right or wrong, which turns abstention precision into a live number instead of a one-time estimate. And every response carries a cost, a latency, and the model version string.
+
+So the plan I'd propose to Meridian is this. Daily, compare the disagreement rate to its baseline, which is three point three percent of fields here. If it goes above double that, page someone, because either the documents changed or a model did. Weekly, take two hundred documents, run them through this same harness with the adjudicators' final answers as the labels, and check two percent of the items the readers agreed on by hand, because two readers agreeing on a wrong value is the one failure this system can't see on its own. If the lower bound on accuracy drops under ninety-seven on that weekly sample, auto-pay stops until someone finds out why. And since the model name is an alias, any change in the version string coming back from the API means the harness runs on the committed corpus again before the next batch goes out.
+
+For the five-hundred-document pilot, the gates are written down. I'd go ahead with double-keying if the lower bound on accuracy is at or above ninety-seven, coverage is at or above ninety, and at least one flag in three turns out to be a real error. If that last gate fails, the honest answer is the primary alone with a sampled audit, not a second model.
+
+## TAB 1: Briefing, section 4
 
 Link: file:///Users/vaughnnahapetian_llm/extraction-demo/docs/BRIEFING.html
 Do: Scroll to section 4, Next steps. Back to the camera for the last two sentences.

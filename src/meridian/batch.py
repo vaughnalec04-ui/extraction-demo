@@ -18,7 +18,7 @@ from typing import Sequence
 
 from meridian.client import PROMPT, Client, cost_usd
 from meridian.schema import response_schema
-from meridian.settings import DATA, RESULTS
+from meridian.settings import (DATA, PRIMARY, RESULTS)
 
 
 BATCH_STATE_FILE = os.path.join(RESULTS, "batch_job.json")
@@ -35,10 +35,10 @@ def submit_batch(model: str, doc_ids: Sequence[str], display_name: str = "meridi
     schema = response_schema()
     requests = []
     for d in doc_ids:
-        png, _ = client.image(d)
+        image_bytes, _ = client.image(d)
         requests.append({
             "contents": [{"parts": [
-                {"inline_data": {"mime_type": "image/jpeg", "data": png}},
+                {"inline_data": {"mime_type": "image/jpeg", "data": image_bytes}},
                 {"text": PROMPT},
             ]}],
             "config": {
@@ -124,7 +124,7 @@ def poll_batch(budget_s: float = 600.0, interval_s: float = 20.0) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description="Submit or poll a batch job.")
     ap.add_argument("--mode", required=True, choices=["submit", "poll"])
-    ap.add_argument("--model", default="gemini-3.5-flash-lite")
+    ap.add_argument("--model", default=PRIMARY)
     ap.add_argument("--split", default="test", choices=["tune", "test"])
     ap.add_argument("--budget", type=float, default=600.0)
     args = ap.parse_args()

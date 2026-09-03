@@ -18,6 +18,10 @@ from meridian.schema import FIELD_ORDER, response_schema
 from meridian.settings import (CACHE, CONFIG, DOCS, MAX_INTERVAL_S, MIN_INTERVAL_S,
                                PROMPT_VERSION, RATE_LIMIT_ATTEMPTS)
 
+# Names the six payment fields; the schema also requires the reconciliation
+# block (line items, stated total, the model's own sum and verdict). Changing
+# this text changes what the cache holds: bump PROMPT_VERSION. A test pins the
+# hash.
 PROMPT = """You are extracting fields from a document submitted to Meridian Claims Group for payment processing.
 
 Return exactly the six fields in the schema. For each field give the value and your confidence that the value is exactly correct.
@@ -121,7 +125,7 @@ class Client:
             self._genai = genai.Client(api_key=key)
         return self._genai
 
-    def call(self, model: str, png: bytes):
+    def call(self, model: str, image_bytes: bytes):
         """One structured-output request. Returns (response, usage, latency_s).
 
         The only place the request is built. extract() adds caching and pacing
@@ -132,7 +136,7 @@ class Client:
         started = time.time()
         resp = self.genai.models.generate_content(
             model=model,
-            contents=[types.Part.from_bytes(data=png, mime_type="image/jpeg"), PROMPT],
+            contents=[types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"), PROMPT],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
                 response_schema=self._schema,
@@ -163,7 +167,7 @@ class Client:
         documents.
         """
         path = cache_path(model, split, run, doc_id)
-        png, image_sha = self.image(doc_id)
+        image_bytes, image_sha = self.image(doc_id)
         expected = cache_key(model, doc_id, run, image_sha, self._schema_sha)
 
         if os.path.exists(path):
@@ -202,7 +206,7 @@ class Client:
             try:
                 # Latency covers the successful attempt only; back-off sleeps
                 # are not model latency.
-                resp, usage, record["latency_s"] = self.call(model, png)
+                resp, usage, record["latency_s"] = self.call(model, image_bytes)
                 usage.pop("cached_tokens", None)      # keep the record shape stable
                 record["usage"] = usage
                 record["response"] = self._parse(resp.text)

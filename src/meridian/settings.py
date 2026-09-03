@@ -16,8 +16,9 @@ CACHE = os.path.join(ROOT, "cache")
 CONFIG = os.path.join(ROOT, "config")
 RESULTS = os.path.join(ROOT, "results")
 
-# The two readers. Both lite-class: free-tier quota on every Flash-tier model
-# runs out after about twenty requests a day (FRICTION F-010).
+# The two readers. Both lite-class: free-tier quota on each Flash model run
+# toward evaluation volume ran out after about twenty requests and did not
+# recover during the build (FRICTION F-010).
 PRIMARY = "gemini-3.5-flash-lite"
 VERIFIER = "gemini-3.1-flash-lite"
 

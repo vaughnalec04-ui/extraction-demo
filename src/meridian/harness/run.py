@@ -28,9 +28,10 @@ from meridian.settings import (
     CACHE,
     CONFIG,
     DATA,
-    DOC_EXT,
     DOCS,
+    DOC_EXT,
     MERIDIAN_BAR,
+    MONTHLY_VOLUME,
     PRIMARY,
     RESULTS,
     VERIFIER)
@@ -143,7 +144,14 @@ def score(config: str, split: str, run: int, tau_abstain: float,
             src_rec = verifier.get(d)
         else:
             src_rec = primary[d]
-        recon_rows.append(metrics.score_reconciliation(lab, (src_rec or {}).get("response")))
+        row = metrics.score_reconciliation(lab, (src_rec or {}).get("response"))
+        if config == "double_key" and resolved["total_amount"]["abstained"] and row.get("applicable"):
+            # The readers disagreed on the total, so the field went to review.
+            # The verdict on that total goes with it rather than being scored
+            # from one reader's value.
+            row["applicable"] = False
+            row["routed_to_review"] = True
+        recon_rows.append(row)
 
         for f in FIELD_ORDER:
             cell = resolved[f]
@@ -170,7 +178,7 @@ def score(config: str, split: str, run: int, tau_abstain: float,
         "cost": {
             "mean_usd_per_doc": round(statistics.mean(costs), 8),
             "total_usd": round(sum(costs), 6),
-            "monthly_usd_at_40k_docs": round(statistics.mean(costs) * 40000, 2),
+            "monthly_usd_at_40k_docs": round(statistics.mean(costs) * MONTHLY_VOLUME, 2),
         },
         "latency": {
             "p50_s": round(_pct(latencies, 50), 3),

@@ -277,7 +277,8 @@ def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
     live = [r for r in rows if r.get("applicable")]
     n = len(live)
     if not n:
-        return {"n": 0, "applicable": False}
+        return {"n": 0, "applicable": False,
+                "routed_to_review": sum(1 for r in rows if r.get("routed_to_review"))}
 
     def verdict_block(key: str) -> Dict[str, object]:
         outcomes = [r[key] for r in live]
@@ -295,6 +296,7 @@ def summarize_reconciliation(rows: Sequence[dict]) -> Dict[str, object]:
 
     return {
         "n": n,
+        "routed_to_review": sum(1 for r in rows if r.get("routed_to_review")),
         "n_inconsistent_claims": len(inconsistent),
         "model_verdict": verdict_block("model_outcome"),
         "code_verdict": verdict_block("code_outcome"),

@@ -18,7 +18,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Optional, Sequence
 
 from meridian.client import Client, cost_usd, load_pricing
-from meridian.settings import DATA, MONTHLY_VOLUME, RESULTS
+from meridian.settings import (DATA, MONTHLY_VOLUME, PRIMARY, RESULTS)
 
 
 class RateGate:
@@ -68,7 +68,7 @@ def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
     The request is Client.call(), the same one the cached extractor uses, so
     throughput is measured on the production request.
     """
-    png, _ = client.image(doc_id)
+    image_bytes, _ = client.image(doc_id)
     attempts = 0
     started_total = time.monotonic()
 
@@ -77,7 +77,7 @@ def _one_call(client: Client, model: str, doc_id: str, gate: RateGate) -> dict:
         gate.acquire()
         t0 = time.monotonic()
         try:
-            _, usage, service_s = client.call(model, png)
+            _, usage, service_s = client.call(model, image_bytes)
             gate.relax()
             # usage includes cached_tokens, which shows whether implicit caching
             # (on by default) hit any of the input.
@@ -156,7 +156,7 @@ def sweep(model: str, doc_ids: Sequence[str], levels: Sequence[int]) -> List[dic
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Measure throughput across worker counts.")
-    ap.add_argument("--model", default="gemini-3.5-flash-lite")
+    ap.add_argument("--model", default=PRIMARY)
     ap.add_argument("--split", default="test", choices=["tune", "test"])
     ap.add_argument("--levels", default="1,2,4,8,16")
     args = ap.parse_args()

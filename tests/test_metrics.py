@@ -192,7 +192,7 @@ def test_summarize_reconciliation_counts_and_recall():
 
 
 def test_summarize_reconciliation_empty_is_not_applicable():
-    assert m.summarize_reconciliation([{"applicable": False}]) == {"n": 0, "applicable": False}
+    assert m.summarize_reconciliation([{"applicable": False}]) == {"n": 0, "applicable": False, "routed_to_review": 0}
 
 
 # --- paired comparison ------------------------------------------------------
@@ -259,3 +259,31 @@ def test_calibration_with_no_instances_is_degenerate_not_an_error():
     from meridian.harness import metrics as m
     cal = m.calibration([], [])
     assert cal["degenerate"] is True
+
+
+def test_wilson_matches_independently_computed_reference_values():
+    from meridian.harness import metrics as m
+    ref = {(238, 240): (0.97013, 0.997712), (232, 232): (0.983712, 1.0),
+           (233, 240): (0.94103, 0.985801), (2, 8): (0.071479, 0.590725),
+           (232, 240): (0.935615, 0.983015)}
+    for (k, n), (lo, hi) in ref.items():
+        w = m.wilson(k, n)
+        assert (w["low"], w["high"]) == (lo, hi), (k, n, w)
+
+
+def test_ece_is_weighted_by_bucket_count_not_a_mean_over_buckets():
+    from meridian.harness import metrics as m
+    inst = [{"would_be_correct": True}] * 3 + [{"would_be_correct": False}]
+    cal = m.calibration(inst, [0.95, 0.95, 0.95, 0.55])
+    assert cal["ece"] == 0.175          # (3 * 0.05 + 1 * 0.55) / 4; an unweighted mean gives 0.30
+
+
+def test_reconciliation_summary_counts_verdicts_routed_to_review():
+    from meridian.harness import metrics as m
+    live = {"applicable": True, "gt_reconciles": False, "model_outcome": "correct",
+            "code_outcome": "correct", "model_arithmetic_correct": True,
+            "item_count_correct": True, "items_sum_matches_truth": True}
+    routed = {"applicable": False, "routed_to_review": True}
+    s = m.summarize_reconciliation([live, routed])
+    assert s["n"] == 1 and s["routed_to_review"] == 1 and s["n_inconsistent_claims"] == 1
+    assert m.summarize_reconciliation([routed])["routed_to_review"] == 1

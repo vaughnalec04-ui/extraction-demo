@@ -9,9 +9,10 @@ The cost asymmetry drives the design. A wrong payout is far more expensive than
 a flagged exception, so the system abstains rather than guesses, and the
 harness measures whether the abstentions are worth anything.
 
-The code was written with Claude (Opus 5). The documents were generated with
-Claude and Gemini. The ground-truth labels come from a seeded random generator
-and were written before any document existed, so no label depends on a model.
+The code was written with Claude (Opus 5); the briefing and walkthrough script
+were drafted with Claude and Gemini. The corpus comes from a seeded generator:
+no model produced a document or a label, and every label was written before
+its document existed.
 
 ---
 
@@ -266,13 +267,15 @@ Wilson 95%.
 |---|---|---|---|---|---|---|---|
 | `primary_solo` | 99.17% [97.0–99.8] | 100% | 100% [75.8–100] | n/a | $0.00132 | $52.8 | 2.17s |
 | `cascade` | 99.17% [97.0–99.8] | 100% | 100% [75.8–100] | n/a | $0.00132 | $52.8 | 2.17s |
-| `double_key` | 100.00% [98.4–100.0] | 96.7% | 100% [75.8–100] | 25.0% [7.1–59.1] | $0.00221 | $88.4 | 5.58s |
+| `double_key` | 100.00% [98.4–100.0] | 96.7% | 100% [75.8–100] | 25.0% [7.1–59.1] | $0.00221 | $88.3 | 5.58s |
 | `verifier_solo` | 97.08% [94.1–98.6] | 100% | 91.7% [64.6–98.5] | n/a | $0.00089 | $35.6 | 3.24s |
 
 Tuning chose an abstention threshold of 0.0 for every configuration that uses
 self-reported confidence, so none of them abstains: full coverage already
 cleared the bar on tune, and the objective maximises coverage. Only
-`double_key` abstains, on disagreement.
+`double_key` abstains, on disagreement. The objective encodes the cost
+asymmetry through the 97% bar rather than a price per error; with a price per
+wrong payout, the thresholds would move.
 
 Against the bar: `primary_solo` clears 97% with its lower bound at 97.0%, which
 is no margin. `double_key` clears it with a 98.4% lower bound at about a ninth
@@ -281,11 +284,29 @@ the constraint anywhere in this table.
 
 ### The cascade escalated nothing
 
-`cascade` is identical to `primary_solo` on every metric. Escalation rate is
-0.0%. It escalates on low self-reported confidence, and nearly every prediction
-lands in the top confidence bucket, so the trigger never fires. The standard
-cost-saving cascade does not work on this model because the signal it relies on
-carries no information. This was predicted before the run.
+`cascade` is identical to `primary_solo` on every metric, and on test that is
+by construction: tuning set the escalation threshold to 0.0, so no page was
+sent on. The cascade was tested on tune, where the sweep tried every observed
+confidence as a threshold:
+
+| escalate when any field is below | pages escalated | accuracy on covered | $/doc |
+|---|---|---|---|
+| never (chosen) | 0% | 98.75% | $0.00132 |
+| 0.95 | 10% | 98.75% | $0.00141 |
+| 0.99 | 15% | 98.75% | $0.00146 |
+| 1.00 | 100% | 97.92% | $0.00221 |
+
+No threshold raised accuracy, and sending everything lowered it, because the
+verifier is not a stronger reader. That is the first reason the cascade fails
+here: the design escalated to a Flash-tier model and quota removed it (F-010),
+so there is nothing better to escalate to. The second is the signal. The
+verifier's confidence is 1.0 on all 240 instances. The primary's is nearly so:
+on tune its three errors all carried 1.0, while on test its two errors were its
+two lowest confidences, 0.90 and 0.95, on one degraded page. A threshold under
+0.95 would have sent that page to the verifier, which read the total correctly
+and the policy number wrong. Five errors across both splits decide nothing
+about the signal; they do show that a cascade needs a stronger second reader
+before the trigger matters.
 
 ### Reconciliation
 
@@ -294,18 +315,21 @@ Reconciliation, whether the line items sum to the stated total, is the
 adjudication task under it and is where Meridian loses money. 34 of the 40 test
 documents have an itemisation and a stated total; 12 are inconsistent by
 construction.
+`double_key` scores 33 of them: on 1 the readers disagreed on the total, so
+the field and its verdict went to review together.
 
 | | primary | verifier | double_key |
 |---|---|---|---|
-| verdict accuracy | 100% [89.8–100] | 97.1% [85.1–99.5] | 100% [89.8–100] |
-| bad-claim recall | 100% [75.8–100] | 91.7% [64.6–98.5] | 100% [75.8–100] |
+| documents scored | 34 | 34 | 33 |
+| verdict accuracy | 100% [89.8–100] | 97.1% [85.1–99.5] | 100% [89.6–100] |
+| bad-claim recall | 100% [75.8–100] | 91.7% [64.6–98.5] | 100% [74.1–100] |
 | false pass (wrong payout) | 0 | 1 | 0 |
 | false flag (review cost) | 0 | 0 | 0 |
 | model arithmetic correct | 100% | 100% | 100% |
-| line items read correctly | 91.2% [77.0–97.0] | 91.2% | 91.2% |
+| line items read correctly | 91.2% [77.0–97.0] | 91.2% | 93.9% |
 
 The interval is wide. The primary reader caught all 12
-inconsistent claims on test and 12 of 14 on tune. With n=12 the recall interval
+inconsistent claims on test and 12 of 13 on tune. With n=12 the recall interval
 runs from 76% to 100%. The miss rate is somewhere under one in four and cannot
 be pinned tighter with this many bad claims. The verifier's one false pass is a
 claim that would have been paid.
@@ -329,8 +353,9 @@ which is an image-quality problem.
 | `hallucinated_field` | 0 | 5 | 0 | measurable only because the OOD and incomplete strata exist |
 
 The verifier hallucinated five fields on out-of-distribution documents. It read
-a utility bill's "Amount Due" as a claim total and an account number as a claim
-ID, which those pages were built to invite. The primary reader did not.
+a utility bill's "Amount Due" as a claim total and an account number as a
+policy number, which those pages were built to invite. The primary reader did
+not.
 Alone, the verifier would have emitted five invented values. Under `double_key`
 none reached output: the primary said absent, the readers disagreed, and the
 five instances went to review. That is the mechanism the second reader is for,
@@ -347,12 +372,14 @@ under `double_key`.
 | field | exact | normalized |
 |---|---|---|
 | `total_amount` | 15.0% | 97.5% |
-| `date_of_service` | 25.0% | 100% |
+| `date_of_service` | 32.5% | 100% |
 | overall | 74.2% | 99.2% |
 
-The 25-point gap between exact and normalized match is formatting: `$7,374.71`
-against `7374.71`, `1 Jun 2026` against `2026-06-01`. Scoring on exact match
-alone would put this pipeline 23 points under the bar.
+Exact match compares against the canonical label, not the printed string, so
+the 25-point gap is the size of the formatting problem a downstream system has
+to solve (`$7,374.71` against `7374.71`, `1 Jun 2026` against `2026-06-01`),
+not a model error rate. A consumer that skipped normalization would see this
+pipeline 23 points under the bar.
 
 ### What double-keying costs
 
@@ -361,9 +388,10 @@ flags, 2 would have been wrong (precision 25.0% [7.1–59.1]): both of the
 primary's errors, so recall is 100% [34.2–100] on a denominator of two. The
 other six flags are the verifier's five hallucinations and one disagreement on
 a degraded policy number, all places where the primary was already right. At
-Meridian's volume that is roughly 1,300 field-instances a month to the
-exception queue, against zero wrong payouts in this sample. With 8 flags,
-neither number is tight.
+Meridian's volume that is roughly 8,000 field-instances a month to the
+exception queue, on about 4,000 documents (4 of 40 pages carried a flag),
+against zero wrong payouts in this sample. With 8 flags, neither number is
+tight.
 
 ### Paired against the primary alone
 
@@ -385,23 +413,25 @@ significance at this size. `cascade` is `primary_solo`.
 ### Variance
 
 Run-to-run variance at temperature 0 was measured on the corpus v2 test split,
-3 runs, before reconciliation was added. Accuracy moved 0.4 points and ECE
-tripled between runs. The v3 test split has one complete run: the verifier has
-three cached, the primary one, and every paired configuration needs both. Two
-more primary runs would cost about $0.10 after a quota reset. Treat any single
-v3 figure as ±0.4 points.
+3 runs, before reconciliation was added; that results file is preserved as
+`results/v2_variance.json`. Accuracy on covered moved 0.4 points across the
+three runs (0.9958, 0.9958, 0.9917) and ECE ranged 0.0019 to 0.0069. The v3
+test split has one complete run: the verifier has three cached, the primary
+one, and every paired configuration needs both. The verifier's three runs
+return identical values on all 40 documents. Two more primary runs would cost
+about $0.10 after a quota reset. Treat any single v3 figure as ±0.4 points.
 
 ### Throughput at 40,000 documents a month
 
 Measured on the corpus v2 test split, one full pass per concurrency level:
 
-| workers | docs/min | docs/hour | hours for 40k | throttle events |
-|---|---|---|---|---|
-| 1 | 8.0 | 479 | 83.4 | 8 |
-| 2 | 8.3 | 499 | 80.1 | 9 |
-| 4 | 8.2 | 490 | 81.7 | 9 |
-| 8 | 8.0 | 479 | 83.5 | 9 |
-| 16 | 7.0 | 423 | 94.7 | 10 |
+| workers | docs/min | docs/hour | hours for 40k | throttle events | failed calls |
+|---|---|---|---|---|---|
+| 1 | 8.0 | 479 | 83.4 | 8 | 1 |
+| 2 | 8.3 | 499 | 80.1 | 9 | 1 |
+| 4 | 8.2 | 490 | 81.7 | 9 | 0 |
+| 8 | 8.0 | 479 | 83.5 | 9 | 0 |
+| 16 | 7.0 | 423 | 94.7 | 10 | 0 |
 
 Throughput is quota-bound. It is flat from 1 to 8 workers and drops at 16;
 sixteen workers is 12% slower than one. The ceiling is account-level
@@ -414,9 +444,12 @@ on one quota.
 
 ### Two levers measured and not used
 
-- Context caching: `cached_tokens` was 0 across all 200 sweep calls. At about
-  1,300 tokens per document the payload is under the 4,096-token minimum for
-  explicit caching on this model family.
+- Context caching: `cached_tokens` was 0 across all 200 sweep calls. Two
+  reasons. The request puts the per-document image before the shared prompt,
+  so no two requests share a prefix; and even prompt-first, the shared part is
+  about 350 tokens against a 4,096-token minimum on this model family, with
+  about 1,400 input tokens per document in total. Prompt-first ordering is the
+  change to try; it alters every cache key, so it was not made after scoring.
 - Batch API: the right mode for the overnight bulk at 50% of interactive cost.
   Implemented against the SDK contract in `src/meridian/batch.py` and never
   successfully submitted. Every `batches.create` returns `400
@@ -440,7 +473,7 @@ on one quota.
 | Label provenance | Authored first; documents rendered from labels | Labels from model output, or hand-labelling generated docs | A harness whose labels come from a model measures agreement, not accuracy |
 | Output format | Response schema with per-field `{value, confidence}` | Prompt-and-parse | Nullable value makes "absent" a real answer instead of a parse failure |
 | Uncertainty signal | Cross-reader disagreement | Self-reported confidence; logprobs; self-consistency | Logprobs are disabled (F-006); self-report is constant and self-consistency showed 5/5 agreement (F-007) |
-| Second reader | Independent lite-class peer | Stronger Flash tier | Free-tier quota stops every Flash model after about 20 requests (F-010). For a disagreement signal, independence matters more than capability |
+| Second reader | Independent lite-class peer | Stronger Flash tier | Free-tier quota stopped each Flash model run toward evaluation volume after about 20 requests (F-010). For a disagreement signal, independence matters more than capability |
 | Escalation | Kept, expected to fail | Dropped, or tuned until it helped | The negative result is the finding. Making it win would have meant tuning on test |
 | Thresholds | Swept on tune, frozen, test scored once | Sweeping on test | Not negotiable |
 | Scoring | Cached responses, never live | Live | Free sweeps, reproducible tuning, offline demo |
@@ -478,14 +511,14 @@ The third requirement, that the system knows when it is unsure, is not met.
    failure distribution is a guess about theirs.
 
 4. **Bad-claim recall is 100% on 12 claims, which is [75.8–100].** Tune showed
-   12 of 14. The miss rate is under one in four and cannot be pinned tighter
+   12 of 13. The miss rate is under one in four and cannot be pinned tighter
    with this many inconsistent claims. One false pass on the verifier is a
    claim that would have been paid.
 
 5. **Zero margin on the bar.** `primary_solo`'s lower bound is 97.0% against
    97%, and run-to-run spread on v2 was 0.4 points. It passes on paper and
    should not be presented as comfortable. n≈500 tightens the interval about
-   3.5× for about $2 of inference. The v3 test split also has one complete
+   3.5× for about $1.10 of inference across both readers. The v3 test split also has one complete
    run; two more primary runs cost about $0.10 after a quota reset.
 
 6. **The capability-tier comparison never ran.** Free-tier quota blocked it.

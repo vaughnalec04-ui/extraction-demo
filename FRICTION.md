@@ -25,8 +25,8 @@ separate.
   ```
 - **What was actually going on:** the binary was at `~/bin/gh` (v2.98.0) and
   already authenticated. `~/bin` was not on the shell `PATH`.
-- **Time lost:** about 5 minutes, plus one round trip telling the user to
-  install a tool they already had.
+- **Time lost:** about 5 minutes, and one wrong conclusion that the tool was
+  missing.
 - **Workaround:** `export PATH="$HOME/bin:$PATH"`.
 - **What would help:** a negative `which` is weak evidence. Probe the common
   install locations before concluding a tool is absent.
@@ -163,13 +163,19 @@ separate.
   model for a probability produces a number that looks like one and behaves
   like a constant. For a customer whose requirement is "know when you are
   unsure", this is the biggest missing piece.
+- **Addendum, corpus v3:** the counts above were logged on corpus v1. On the
+  committed v3 tune cache the primary reports 214 x 1.00, 22 x 0.99 and
+  4 x 0.95; the verifier reports 1.00 on all 240. The primary's three tune
+  errors all carried 1.00. On test its two errors were its two lowest
+  confidences, 0.90 and 0.95, on one degraded page. The verifier's confidence
+  is a constant; the primary's is nearly one, and five errors decide nothing.
 
 ## F-008: One 429 message for two different conditions
 
 - **Bucket:** API surface
 - **Severity:** medium
 - **Attempting:** extract 80 documents across two model tiers in one pass.
-- **Error**, on 23 of 40 cheap-tier calls and 33 of 40 strong-tier calls:
+- **Error**, on 23 of 40 lite-tier calls and 33 of 40 Flash-tier calls:
   ```
   ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You
   exceeded your current quota, please check your plan and billing details. ...
@@ -210,24 +216,30 @@ separate.
 - **Severity:** high
 - **Attempting:** run a 3x-repeated evaluation over an 80-document corpus across
   two model tiers, roughly 320 calls. A small evaluation.
-- **Observed:** every Flash-tier model runs out after about 20 successful
-  requests and then returns 429 in about 0.2s without attempting inference.
-  Measured across four models:
+- **Observed:** each Flash model run toward evaluation volume stopped after
+  about 20 successful requests and then returned 429 in about 0.2s without
+  attempting inference. Across the four Flash models tried:
   ```
   gemini-3.5-flash     ok, then 429 permanently
   gemini-3.7-flash     17 ok, then 429 permanently
   gemini-3.8-flash     available, intermittent 503 under load
   gemini-3-flash-preview  available
   ```
-  Lite-tier models were unaffected. `gemini-3.5-flash-lite` completed 89
+  The two run toward volume hit the quota and did not recover for the rest of
+  the build. `gemini-3.8-flash` returned 503 on 2 of 4 probe calls (F-004).
+  `gemini-3-flash-preview` passed a 4-call probe (9.6s mean, about 1,500
+  thinking tokens per call) and was not carried to evaluation volume, so its
+  quota is untested. Lite-tier models were unaffected. `gemini-3.5-flash-lite` completed 89
   consecutive calls with no errors.
 - **Why it matters:** the quota is not the cost. The whole evaluation at list
   price costs about a dollar. The free tier is enough to try a model and not
   enough to evaluate one, and evaluation is what a partner does before
   committing.
 - **Consequence for this build:** the escalation tier was dropped for a second
-  lite-class reader, because no Flash model could supply the call volume. The
-  evaluation survived; the capability-escalation design did not.
+  lite-class reader, because no Flash model was carried to the call volume:
+  two stopped at the quota, one was unstable, and the preview model was not
+  tested at volume. The evaluation survived; the capability-escalation design
+  did not.
 - **Time lost:** about 90 minutes across four model migrations.
 - **Workaround:** none on the free tier. Enabling billing resolves it.
 - **What would help:** a quota shaped for evaluation. A one-off allowance of a

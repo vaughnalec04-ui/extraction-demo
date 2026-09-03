@@ -116,3 +116,30 @@ def test_tune_only_ever_scores_the_tune_split(monkeypatch):
     out = run.tune(run.load_labels())
     assert seen and set(seen) == {"tune"}
     assert out["tuned_on"].startswith("tune split")
+
+
+def _stub_score(accuracy_at, coverage_at):
+    def fake(config, split, run_idx, tau_a, tau_e, labels, doc_ids=None):
+        return {"overall": {"coverage": {"point": coverage_at(tau_a)},
+                            "normalized_match_on_covered": {"point": accuracy_at(tau_a)},
+                            "abstention_precision": {"point": None}},
+                "cost": {"mean_usd_per_doc": 0.001}, "escalation_rate": 0.0}
+    return fake
+
+
+def test_tune_rejects_thresholds_below_the_bar(monkeypatch):
+    """Below the bar at tau 0, above it once anything is abstained: tune must
+    pick the abstaining threshold and say the bar was met."""
+    monkeypatch.setattr(run, "score", _stub_score(
+        lambda t: 0.90 if t == 0.0 else 0.99, lambda t: 1.0 if t == 0.0 else 0.8))
+    out = run.tune(run.load_labels())
+    assert out["chosen"]["primary_solo"]["tau_abstain"] > 0.0
+    assert out["chosen"]["primary_solo"]["bar_met_on_tune"] is True
+    # double_key has no threshold to move, so it cannot clear the bar here.
+    assert out["chosen"]["double_key"]["bar_met_on_tune"] is False
+
+
+def test_tune_reports_an_unmet_bar_instead_of_relaxing_it(monkeypatch):
+    monkeypatch.setattr(run, "score", _stub_score(lambda t: 0.5, lambda t: 1.0))
+    out = run.tune(run.load_labels())
+    assert all(v["bar_met_on_tune"] is False for v in out["chosen"].values())

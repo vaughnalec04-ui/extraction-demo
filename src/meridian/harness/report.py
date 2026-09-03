@@ -49,7 +49,7 @@ def _header(meta: dict) -> None:
 def _frontier(frontier: list, meta: dict) -> None:
     print()
     print(_rule("="))
-    print("COST / ACCURACY FRONTIER   (median across runs; CI on run 1)")
+    print("COST / ACCURACY FRONTIER   (run 1; run-to-run spread under each configuration)")
     print(_rule("="))
     print("%-13s %-22s %-10s %-10s %-11s %-9s %-7s %s"
           % ("config", "accuracy on covered", "coverage", "bad-claim", "abst.prec", "$/doc", "ECE", "p50"))

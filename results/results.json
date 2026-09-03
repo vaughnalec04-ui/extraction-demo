@@ -940,7 +940,8 @@
               "no_verdict": 0
             },
             "n": 34,
-            "n_inconsistent_claims": 12
+            "n_inconsistent_claims": 12,
+            "routed_to_review": 0
           },
           "run": 1,
           "split": "test",
@@ -1923,21 +1924,21 @@
           "reconciliation": {
             "bad_claim_recall_code": {
               "high": 1.0,
-              "low": 0.757506,
-              "n": 12,
+              "low": 0.741167,
+              "n": 11,
               "point": 1.0
             },
             "bad_claim_recall_model": {
               "high": 1.0,
-              "low": 0.757506,
-              "n": 12,
+              "low": 0.741167,
+              "n": 11,
               "point": 1.0
             },
             "code_verdict": {
               "accuracy": {
                 "high": 1.0,
-                "low": 0.898485,
-                "n": 34,
+                "low": 0.89573,
+                "n": 33,
                 "point": 1.0
               },
               "false_flag": 0,
@@ -1946,35 +1947,36 @@
             },
             "line_item_count_accuracy": {
               "high": 1.0,
-              "low": 0.898485,
-              "n": 34,
+              "low": 0.89573,
+              "n": 33,
               "point": 1.0
             },
             "line_item_sum_accuracy": {
-              "high": 0.969534,
-              "low": 0.770395,
-              "n": 34,
-              "point": 0.911765
+              "high": 0.983219,
+              "low": 0.803938,
+              "n": 33,
+              "point": 0.939394
             },
             "model_arithmetic_accuracy": {
               "high": 1.0,
-              "low": 0.898485,
-              "n": 34,
+              "low": 0.89573,
+              "n": 33,
               "point": 1.0
             },
             "model_verdict": {
               "accuracy": {
                 "high": 1.0,
-                "low": 0.898485,
-                "n": 34,
+                "low": 0.89573,
+                "n": 33,
                 "point": 1.0
               },
               "false_flag": 0,
               "false_pass": 0,
               "no_verdict": 0
             },
-            "n": 34,
-            "n_inconsistent_claims": 12
+            "n": 33,
+            "n_inconsistent_claims": 11,
+            "routed_to_review": 1
           },
           "run": 1,
           "split": "test",
@@ -2983,7 +2985,8 @@
               "no_verdict": 0
             },
             "n": 34,
-            "n_inconsistent_claims": 12
+            "n_inconsistent_claims": 12,
+            "routed_to_review": 0
           },
           "run": 1,
           "split": "test",
@@ -4011,7 +4014,8 @@
               "no_verdict": 0
             },
             "n": 34,
-            "n_inconsistent_claims": 12
+            "n_inconsistent_claims": 12,
+            "routed_to_review": 0
           },
           "run": 1,
           "split": "test",

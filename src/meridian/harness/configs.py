@@ -18,8 +18,9 @@ cascade and double_key make opposite bets about self-reported confidence, so
 both are measured.
 
 Both readers are lite-class. The original design escalated to a Flash-tier
-model, but free-tier quota on every Flash model runs out after roughly twenty
-requests a day (FRICTION.md F-010), which cannot fund a scored evaluation. For
+model, but free-tier quota on each Flash model run toward evaluation volume
+ran out after roughly twenty requests (FRICTION.md F-010), which cannot fund a
+scored evaluation. For
 a disagreement signal, independence between readers matters more than relative
 capability, so the design changed rather than the evaluation.
 """

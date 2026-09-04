@@ -83,15 +83,15 @@
     <div><b>Numbers</b><span>All figures come from <code>results/results.json</code>: corpus v3, the test split, 40 documents and 240 field-instances, one run at temperature 0. Bracketed ranges are 95% Wilson intervals.</span></div>
   </div>
 
-  <div class="bluf">
+  <div class="bluf" id="bluf">
     <p><b>BLUF.</b> The accuracy and cost requirements are met; the requirement that the system know when it is unsure is not. A single lite-class reader, <code>gemini-3.5-flash-lite</code>, reads 99.2% [97.0–99.8] of fields correctly at $0.0013 per document, and the lower bound of that interval sits exactly on the 97% target. Two lite-class readers run as a double-key pair reach 100% [98.4–100] on the 96.7% of fields on which they agree, at $0.0022 per document. On the same documents, the two systems differ on two field-instances (p = 0.50), so the effect this sample establishes is a coverage cost of 3.3 points rather than an accuracy gain. Self-reported confidence is nearly constant and cannot gate anything; disagreement between readers is the only usable signal, and its precision on 8 flags is 25% [7.1–59.1]. I recommend running this harness unchanged on about 500 real Meridian documents before choosing a configuration; the decision gates are in section 2.5. The one request to GDM is a calibrated confidence output for structured extraction (F-007).</p>
   </div>
 
-  <h2>Context</h2>
+  <h2 id="context">Context</h2>
   <p>Meridian Claims Group is a composite partner profile built for this exercise. It receives about 40,000 scanned claims documents a month and needs six payment-critical fields extracted from each: the claim id, the policy number, the claimant, the provider, the date of service, and the total amount. Its requirements are 97% field accuracy, a cost under $0.02 per document, and a system that flags what it is unsure of rather than guessing, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness on a synthetic corpus of 80 documents. The labels were written first and each page was rendered from its label, so the failure distribution is my estimate of Meridian's rather than a measurement of it. Everything ran on the free API tier, which forced one design change (section 1.3) and produced most of section 3.</p>
 
-  <h2>1. Architecture</h2>
-  <h3>1.1 Flow</h3>
+  <h2 id="s1">1. Architecture</h2>
+  <h3 id="s1-1">1.1 Flow</h3>
   <p>The pipeline runs in five stages. Labels are authored first from a fixed seed. Pages are rendered from those labels in five strata, with scanner noise and JPEG loss on every page. The extractor sends each page to Gemini with a response schema and receives one nullable value and one confidence per field. Every raw response is written to a cache that is keyed on the model, the prompt version, the schema, and the image bytes, and the cache is committed to the repository. The harness scores the cache offline and never calls the API.</p>
   <p>Extraction and scoring are separate programs. Because thresholds are chosen from cached responses, sweeps cost no calls, tuning is reproducible, and the demo replays offline with identical numbers. Both programs recompute the cache key when they read, so a regenerated page cannot be scored against an old response; that failure would produce plausible wrong numbers rather than an error, which is why it is checked and refused.</p>
 
@@ -103,7 +103,7 @@
     <li><code>double_key</code> runs both readers on every page and sends a field to review when their normalized values disagree. This automates the double-keying control that Meridian's processors already run with people.</li>
   </ul>
 
-  <h3>1.3 Trade-offs</h3>
+  <h3 id="s1-3">1.3 Trade-offs</h3>
   <div class="tw">
     <table>
       <thead><tr><th>Decision</th><th>What I did</th><th>What I did not do</th><th>Why</th></tr></thead>
@@ -118,7 +118,7 @@
   </div>
   <p class="small">The following were deliberately not built: authentication, containers, CI, a database, a job queue, a UI, and retry libraries.</p>
 
-  <h2>2. Evaluation</h2>
+  <h2 id="s2">2. Evaluation</h2>
   <h3>2.1 Definitions</h3>
   <ul>
     <li>The unit of measurement is the field-instance, meaning one field on one document, because Meridian pays per field. Exact match and normalized match are both reported and are never merged.</li>
@@ -131,7 +131,7 @@
   <h3>2.2 Protocol</h3>
   <p>The corpus holds 80 documents in five strata (24 clean, 16 ambiguous, 16 degraded, 16 incomplete, and 8 out-of-distribution), split into 40 tune and 40 test documents before the first API call. Thresholds were swept on the tune split only, and the test split was scored once.</p>
 
-  <h3>2.3 Results</h3>
+  <h3 id="s2-3">2.3 Results</h3>
   <div class="tw">
     <table>
       <thead><tr><th>Configuration</th><th class="n">Accuracy on covered</th><th class="n">Coverage</th><th class="n">Wrong / missed / hallucinated</th><th class="n">Cost per document</th><th class="n">p50 latency</th></tr></thead>
@@ -147,7 +147,7 @@
   <p>Of the test documents, 34 have an itemization and a stated total, and 12 are inconsistent by construction. The primary caught all 12 [75.8–100]. The verifier missed one, which is a claim that would have been paid. The models' arithmetic was right on every document, and every verdict failure traces to a misread digit on a degraded scan; line items were read correctly 91.2% of the time [77.0–97.0].</p>
   <p>Several things are not established. A sample of 240 field-instances and 8 flags is small. This corpus has one complete run; three runs on the previous corpus moved accuracy by 0.4 points, so any single figure should be read as ±0.4. Calibration cannot be assessed when 239 of 240 predictions fall in one bin. The degraded stratum is the only one below 100% for the primary (95.8% [86.0–98.8]), and it is where double-keying's coverage drops most (93.8%, and 79.2% on out-of-distribution pages).</p>
 
-  <h3>2.4 Monitoring in production</h3>
+  <h3 id="s2-4">2.4 Monitoring in production</h3>
   <p>For each document, the pipeline already emits the disagreement rate between readers by field and by stratum, the adjudicator's ruling on each flagged item (which makes abstention precision a running measurement), the cost from usage metadata, latency and error rates, and the model version string. The following plan is proposed for Meridian to confirm.</p>
   <ul>
     <li>Daily, the disagreement rate is compared with its baseline of 3.3% of fields. A rate above twice the baseline pages the on-call engineer, because either the input mix has moved or a model has changed.</li>
@@ -157,10 +157,10 @@
   </ul>
   <p>The throughput limit is account quota. The pipeline processes about 8 documents a minute from 1 to 8 workers and 12% fewer at 16, so 40,000 documents take about 83 hours of continuous running. The Batch API is the right mode for overnight bulk at half the price, but <code>batches.create</code> failed a precondition on this tier (F-011), so no batch cost is claimed.</p>
 
-  <h3>2.5 Pilot gates</h3>
+  <h3 id="s2-5">2.5 Pilot gates</h3>
   <p>For the 500-document pilot, I would proceed with double-keying if the lower bound of accuracy on covered is at or above 97%, coverage is at or above 90% (a figure to be set against the exception queue's capacity), and at least one flag in three is a real error. If the last gate fails, the primary alone with a sampled audit is the honest alternative.</p>
 
-  <h2>3. Friction log and feedback for GDM</h2>
+  <h2 id="s3">3. Friction log and feedback for GDM</h2>
   <p>Eleven items were logged as they happened, with the error text as it appeared; the full log is <code>FRICTION.md</code>. Ten concern the API, the SDK, or the documentation, and one concerns the local environment. The six that matter to GDM follow, ordered by how much they would change what a partner can build.</p>
   <div class="tw">
     <table>
@@ -212,7 +212,7 @@
     </table>
   </div>
 
-  <h2>4. Next steps</h2>
+  <h2 id="s4">4. Next steps</h2>
   <ol>
     <li>Ingest about 500 real Meridian documents, weighted toward the exceptions their contractors already flag, and re-run this harness on them unchanged.</li>
     <li>Re-run the cascade with a Flash-tier second reader once quota allows, since the negative result applies to these two readers.</li>

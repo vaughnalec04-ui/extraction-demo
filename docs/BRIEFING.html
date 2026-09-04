@@ -75,20 +75,13 @@
 <div class="memo">
   <h1>Meridian Claims Group: field extraction on the Gemini API</h1>
   <p class="sub">Partner Engineering Briefing</p>
-  <div class="hdr">
-    <div><b>To</b><span>GDM partner engineering. Section 3 is addressed to the core modeling and product teams.</span></div>
-    <div><b>From</b><span>Vaughn Nahapetian</span></div>
-    <div><b>Date</b><span>3 September 2026</span></div>
-    <div><b>Repository</b><span><a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>. After installation, <code>meridian-evaluate</code> reproduces every number in this document from the committed response cache without an API key.</span></div>
-    <div><b>Numbers</b><span>All figures come from <code>results/results.json</code>: corpus v3, the test split, 40 documents and 240 field-instances, one run at temperature 0. Bracketed ranges are 95% Wilson intervals.</span></div>
-  </div>
 
   <div class="bluf" id="bluf">
     <p><b>BLUF.</b> The accuracy and cost requirements are met; the requirement that the system know when it is unsure is not. A single lite-class reader, <code>gemini-3.5-flash-lite</code>, reads 99.2% [97.0–99.8] of fields correctly at $0.0013 per document, and the lower bound of that interval sits exactly on the 97% target. Two lite-class readers run as a double-key pair reach 100% [98.4–100] on the 96.7% of fields on which they agree, at $0.0022 per document. On the same documents, the two systems differ on two field-instances (p = 0.50), so the effect this sample establishes is a coverage cost of 3.3 points rather than an accuracy gain. Self-reported confidence is nearly constant and cannot gate anything; disagreement between readers is the only usable signal, and its precision on 8 flags is 25% [7.1–59.1]. I recommend running this harness unchanged on about 500 real Meridian documents before choosing a configuration; the decision gates are in section 2.5. The one request to GDM is a calibrated confidence output for structured extraction (F-007).</p>
   </div>
 
   <h2 id="context">Context</h2>
-  <p>Meridian Claims Group is a composite partner profile built for this exercise. It receives about 40,000 scanned claims documents a month and needs six payment-critical fields extracted from each: the claim id, the policy number, the claimant, the provider, the date of service, and the total amount. Its requirements are 97% field accuracy, a cost under $0.02 per document, and a system that flags what it is unsure of rather than guessing, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness on a synthetic corpus of 80 documents. The labels were written first and each page was rendered from its label, so the failure distribution is my estimate of Meridian's rather than a measurement of it. Everything ran on the free API tier, which forced one design change (section 1.3) and produced most of section 3.</p>
+  <p>Meridian Claims Group is a composite partner profile built for this exercise. It receives about 40,000 scanned claims documents a month and needs six payment-critical fields extracted from each: the claim id, the policy number, the claimant, the provider, the date of service, and the total amount. Its requirements are 97% field accuracy, a cost under $0.02 per document, and a system that flags what it is unsure of rather than guessing, because a wrong payout costs far more than a review. I built a prototype extractor and an evaluation harness on a synthetic corpus of 80 documents. The labels were written first and each page was rendered from its label, so the failure distribution is my estimate of Meridian's rather than a measurement of it. Everything ran on the free API tier, which forced one design change (section 1.3) and produced most of section 3. All figures come from <code>results/results.json</code> in the repository (<a href="https://github.com/vaughnalec04-ui/extraction-demo">github.com/vaughnalec04-ui/extraction-demo</a>), where <code>meridian-evaluate</code> reproduces them from the committed response cache without an API key; bracketed ranges are 95% Wilson intervals.</p>
 
   <h2 id="s1">1. Architecture</h2>
   <h3 id="s1-1">1.1 Flow</h3>
@@ -218,8 +211,6 @@
     <li>Re-run the cascade with a Flash-tier second reader once quota allows, since the negative result applies to these two readers.</li>
     <li>Re-run the calibration analysis when a confidence output becomes available.</li>
   </ol>
-
-  <p class="foot">The code was written with Claude (Opus 5), and this briefing was drafted with Claude and Gemini.</p>
 </div>
 
 </body>
